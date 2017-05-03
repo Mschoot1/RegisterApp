@@ -21,7 +21,10 @@
         <activity android:name="com.example.marni.orderapp.Presentation.AllergyInfoActivity" />
         <activity android:name="com.example.marni.orderapp.Presentation.OrderHistoryActivity" />
         <activity android:name="com.example.marni.orderapp.Presentation.OrderActivity" />
-        <activity android:name="com.example.marni.orderapp.Presentation.AssortmentActivity"></activity>
+        <activity android:name="com.example.marni.orderapp.Presentation.AssortmentActivity" />
+        <activity android:name=".Presentation.OrderHistoryActivity" />
+        <activity android:name=".Presentation.EditProductActivity" />
+        <activity android:name=".Presentation.OrderActivity"></activity>
     </application>
 
 </manifest>
