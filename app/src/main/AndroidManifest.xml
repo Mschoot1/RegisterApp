@@ -16,12 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.RegisterActivity" />
-        <activity android:name=".Presentation.TopUpActivity" />
-        <activity android:name=".Presentation.AllergyInfoActivity" />
-        <activity android:name=".Presentation.OrderHistoryActivity" />
-        <activity android:name=".Presentation.OrderActivity" />
-        <activity android:name=".Presentation.AssortmentActivity"></activity>
+        <activity android:name="com.example.marni.orderapp.Presentation.RegisterActivity" />
+        <activity android:name="com.example.marni.orderapp.Presentation.TopUpActivity" />
+        <activity android:name="com.example.marni.orderapp.Presentation.AllergyInfoActivity" />
+        <activity android:name="com.example.marni.orderapp.Presentation.OrderHistoryActivity" />
+        <activity android:name="com.example.marni.orderapp.Presentation.OrderActivity" />
+        <activity android:name="com.example.marni.orderapp.Presentation.AssortmentActivity"></activity>
     </application>
 
 </manifest>

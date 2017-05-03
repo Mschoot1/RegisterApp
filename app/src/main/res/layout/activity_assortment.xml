@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.marni.registerapp.Presentation.AssortmentActivity">
+    tools:context="com.example.marni.registerapp.com.example.marni.orderapp.Presentation.AssortmentActivity">
 
 </android.support.constraint.ConstraintLayout>
