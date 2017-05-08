@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.marni.registerapp.Presentation.AddItemActivity">
 
-
     <TextView
         android:id="@+id/add_item"
         android:layout_width="wrap_content"
