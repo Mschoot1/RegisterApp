@@ -1,5 +1,7 @@
 package com.example.marni.registerapp.Presentation;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,7 @@ public class LogInActivity extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.buttonSignIn);
         button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
             public void onClick(View V) {
                 EditText ed = (EditText) findViewById(R.id.editTextEmailaddress);
                 EditText ed2 = (EditText) findViewById(R.id.editTextPassword);
