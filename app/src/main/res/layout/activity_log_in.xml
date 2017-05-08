@@ -31,8 +31,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Emailaddress"
-        android:id="@+id/textViewEmailaddress"
+        android:text="@string/ID"
+        android:id="@+id/textViewID"
         android:textSize="16sp"
         android:textColor="#000"
         android:layout_below="@+id/textViewSignIn"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextEmailaddress"
         android:textSize="16sp"
-        android:layout_below="@+id/textViewEmailaddress"
+        android:layout_below="@+id/textViewID"
         android:layout_centerHorizontal="true"
         android:inputType="textEmailAddress" />
 
@@ -79,15 +79,6 @@
         android:layout_alignLeft="@+id/textViewSignIn"
         android:layout_alignStart="@+id/textViewSignIn" />
 
-    <TextView
-        android:id="@+id/textViewNoAccountYet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="14sp"
-        android:padding="18dp"
-        android:text="@string/No_account_yet_register_here"
-        android:textColor="#000"/>
+
 
 </RelativeLayout>
