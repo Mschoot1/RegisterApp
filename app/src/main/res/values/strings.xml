@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">RegisterApp</string>
+    <string name="company_image">company_image</string>
+    <string name="sign_in">sign_in</string>
+    <string name="emailaddress">emailaddress</string>
+    <string name="password">password</string>
+    <string name="no_account_yet_register_here">no_account_yet_register_here</string>
+    <string name="Password">Password</string>
+    <string name="Emailaddress">Emailaddress</string>
+    <string name="Sign_in">Sign in</string>
+    <string name="No_account_yet_register_here">No account yet? Register here.</string>
+    <string name="add_item">Add item</string>
 </resources>

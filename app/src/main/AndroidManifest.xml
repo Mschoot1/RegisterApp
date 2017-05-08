@@ -24,7 +24,9 @@
         <activity android:name="com.example.marni.orderapp.Presentation.AssortmentActivity" />
         <activity android:name=".Presentation.OrderHistoryActivity" />
         <activity android:name=".Presentation.EditProductActivity" />
-        <activity android:name=".Presentation.OrderActivity"></activity>
+        <activity android:name=".Presentation.OrderActivity" />
+        <activity android:name=".Presentation.OrderActivity$AddItemActivity" />
+        <activity android:name=".Presentation.AddItemActivity"></activity>
     </application>
 
 </manifest>
