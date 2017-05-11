@@ -5,35 +5,43 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textViewID"
+        android:id="@+id/textViewId"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
-        android:id="@+id/textViewDateTime"
+        android:id="@+id/textViewTimestamp"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewID"
+        android:layout_below="@+id/textViewId"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
-        android:id="@+id/textViewTotalPrice"
+        android:id="@+id/textViewTotal_price"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toRightOf="@+id/textViewID" />
+        android:layout_toRightOf="@+id/textViewId" />
 
     <TextView
         android:id="@+id/textViewStatus"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewTotalPrice"
+        android:layout_below="@+id/textViewTotal_price"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toRightOf="@id/textViewDateTime" />
+        android:layout_toRightOf="@id/textViewTimestamp" />
+
+    <TextView
+        android:id="@+id/textViewCustomer_id"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTimestamp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
 </RelativeLayout>

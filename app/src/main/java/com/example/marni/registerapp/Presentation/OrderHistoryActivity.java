@@ -9,41 +9,34 @@ import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
-public class OrderHistoryActivity extends AppCompatActivity {
+public class OrderHistoryActivity extends AppCompatActivity implements HttpHandler.OnRandomOrderAvailable{
 
     ListView mListViewOrders;
     CostumAdapter mCostumAdapter;
-    ArrayList mOrderList = new ArrayList();
+    ArrayList mOrderArrayList = new ArrayList();
+
+    private static String url = "http://mysql-test-p4.herokuapp.com/orders/284";
+    ArrayList<HashMap<String, String>> orderList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
-        Order o = new Order();
-
-        o.id = 5;
-        o.date = "25-3-2017";
-        o.price = 3;
-        o.status = "Paid";
-
-        mOrderList.add(o);
-
-        o = new Order();
-
-        o.id = 6;
-        o.date = "25-3-2017";
-        o.price = 27;
-        o.status = "Paid";
-
-        mOrderList.add(o);
-
         mListViewOrders = (ListView) findViewById(R.id.listViewOrders);
 
-        mCostumAdapter = new CostumAdapter(this, getLayoutInflater(), mOrderList);
+        mCostumAdapter = new CostumAdapter(this, getLayoutInflater(), mOrderArrayList);
         mListViewOrders.setAdapter(mCostumAdapter);
+
+        HttpHandler getRandomOrder = new HttpHandler(this);
+        getRandomOrder.execute(url);
+
+    }
+    @Override
+    public void onRandomOrderAvailable(Order order) {
+        mOrderArrayList.add(order);
         mCostumAdapter.notifyDataSetChanged();
     }
-
 }
 

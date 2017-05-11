@@ -56,10 +56,11 @@ public class CostumAdapter extends BaseAdapter{
 
 
             viewHolder = new ViewHolder();
-            viewHolder.textViewID = (TextView) convertView.findViewById(R.id.textViewID);
-            viewHolder.textViewDateTime = (TextView) convertView.findViewById(R.id.textViewDateTime);
-            viewHolder.textViewTotalPrice = (TextView) convertView.findViewById(R.id.textViewTotalPrice);
+            viewHolder.textViewId = (TextView) convertView.findViewById(R.id.textViewId);
+            viewHolder.textViewTimestamp = (TextView) convertView.findViewById(R.id.textViewTimestamp);
+            viewHolder.textViewTotal_price = (TextView) convertView.findViewById(R.id.textViewTotal_price);
             viewHolder.textViewStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
+            viewHolder.textViewCustomer_id = (TextView) convertView.findViewById(R.id.textViewCustomer_id);
 
             convertView.setTag(viewHolder);
         } else {
@@ -67,18 +68,21 @@ public class CostumAdapter extends BaseAdapter{
         }
         Order order = (Order) mOrderArrayList.get(position);
 
-        viewHolder.textViewID.setText(order.getId()+"");
-        viewHolder.textViewDateTime.setText(order.getDate());
-        viewHolder.textViewTotalPrice.setText(order.getPrice()+"");
+
+        viewHolder.textViewId.setText(order.getId()+"");
+        viewHolder.textViewTimestamp.setText(order.getTimestamp());
+        viewHolder.textViewTotal_price.setText(order.getPrice_total()+"");
         viewHolder.textViewStatus.setText(order.getStatus());
+        viewHolder.textViewCustomer_id.setText(order.getCustomer_id());
 
         return convertView;
     }
 
     private static class ViewHolder{
-        public TextView textViewID;
-        public TextView textViewDateTime;
-        public TextView textViewTotalPrice;
+        public TextView textViewId;
         public TextView textViewStatus;
+        public TextView textViewTimestamp;
+        public TextView textViewTotal_price;
+        public TextView textViewCustomer_id;
     }
 }
