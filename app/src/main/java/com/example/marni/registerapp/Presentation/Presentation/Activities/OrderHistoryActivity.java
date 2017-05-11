@@ -18,7 +18,6 @@ public class OrderHistoryActivity extends AppCompatActivity implements HttpHandl
     CostumAdapter mCostumAdapter;
     ArrayList mOrderArrayList = new ArrayList();
 
-    private static String url = "http://mysql-test-p4.herokuapp.com/orders/284";
     ArrayList<HashMap<String, String>> orderList;
 
     protected void onCreate(Bundle savedInstanceState) {
