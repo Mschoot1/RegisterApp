@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Presentation.OrderHistoryActivity">
+        <activity android:name=".Presentation.Presentation.Activities.OrderHistoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,9 +20,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Presentation.EditProductActivity" />
-        <activity android:name=".Presentation.OrderActivity" />
-        <activity android:name=".Presentation.OrderActivity$AddItemActivity" />
+        <activity android:name=".Presentation.Presentation.Activities.EditProductActivity" />
+        <activity android:name=".Presentation.Presentation.Activities.OrderActivity" />
+        <activity android:name=".Presentation.Presentation.Activities.OrderActivity$AddItemActivity" />
 
         <!--<meta-data-->
             <!--android:name="android.support.PARENT_ACTIVITY"-->

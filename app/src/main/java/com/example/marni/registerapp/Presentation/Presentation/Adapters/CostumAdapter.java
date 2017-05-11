@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.Presentation;
+package com.example.marni.registerapp.Presentation.Presentation.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.marni.registerapp.Presentation.Order;
 import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
