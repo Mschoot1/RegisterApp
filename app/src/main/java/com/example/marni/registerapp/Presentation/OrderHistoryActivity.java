@@ -16,7 +16,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
     CostumAdapter mCostumAdapter;
     ArrayList mOrderList = new ArrayList();
 
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
