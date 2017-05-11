@@ -9,24 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Presentation.LogInActivity">
+        <activity android:name=".Presentation.OrderHistoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.marni.orderapp.Presentation.RegisterActivity" />
-        <activity android:name="com.example.marni.orderapp.Presentation.TopUpActivity" />
-        <activity android:name="com.example.marni.orderapp.Presentation.AllergyInfoActivity" />
-        <activity android:name="com.example.marni.orderapp.Presentation.OrderHistoryActivity" />
-        <activity android:name="com.example.marni.orderapp.Presentation.OrderActivity" />
-        <activity android:name="com.example.marni.orderapp.Presentation.AssortmentActivity" />
-        <activity android:name=".Presentation.OrderHistoryActivity" />
-        <activity android:name=".Presentation.EditProductActivity" />
-        <activity android:name=".Presentation.OrderActivity" />
-        <activity android:name=".Presentation.OrderActivity$AddItemActivity" />
-        <activity android:name=".Presentation.AddItemActivity"></activity>
+        <activity android:name="com.example.marni.registerapp.Presentation.EditProductActivity" />
+        <activity android:name="com.example.marni.registerapp.Presentation.AddItemActivity" />
+        <activity android:name="com.example.marni.registerapp.Presentation.LogInActivity" />
+        <activity android:name="com.example.marni.registerapp.Presentation.EditProductActivity" />
+        <activity android:name="com.example.marni.registerapp.Presentation.OrderActivity" />
+        <activity android:name="com.example.marni.registerapp.Presentation.AddItemActivity" />
     </application>
 
 </manifest>
