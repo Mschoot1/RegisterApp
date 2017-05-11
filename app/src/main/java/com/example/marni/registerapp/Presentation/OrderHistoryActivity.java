@@ -24,13 +24,12 @@ public class OrderHistoryActivity extends AppCompatActivity implements HttpHandl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
+        getData();
+
         mListViewOrders = (ListView) findViewById(R.id.listViewOrders);
 
         mCostumAdapter = new CostumAdapter(this, getLayoutInflater(), mOrderArrayList);
         mListViewOrders.setAdapter(mCostumAdapter);
-
-        HttpHandler getRandomOrder = new HttpHandler(this);
-        getRandomOrder.execute(url);
 
     }
     @Override
@@ -38,5 +37,13 @@ public class OrderHistoryActivity extends AppCompatActivity implements HttpHandl
         mOrderArrayList.add(order);
         mCostumAdapter.notifyDataSetChanged();
     }
+
+    public void getData() {
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/orders/284"};
+
+        HttpHandler g = new HttpHandler(this);
+        g.execute(urls);
+    }
+
 }
 

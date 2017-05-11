@@ -73,7 +73,7 @@ public class CostumAdapter extends BaseAdapter{
         viewHolder.textViewTimestamp.setText(order.getTimestamp());
         viewHolder.textViewTotal_price.setText(order.getPrice_total()+"");
         viewHolder.textViewStatus.setText(order.getStatus());
-        viewHolder.textViewCustomer_id.setText(order.getCustomer_id());
+        viewHolder.textViewCustomer_id.setText(order.getCustomer_id()+"");
 
         return convertView;
     }

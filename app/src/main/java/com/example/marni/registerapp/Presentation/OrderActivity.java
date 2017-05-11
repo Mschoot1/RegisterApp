@@ -1,10 +1,8 @@
 package com.example.marni.registerapp.Presentation;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.example.marni.registerapp.Presentation.Domain.Product;
-import com.example.marni.registerapp.Presentation.DummyGenerators.ProductGenerator;
 import com.example.marni.registerapp.R;
 
 public class OrderActivity extends AppCompatActivity{

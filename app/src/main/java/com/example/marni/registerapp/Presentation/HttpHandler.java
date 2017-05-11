@@ -24,7 +24,11 @@ import static android.content.ContentValues.TAG;
 
 public class HttpHandler extends AsyncTask<String, Void, String> {
 
-    HttpURLConnection urlConnection;
+    private final String TAG = getClass().getSimpleName();
+
+    public HttpHandler(OnRandomOrderAvailable listener) {
+        this.listener = listener;
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -108,10 +112,6 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
 
     private OnRandomOrderAvailable listener = null;
 
-    public HttpHandler(OnRandomOrderAvailable listener) {
-        this.listener = listener;
-    }
-
     @Override
     protected void onPostExecute(String response) {
 
@@ -127,20 +127,26 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
         // Daar moeten we de info die we willen tonen uit filteren (parsen).
         // Dat kan met een JSONObject.
         JSONArray jsonArray;
-        try {
-            // Top level json object
-            jsonArray = new JSONArray(response);
+        JSONObject jsonObject;
 
-            // Get all orderss and start looping
+        try {
+
+            jsonObject = new JSONObject(response);
+
+            // Top level json object
+            jsonArray = jsonObject.getJSONArray("results");
+
+            // Get all orders and start looping
             for(int idx = 0; idx < jsonArray.length(); idx++) {
-                JSONArray array = jsonArray.getJSONArray(idx);
-                for(int j = 0; j < array.length(); j++) {
-                    JSONObject jsonObject=array.getJSONObject(j);
-                    int id = jsonObject.getInt("id");
-                    String status = jsonObject.getString("status");
-                    String timestamp = jsonObject.getString("timestamp");
-                    String price_total = jsonObject.getString("price_total");
-                    int customer_id = jsonObject.getInt("customer_id");
+                JSONObject order = jsonArray.getJSONObject(idx);
+
+
+
+                    int id = order.getInt("id");
+                    String status = order.getString("status");
+                    String timestamp = order.getString("timestamp");
+                    String price_total = order.getString("price_total");
+                    int customer_id = order.getInt("customer_id");
                     Log.i(TAG, id + " " + status + " " + timestamp + " " + price_total + " " + customer_id);
 
                     // Create new Order object
@@ -150,6 +156,7 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
                     o.setTimestamp(timestamp);
                     o.setPrice_total(price_total);
                     o.setCustomer_id(customer_id);
+
 
                     //
                     // call back with new order data
@@ -163,7 +170,7 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
 
 
 
-            }
+
         } catch( JSONException ex) {
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
         }
