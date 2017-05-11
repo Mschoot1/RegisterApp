@@ -97,9 +97,9 @@ public class ProductGenerator extends AsyncTask<String,Void,String>{
             for (int i = 0; i < jsonArray.length();i++){
                 JSONObject product = jsonArray.getJSONObject(i);
 
-                String productname = product.getString("product");
+                String productname = product.getString("name");
                 double price = product.getDouble("price");
-                int size = product.getInt("size");
+                int size = product.getInt("quantity");
 
                 Product p = new Product();
                 p.setName(productname);

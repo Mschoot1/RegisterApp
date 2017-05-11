@@ -50,7 +50,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     }
 
     public void getProducts(){
-        String[] urls = new String[] {"http://10.0.2.2:3000/"};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/orders/current/284"};
 
         ProductGenerator getProduct = new ProductGenerator(this);
         getProduct.execute(urls);
