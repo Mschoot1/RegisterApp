@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.marni.registerapp.Presentation.LogInActivity">
 
-    <ImageView
+    <!--ImageView
         android:src="@mipmap/rsz_3logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -14,7 +14,7 @@
         android:contentDescription="@string/company_image"
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true" /-->
 
     <TextView
         android:layout_width="wrap_content"
