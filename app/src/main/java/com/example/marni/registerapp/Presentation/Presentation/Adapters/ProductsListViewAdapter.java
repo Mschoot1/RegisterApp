@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.Presentation.Adapters;
+package com.example.marni.registerapp.Presentation.Presentation.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

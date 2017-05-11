@@ -1,15 +1,13 @@
-package com.example.marni.registerapp.Presentation;
+package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.marni.registerapp.Presentation.Adapters.ProductsListViewAdapter;
-import com.example.marni.registerapp.Presentation.BusinessLogic.CalculatePriceOrder;
+import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.Presentation.Domain.Product;
-import com.example.marni.registerapp.Presentation.DummyGenerators.ProductGenerator;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductGenerator;
 import com.example.marni.registerapp.R;
 
 import java.text.DecimalFormat;

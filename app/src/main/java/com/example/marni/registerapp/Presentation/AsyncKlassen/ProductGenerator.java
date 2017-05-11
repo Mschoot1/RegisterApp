@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.Presentation.DummyGenerators;
+package com.example.marni.registerapp.Presentation.AsyncKlassen;
 
 import android.os.AsyncTask;
 import android.util.Log;

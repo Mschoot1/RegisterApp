@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.Presentation;
+package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;

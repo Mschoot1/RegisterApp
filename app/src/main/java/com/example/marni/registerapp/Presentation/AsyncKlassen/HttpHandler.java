@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.Presentation;
+package com.example.marni.registerapp.Presentation.AsyncKlassen;
 
 /**
  * Created by Wilco on 11-5-2017.
@@ -6,6 +6,8 @@ package com.example.marni.registerapp.Presentation;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.marni.registerapp.Presentation.Order;
 
 import org.json.JSONArray;
 import org.json.JSONException;
