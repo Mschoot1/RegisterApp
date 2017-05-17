@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.marni.registerapp">
 
@@ -15,20 +16,16 @@
         <activity
             android:name=".Presentation.Presentation.Activities.OrderDetailActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Presentation.Presentation.Activities.EditProductActivity" />
-        <activity android:name=".Presentation.Presentation.Activities.OrderActivity" />
-        <activity android:name=".Presentation.Presentation.Activities.OrderActivity$AddItemActivity" />
-        <activity android:exported="true"
-                    android:name=".Presentation.Presentation.Activities.OrderHistoryActivity"/>
+        <!--activity android:name=".Presentation.Presentation.Activities.OrderDetailActivity"/-->
+        <activity android:name=".Presentation.Presentation.Activities.OrderHistoryActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.EditProductActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
 
-        <!--<meta-data-->
-            <!--android:name="android.support.PARENT_ACTIVITY"-->
-            <!--android:value=".Presentation.Activities.OrderHistoryActivity" />-->
     </application>
 </manifest>
