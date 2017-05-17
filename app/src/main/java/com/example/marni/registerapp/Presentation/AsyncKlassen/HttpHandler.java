@@ -7,7 +7,7 @@ package com.example.marni.registerapp.Presentation.AsyncKlassen;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.marni.registerapp.Presentation.Order;
+import com.example.marni.registerapp.Presentation.Domain.Order;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,8 +21,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
-import static android.content.ContentValues.TAG;
 
 public class HttpHandler extends AsyncTask<String, Void, String> {
 
@@ -147,18 +145,12 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
                     int id = order.getInt("id");
                     String status = order.getString("status");
                     String timestamp = order.getString("timestamp");
-                    String price_total = order.getString("price_total");
+                    double price_total = order.getDouble("price_total");
                     int customer_id = order.getInt("customer_id");
                     Log.i(TAG, id + " " + status + " " + timestamp + " " + price_total + " " + customer_id);
 
                     // Create new Order object
-                    Order o = new Order();
-                    o.setId(id);
-                    o.setStatus(status);
-                    o.setTimestamp(timestamp);
-                    o.setPrice_total(price_total);
-                    o.setCustomer_id(customer_id);
-
+                    Order o = new Order(id,status,timestamp,price_total,customer_id);
 
                     //
                     // call back with new order data

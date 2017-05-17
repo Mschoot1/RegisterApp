@@ -26,6 +26,7 @@
         <activity android:name=".Presentation.Presentation.Activities.OrderHistoryActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.EditProductActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.OrderHistorySingleActivity"/>
 
     </application>
 </manifest>

@@ -5,11 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.marni.registerapp.Presentation.Order;
+import com.example.marni.registerapp.Presentation.Domain.Order;
 import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
@@ -70,11 +69,11 @@ public class CostumAdapter extends BaseAdapter{
         Order order = (Order) mOrderArrayList.get(position);
 
 
-        viewHolder.textViewId.setText(order.getId()+"");
-        viewHolder.textViewTimestamp.setText(order.getTimestamp());
-        viewHolder.textViewTotal_price.setText(order.getPrice_total()+"");
+        viewHolder.textViewId.setText(order.getOrderId()+"");
+        viewHolder.textViewTimestamp.setText(order.getDateTime());
+        viewHolder.textViewTotal_price.setText(order.getTotalPrice()+"");
         viewHolder.textViewStatus.setText(order.getStatus());
-        viewHolder.textViewCustomer_id.setText(order.getCustomer_id()+"");
+        viewHolder.textViewCustomer_id.setText(order.getCustomerid()+"");
 
         return convertView;
     }

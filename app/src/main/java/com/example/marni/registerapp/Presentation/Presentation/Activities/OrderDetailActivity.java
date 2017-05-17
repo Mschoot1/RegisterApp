@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.EmailGetTask;
+import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductGenerator;
@@ -25,8 +27,7 @@ import java.util.ArrayList;
  */
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
-        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener
-        {
+        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, EmailGetTask.OnEmailAvailable {
     private final String TAG = getClass().getSimpleName();
     private ProductsListViewAdapter productAdapter;
     private ArrayList<Product> productsList = new ArrayList<>();
@@ -36,6 +37,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private Button cancelbutton;
     private Button confirmbutton;
             private Button deviceinfobutton;
+            private TextView email;
     DecimalFormat formatter = new DecimalFormat("#0.00");
     //
 
@@ -99,8 +101,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             }
         });
 
-
+        getEmail();
         getProducts();
+
+        email = (TextView) findViewById(R.id.customer_email);
         textViewTotal = (TextView) findViewById(R.id.totalprice);
         productListView = (ListView) findViewById(R.id.productdetail_listview);
         productAdapter = new ProductsListViewAdapter(this, getLayoutInflater(), productsList);
@@ -131,5 +135,16 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         return priceTotal;
     }
+
+            public void OnEmailAvailable (Customer customer){
+                email.setText(customer.getEmail());
+            }
+
+            public void getEmail(){
+                String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/email/284"};
+
+                EmailGetTask e = new EmailGetTask(this);
+                e.execute(urls);
+            }
     /////////
 }
