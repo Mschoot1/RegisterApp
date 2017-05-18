@@ -140,8 +140,6 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
             for(int idx = 0; idx < jsonArray.length(); idx++) {
                 JSONObject order = jsonArray.getJSONObject(idx);
 
-
-
                     int id = order.getInt("id");
                     String status = order.getString("status");
                     String timestamp = order.getString("timestamp");
@@ -158,12 +156,6 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
                     listener.onRandomOrderAvailable(o);
                 }
                 // array level objects and get orders
-
-
-
-
-
-
 
         } catch( JSONException ex) {
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
