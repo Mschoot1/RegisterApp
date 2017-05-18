@@ -9,10 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.marni.registerapp.Presentation.AsyncKlassen.BalanceGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.EmailGetTask;
+import com.example.marni.registerapp.Presentation.Domain.Balance;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.Presentation.Domain.Product;
@@ -22,12 +25,14 @@ import com.example.marni.registerapp.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import static java.lang.String.valueOf;
+
 /**
  * Created by Wallaard on 9-5-2017.
  */
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
-        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, EmailGetTask.OnEmailAvailable {
+        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, EmailGetTask.OnEmailAvailable, BalanceGetTask.OnBalanceAvailable {
     private final String TAG = getClass().getSimpleName();
     private ProductsListViewAdapter productAdapter;
     private ArrayList<Product> productsList = new ArrayList<>();
@@ -38,6 +43,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private Button confirmbutton;
             private Button deviceinfobutton;
             private TextView email;
+    private double current_balance,d;
     DecimalFormat formatter = new DecimalFormat("#0.00");
     //
 
@@ -51,7 +57,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
                 ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
                 String[] urls2 = new String[]{
-                        "https://mysql-test-p4.herokuapp.com/order/pay", String.valueOf(priceTotal), "284"
+                        "https://mysql-test-p4.herokuapp.com/order/pay", valueOf(priceTotal), "284"
                 };
                 confirmPostAsync.execute(urls2);
         }
@@ -74,6 +80,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
+        getBalance();
 
         cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
@@ -84,13 +91,28 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             }
         });
 
+
+
         confirmbutton = (Button) findViewById(R.id.confirmbutton1);
         confirmbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v2) {
-                changeOrderStatus();
+                //String totalstring = textViewTotal.getText().toString();
+                Log.i(TAG,current_balance+"huidig balans");
+                Log.i(TAG,priceTotal+"totale prijs");
+                if(
+                        priceTotal < current_balance
+                        ){
+                    changeOrderStatus();
+                    Log.i(TAG,"");
+                } else {
+                    Log.i(TAG,"Het bedrag is te laag");
+                    Toast.makeText(OrderDetailActivity.this, "Customer's balance too low. € "+(priceTotal-current_balance), Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
 
         deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton);
         deviceinfobutton.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +134,17 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     }
     //////
 
+    //GET methoden van balance
+    @Override
+    public void onBalanceAvailable(Balance balance) {
+        current_balance = balance.getBalance();
+    }
+
+    public void getBalance(){
+        BalanceGetTask balancetask = new BalanceGetTask(this);
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/balance/284"};
+        balancetask.execute(urls3);
+    }
 
     //GET klassen hieronder
     public void OnAvailable(Product product) {
