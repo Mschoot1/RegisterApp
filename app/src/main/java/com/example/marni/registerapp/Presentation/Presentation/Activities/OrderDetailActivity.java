@@ -156,7 +156,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     public void changeOrderStatus(){
         ConfirmAsync confirmAsync = new ConfirmAsync(this);
         String[] urls = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/edit", "1", "4"
+                "https://mysql-test-p4.herokuapp.com/order/edit", "1", orderid
         };
         confirmAsync.execute(urls);
 
@@ -172,8 +172,8 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         Log.i(TAG,succesful.toString());
         if(succesful){
             Log.i(TAG,"Gelukt");
-            Intent intent2 = new Intent(OrderDetailActivity.this,OrderHistoryActivity.class);
-            startActivity(intent2);
+            Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+            startActivity(intent );
         } else {
             Log.i(TAG,"Mislukt");
         }

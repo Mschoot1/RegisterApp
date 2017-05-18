@@ -12,7 +12,7 @@ import com.example.marni.registerapp.R;
  * Created by Wallaard on 17-5-2017.
  */
 
-public class OrderHistorySingleActivity extends AppCompatActivity {
+public class OrderHistoryDetailActivity extends AppCompatActivity {
     private TextView customeridView,idView,statusView,timestampView,totalpriceView;
 
     protected void onCreate(Bundle savedInstanceState) {
