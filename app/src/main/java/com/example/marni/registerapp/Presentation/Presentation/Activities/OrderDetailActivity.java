@@ -1,6 +1,5 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,46 +40,21 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private double priceTotal;
     private Button cancelbutton;
     private Button confirmbutton;
-            private Button deviceinfobutton;
-            private TextView email;
+    private Button deviceinfobutton;
+    private TextView email;
     private double current_balance,d;
+    private String orderid;
     DecimalFormat formatter = new DecimalFormat("#0.00");
     //
 
-    //PUT methoden hieronder
-    public void changeOrderStatus(){
-                ConfirmAsync confirmAsync = new ConfirmAsync(this);
-                String[] urls = new String[]{
-                        "https://mysql-test-p4.herokuapp.com/order/edit", "1", "4"
-                };
-                confirmAsync.execute(urls);
-
-                ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
-                String[] urls2 = new String[]{
-                        "https://mysql-test-p4.herokuapp.com/order/pay", valueOf(priceTotal), "284"
-                };
-                confirmPostAsync.execute(urls2);
-        }
-
-    @Override
-    public void successful(Boolean succesful){
-        Log.i(TAG,succesful.toString());
-        if(succesful){
-            Log.i(TAG,"Gelukt");
-            Intent intent2 = new Intent(OrderDetailActivity.this,OrderHistoryActivity.class);
-            startActivity(intent2);
-        } else {
-            Log.i(TAG,"Mislukt");
-        }
-    }
-    ///////
-
-    //////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
         getBalance();
+
+        Bundle bundle = getIntent().getExtras();
+        orderid = bundle.getString("ACCOUNT");
 
         cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +64,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
                 startActivity(intent);
             }
         });
-
-
 
         confirmbutton = (Button) findViewById(R.id.confirmbutton1);
         confirmbutton.setOnClickListener(new View.OnClickListener(){
@@ -124,7 +96,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         });
 
         getEmail();
-        getProducts();
+        getProducts(orderid);
 
         email = (TextView) findViewById(R.id.customer_email);
         textViewTotal = (TextView) findViewById(R.id.totalprice);
@@ -156,8 +128,8 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
     }
 
-    public void getProducts(){
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/14"};
+    public void getProducts(String orderid){
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
 
         ProductGenerator getProduct = new ProductGenerator(this);
         getProduct.execute(urls);
@@ -169,16 +141,42 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         return priceTotal;
     }
 
-            public void OnEmailAvailable (Customer customer){
-                email.setText(customer.getEmail());
-            }
+    public void OnEmailAvailable (Customer customer){
+        email.setText(customer.getEmail());
+    }
 
-            public void getEmail(){
-                String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/email/284"};
+    public void getEmail(){
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/email/284"};
 
-                EmailGetTask e = new EmailGetTask(this);
-                e.execute(urls);
-            }
-    /////////
+        EmailGetTask e = new EmailGetTask(this);
+        e.execute(urls);
+    }
+
+    //PUT methoden hieronder
+    public void changeOrderStatus(){
+        ConfirmAsync confirmAsync = new ConfirmAsync(this);
+        String[] urls = new String[]{
+                "https://mysql-test-p4.herokuapp.com/order/edit", "1", orderid
+        };
+        confirmAsync.execute(urls);
+
+        ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
+        String[] urls2 = new String[]{
+                "https://mysql-test-p4.herokuapp.com/order/pay", valueOf(priceTotal), "284"
+        };
+        confirmPostAsync.execute(urls2);
+    }
+
+    @Override
+    public void successful(Boolean succesful){
+        Log.i(TAG,succesful.toString());
+        if(succesful){
+            Log.i(TAG,"Gelukt");
+            Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+            startActivity(intent );
+        } else {
+            Log.i(TAG,"Mislukt");
+        }
+    }
 }
 ////
