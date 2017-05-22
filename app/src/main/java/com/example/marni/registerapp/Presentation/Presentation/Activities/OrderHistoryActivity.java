@@ -67,7 +67,7 @@ public class OrderHistoryActivity extends AppCompatActivity implements LoyaltyCa
 
         Order order = mOrderArrayList.get(position);
 
-        Intent intent = new Intent(getApplicationContext(), OrderHistorySingleActivity.class);
+        Intent intent = new Intent(getApplicationContext(), OrderHistoryDetailActivity.class);
         intent.putExtra(ORDER, order);
         startActivity(intent);
     }

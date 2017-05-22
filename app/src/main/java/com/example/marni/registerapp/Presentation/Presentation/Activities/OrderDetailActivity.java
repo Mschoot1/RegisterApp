@@ -179,4 +179,3 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         }
     }
 }
-////

@@ -21,7 +21,7 @@
         <activity
             android:name=".Presentation.Presentation.Activities.OrderHistoryActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />>
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -29,7 +29,7 @@
 
         <activity android:name=".Presentation.Presentation.Activities.EditProductActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.OrderHistorySingleActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.OrderHistoryDetailActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.OrderDetailActivity"/>
 
     </application>
