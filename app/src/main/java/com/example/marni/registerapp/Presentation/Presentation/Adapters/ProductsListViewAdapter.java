@@ -122,4 +122,5 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         TextView textViewQuantity;
         TextView textViewAlcohol;
     }
+    //
 }
