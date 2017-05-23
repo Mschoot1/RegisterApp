@@ -41,8 +41,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private Button cancelbutton;
     private Button confirmbutton;
     private Button deviceinfobutton;
-    private TextView email;
-    private double current_balance,d;
+    private double current_balance, d;
     private String orderid;
     DecimalFormat formatter = new DecimalFormat("#0.00");
     private StickyListHeadersListView stickyList;
@@ -53,8 +52,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         setContentView(R.layout.activity_order_details);
         getBalance();
 
-        Bundle bundle = getIntent().getExtras();
+        //Bundle bundle = getIntent().getExtras();
         //        orderid = bundle.getString("ACCOUNT");
+
+        orderid = "304";
 
         cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
@@ -70,11 +71,9 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             @Override
             public void onClick(View v2) {
                 //String totalstring = textViewTotal.getText().toString();
-                Log.i(TAG,current_balance+"huidig balans");
-                Log.i(TAG,priceTotal+"totale prijs");
-                if(
-                        priceTotal < current_balance
-                        ){
+                Log.i(TAG,current_balance + " huidig balans");
+                Log.i(TAG,priceTotal + " totale prijs");
+                if(priceTotal < current_balance){
                     changeOrderStatus();
                     Log.i(TAG,"");
                 } else {
@@ -95,10 +94,8 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             }
         });
 
-        getEmail();
         getProducts(orderid);
 
-//        email = (TextView) findViewById(R.id.customer_email);
         textViewTotal = (TextView) findViewById(R.id.totalprice);
         //productListView = (ListView) findViewById(R.id.productdetail_listview);
         //productListView.setAdapter(productAdapter);
@@ -121,8 +118,8 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     }
 
     public void getProducts(String orderid){
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/254"};
-        //String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
+        //String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/294"};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
 
         ProductGenerator getProduct = new ProductGenerator(this);
         getProduct.execute(urls);
@@ -141,13 +138,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         current_balance = customer.getBalance();
     }
 
-    public void getEmail(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
-
-        AccountGetTask e = new AccountGetTask(this);
-        e.execute(urls);
-    }
-
     public void getBalance(){
         AccountGetTask accounttask = new AccountGetTask(this);
         String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
@@ -164,7 +154,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
         String[] urls2 = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/pay", valueOf(priceTotal), "284"
+                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), "284"
         };
         confirmPostAsync.execute(urls2);
     }
@@ -174,7 +164,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         Log.i(TAG,succesful.toString());
         if(succesful){
             Log.i(TAG,"Gelukt");
-            Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+            Intent intent = new Intent(this, OrderHistoryActivity.class);
             startActivity(intent );
         } else {
             Log.i(TAG,"Mislukt");
