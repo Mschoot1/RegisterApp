@@ -70,9 +70,10 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         Product product = products.get(position);
 
         DecimalFormat formatter = new DecimalFormat("#0");
+        DecimalFormat formatter2 = new DecimalFormat("#0.00");
 
         viewHolder.textViewName.setText(product.getName());
-        viewHolder.textViewPrice.setText("€ "+product.getPrice());
+        viewHolder.textViewPrice.setText("€ "+formatter2.format(product.getPrice()));
         viewHolder.textViewSize.setText(product.getSize()+" ML");
         viewHolder.textViewQuantity.setText(product.getQuantity()+"");
         if(product.getAlcohol_percentage()==0) {
