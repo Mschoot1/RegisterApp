@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+//import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import com.example.marni.registerapp.Presentation.AsyncKlassen.BalanceGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
@@ -45,7 +46,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private double current_balance,d;
     private String orderid;
     DecimalFormat formatter = new DecimalFormat("#0.00");
-    //
+    //private StickyListHeadersListView stickyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         getBalance();
 
         Bundle bundle = getIntent().getExtras();
-        orderid = bundle.getString("ACCOUNT");
+        //        orderid = bundle.getString("ACCOUNT");
 
         cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +104,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         productListView = (ListView) findViewById(R.id.productdetail_listview);
         productAdapter = new ProductsListViewAdapter(this, getLayoutInflater(), productsList);
         productListView.setAdapter(productAdapter);
+
+        //stickyList = (StickyListHeadersListView) findViewById(R.id.productdetail_listview);
+        //stickyList.setAreHeadersSticky(true);
     }
-    //////
 
     //GET methoden van balance
     @Override
@@ -118,35 +121,36 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         balancetask.execute(urls3);
     }
 
-    //GET klassen hieronder
+    //GET klassen product hieronder
     public void OnAvailable(Product product) {
         productsList.add(product);
         productAdapter.notifyDataSetChanged();
         getPriceTotal(product);
-
-        textViewTotal.setText("€" + formatter.format(priceTotal));
+        //stickyList.setAdapter(productAdapter);
+        textViewTotal.setText("Total: €" + formatter.format(priceTotal));
 
     }
 
     public void getProducts(String orderid){
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/254"};
+        //String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
 
         ProductGenerator getProduct = new ProductGenerator(this);
         getProduct.execute(urls);
     }
 
     public Double getPriceTotal(Product product) {
-            priceTotal = priceTotal + (product.getPrice() * product.getSize());
+            priceTotal = priceTotal + (product.getPrice() * product.getQuantity());
 
         return priceTotal;
     }
 
     public void OnEmailAvailable (Customer customer){
-        email.setText(customer.getEmail());
+        email.setText("Customer: "+customer.getEmail());
     }
 
     public void getEmail(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/email/284"};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/email/264"};
 
         EmailGetTask e = new EmailGetTask(this);
         e.execute(urls);

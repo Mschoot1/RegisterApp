@@ -21,6 +21,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class HttpHandler extends AsyncTask<String, Void, String> {
 
@@ -141,25 +144,36 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
                 JSONObject order = jsonArray.getJSONObject(idx);
 
                     int id = order.getInt("id");
-                    String status = order.getString("status");
+                    int status = order.getInt("status");
                     String timestamp = order.getString("timestamp");
                     double price_total = order.getDouble("price_total");
                     int customer_id = order.getInt("customer_id");
                     Log.i(TAG, id + " " + status + " " + timestamp + " " + price_total + " " + customer_id);
 
-                    // Create new Order object
-                    Order o = new Order(id,status,timestamp,price_total,customer_id);
+                    String timestamp2 = getFormattedDate(timestamp);
 
-                    //
-                    // call back with new order data
-                    //
+                    Order o = new Order(id,status,timestamp2,price_total,customer_id);
+
                     listener.onRandomOrderAvailable(o);
                 }
                 // array level objects and get orders
 
         } catch( JSONException ex) {
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+    }
+
+    private String getFormattedDate(String s) throws ParseException {
+
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date parsedDate = sdf.parse(s);
+        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(parsedDate);
+
+        return formattedDate;
     }
 
     public interface OnRandomOrderAvailable {

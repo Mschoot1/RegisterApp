@@ -15,6 +15,19 @@ public class Product {
     private ArrayList allergies;
     private int categoryid;
     private double totalprice;
+    private int quantity;
+
+    public int getCategoryid() {
+        return categoryid;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public String getName() {
         return name;

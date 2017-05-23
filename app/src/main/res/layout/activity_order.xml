@@ -1,50 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    tools:context="com.example.marni.registerapp.Presentation.Presentation.Activities.OrderActivity">
+    android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
 
-    <TextView
+        <TextView
             android:id="@+id/textview_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="Product"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Beer"
+            android:textColor="@color/productName"
+            android:textSize="@dimen/textsizeProduct" />
 
-    <TextView
-        android:id="@+id/textview_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp"
-        android:text="2"
-        android:textSize="16sp"
-        android:layout_alignBaseline="@+id/textview_product"
-        android:layout_alignBottom="@+id/textview_product"
-        android:layout_toRightOf="@+id/textview_product"
-        android:layout_toEndOf="@+id/textview_product" />
+        <TextView
+            android:id="@+id/textview_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textview_product"
+            android:layout_alignStart="@+id/textview_product"
+            android:layout_below="@+id/textview_product"
+            android:layout_marginEnd="@dimen/tvMarginRight"
+            android:layout_marginRight="@dimen/tvMarginRight"
+            android:text="330ml"
+            android:textSize="@dimen/textsizeProduct"
+            android:textColor="@color/black_text"/>
+
+        <TextView
+            android:id="@+id/textview_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/tvMarginRight"
+            android:text="$2.00"
+            android:textColor="@color/productName"
+            android:textSize="@dimen/textsizeProduct"
+            android:layout_marginEnd="17dp"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/textview_alcohol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textview_size"
+            android:layout_alignBottom="@+id/textview_size"
+            android:layout_toEndOf="@+id/textview_size"
+            android:layout_toRightOf="@+id/textview_size"
+            android:text="5% Alc."
+            android:textSize="@dimen/textsizeProduct"
+            android:textColor="@color/black_text"/>
 
         <TextView
             android:id="@+id/textview_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="3X"
-            android:layout_marginRight="48dp"
-            android:layout_marginEnd="48dp"
-            android:layout_alignBaseline="@+id/textview_product"
-            android:layout_alignBottom="@+id/textview_product"
-            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/tvMarginRight"
+            android:layout_alignBaseline="@+id/textview_size"
+            android:text="2 X"
+            android:textColor="@color/productName"
+            android:textSize="@dimen/textsizeProduct"
+            android:layout_marginEnd="17dp"
             android:layout_alignParentEnd="true" />
 
+        <!--<LinearLayout-->
+            <!--android:id="@+id/iconHolder"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toRightOf="@+id/textview_product"-->
+            <!--android:layout_alignTop="@+id/textview_product"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:padding="@dimen/paddingProduct" />-->
+
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
+
+    <!--<TextView-->
+    <!--android:id="@+id/textview_product"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textSize="16sp"-->
+    <!--android:text="Product"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:layout_marginLeft="17dp"-->
+    <!--android:layout_marginStart="17dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textview_price"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="18dp"-->
+    <!--android:layout_marginStart="18dp"-->
+    <!--android:text="2"-->
+    <!--android:textSize="16sp"-->
+    <!--android:layout_alignBaseline="@+id/textview_product"-->
+    <!--android:layout_alignBottom="@+id/textview_product"-->
+    <!--android:layout_toRightOf="@+id/textview_product"-->
+    <!--android:layout_toEndOf="@+id/textview_product" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textview_quantity"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textSize="16sp"-->
+    <!--android:text="3X"-->
+    <!--android:layout_marginRight="48dp"-->
+    <!--android:layout_marginEnd="48dp"-->
+    <!--android:layout_alignBaseline="@+id/textview_product"-->
+    <!--android:layout_alignBottom="@+id/textview_product"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentEnd="true" />-->
+
+
+    <!--</RelativeLayout>-->

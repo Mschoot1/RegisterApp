@@ -11,12 +11,12 @@ public class Order implements Serializable {
 
     private int orderId;
     private int customerid;
-    private String Status;
+    private int Status;
     private String dateTime;
     private double totalPrice;
     private ArrayList<Product> products;
 
-    public Order(int orderId, String status, String dateTime, double totalPrice, int customerid) {
+    public Order(int orderId, int status, String dateTime, double totalPrice, int customerid) {
         this.orderId = orderId;
         Status = status;
         this.dateTime = dateTime;
@@ -44,11 +44,11 @@ public class Order implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return Status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         Status = status;
     }
 

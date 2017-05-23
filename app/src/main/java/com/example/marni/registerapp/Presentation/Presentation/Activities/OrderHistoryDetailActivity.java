@@ -29,7 +29,11 @@ public class OrderHistoryDetailActivity extends AppCompatActivity {
         Order order = (Order) intent.getSerializableExtra("ORDER");
 
         idView.setText(String.valueOf(order.getOrderId()));
-        statusView.setText(order.getStatus());
+        if(order.getStatus() == 1) {
+            statusView.setText("Paid");
+        } else {
+            statusView.setText("Open");
+        }
         customeridView.setText(String.valueOf(order.getCustomerid()));
         timestampView.setText(order.getDateTime());
         totalpriceView.setText(String.valueOf(order.getTotalPrice()));

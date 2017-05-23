@@ -3,6 +3,7 @@ package com.example.marni.registerapp.Presentation.AsyncKlassen;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.marni.registerapp.Presentation.Domain.Order;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 
 import org.json.JSONArray;
@@ -99,12 +100,16 @@ public class ProductGenerator extends AsyncTask<String,Void,String>{
 
                 String productname = product.getString("name");
                 double price = product.getDouble("price");
-                int size = product.getInt("quantity");
+                int size = product.getInt("size");
+                int quantity = product.getInt("quantity");
+                int alcohol = product.getInt("alcohol");
 
                 Product p = new Product();
                 p.setName(productname);
                 p.setPrice(price);
                 p.setSize(size);
+                p.setQuantity(quantity);
+                p.setAlcohol_percentage(alcohol);
 
                 //,string2,string3,string4
 

@@ -11,10 +11,11 @@ import android.widget.TextView;
 import com.example.marni.registerapp.Presentation.Domain.Order;
 import com.example.marni.registerapp.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * Created by Wilco on 9-5-2017.
+ * Created by Erin :) on 9-5-2017.
  */
 
 public class CostumAdapter extends BaseAdapter{
@@ -68,12 +69,17 @@ public class CostumAdapter extends BaseAdapter{
         }
         Order order = (Order) mOrderArrayList.get(position);
 
+        DecimalFormat formatter = new DecimalFormat("#0.00");
 
-        viewHolder.textViewId.setText(order.getOrderId()+"");
+        viewHolder.textViewId.setText("Order: "+order.getOrderId());
         viewHolder.textViewTimestamp.setText(order.getDateTime());
-        viewHolder.textViewTotal_price.setText(order.getTotalPrice()+"");
-        viewHolder.textViewStatus.setText(order.getStatus());
-        viewHolder.textViewCustomer_id.setText(order.getCustomerid()+"");
+        viewHolder.textViewTotal_price.setText("€ "+formatter.format(order.getTotalPrice()));
+        if(order.getStatus() == 1) {
+            viewHolder.textViewStatus.setText("Paid");
+        } else {
+            viewHolder.textViewStatus.setText("Open");
+        }
+        viewHolder.textViewCustomer_id.setText("Customer: "+order.getCustomerid());
 
         return convertView;
     }

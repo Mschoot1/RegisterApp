@@ -12,6 +12,7 @@ import com.example.marni.registerapp.R;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -54,7 +55,10 @@ public class ProductsListViewAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.textViewName = (TextView) convertView.findViewById(R.id.textview_product);
             viewHolder.textViewPrice = (TextView) convertView.findViewById(R.id.textview_price);
-            viewHolder.textViewSize = (TextView) convertView.findViewById(R.id.textview_quantity);
+            viewHolder.textViewQuantity = (TextView) convertView.findViewById(R.id.textview_quantity);
+            viewHolder.textViewSize = (TextView) convertView.findViewById(R.id.textview_size);
+            viewHolder.textViewAlcohol = (TextView) convertView.findViewById(R.id.textview_alcohol);
+
 
             convertView.setTag(viewHolder);
         } else {
@@ -63,9 +67,17 @@ public class ProductsListViewAdapter extends BaseAdapter {
 
         Product product = products.get(position);
 
+        DecimalFormat formatter = new DecimalFormat("#0");
+
         viewHolder.textViewName.setText(product.getName());
         viewHolder.textViewPrice.setText("€ "+product.getPrice());
-        viewHolder.textViewSize.setText(""+product.getSize());
+        viewHolder.textViewSize.setText(product.getSize()+" ML");
+        viewHolder.textViewQuantity.setText(product.getQuantity()+"");
+        if(product.getAlcohol_percentage()==0) {
+            viewHolder.textViewAlcohol.setText("");
+        }else{
+            viewHolder.textViewAlcohol.setText(formatter.format(product.getAlcohol_percentage()) + "% Alc.");
+        }
 
         return convertView;
 
@@ -75,5 +87,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
         TextView textViewName;
         TextView textViewPrice;
         TextView textViewSize;
+        TextView textViewQuantity;
+        TextView textViewAlcohol;
     }
 }

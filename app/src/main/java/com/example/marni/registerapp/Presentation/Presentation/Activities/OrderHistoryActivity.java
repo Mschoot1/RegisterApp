@@ -25,6 +25,7 @@ import java.util.HashMap;
 public class OrderHistoryActivity extends AppCompatActivity implements LoyaltyCardReader.AccountCallback,
         HttpHandler.OnRandomOrderAvailable,AdapterView.OnItemClickListener {
 
+
     private final String TAG = getClass().getSimpleName();
     public static final String ORDER = "ORDER";
     ListView mListViewOrders;
