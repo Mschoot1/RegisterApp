@@ -61,7 +61,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     }
 
     public void getDeviceInformation(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/customer/device"};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/customer/284/device/"};
 
         DeviceInformationGetTask g = new DeviceInformationGetTask(this);
         g.execute(urls);
