@@ -10,4 +10,5 @@
     <color name="buttonColor">#90A4AE</color>
     <color name="productName">#000</color>
     <color name="colorPrimaryLight">#F48FB1</color>
+    <color name="backgroundcategoryheaders">#BDBDBD</color>
 </resources>

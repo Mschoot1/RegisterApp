@@ -1,11 +1,14 @@
 package com.example.marni.registerapp.Presentation.AsyncKlassen;
 
 /**
- * Created by Wallaard on 17-5-2017.
+ * Created by Wallaard on 16-5-2017.
  */
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.marni.registerapp.Presentation.Domain.Customer;
+import com.example.marni.registerapp.Presentation.Domain.Deviceinformation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +26,8 @@ import java.net.URLConnection;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.marni.registerapp.Presentation.Domain.Balance;
+import com.example.marni.registerapp.Presentation.Domain.Deviceinformation;
+import com.example.marni.registerapp.Presentation.Domain.Product;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,32 +43,35 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * Created by MarcdenUil on 9-5-2017.
+ * Created by Wallaard on 16-5-2017.
  */
 
-public class BalanceGetTask extends AsyncTask<String, Void, String> {
-
-    private OnBalanceAvailable listener = null;
-
+public class AccountGetTask extends AsyncTask<String, Void, String> {
     private final String TAG = getClass().getSimpleName();
+    private OnAccountAvailable listener = null;
 
-    public BalanceGetTask(OnBalanceAvailable listener){
+    public AccountGetTask(OnAccountAvailable listener) {
         this.listener = listener;
     }
 
+    public interface OnAccountAvailable{
+        void OnAccountAvailable(Customer customer);
+    }
+
+    @Override
     protected String doInBackground(String... params) {
 
         InputStream inputStream = null;
         int responsCode = -1;
         // De URL die we via de .execute() meegeleverd krijgen
-        String balanceUrl = params[0];
+        String orderUrl = params[0];
         // Het resultaat dat we gaan retourneren
         String response = "";
 
-        Log.i(TAG, "doInBackground - " + balanceUrl);
+        Log.i(TAG, "doInBackground - " + orderUrl);
         try {
             // Maak een URL object
-            URL url = new URL(balanceUrl);
+            URL url = new URL(orderUrl);
             // Open een connection op de URL
             URLConnection urlConnection = url.openConnection();
 
@@ -94,50 +101,35 @@ public class BalanceGetTask extends AsyncTask<String, Void, String> {
             Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e(TAG, "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e("TAG", "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         }
-//        response = "[{\"balance\":231}]";
-
         return response;
     }
 
-    protected void onPostExecute(String response) {
+    @Override
+    protected void onPostExecute(String response){
+        JSONObject jsonObject;
+        JSONArray jsonArray;
+        try{
+            jsonObject = new JSONObject(response);
+            jsonArray = jsonObject.getJSONArray("results");
 
-        // Check of er een response is
-        if(response == null || response == "") {
-            Log.e(TAG, "onPostExecute kreeg een lege response!");
-            return;
-        }
+            for (int i = 0; i < jsonArray.length();i++){
+                JSONObject email = jsonArray.getJSONObject(i);
 
-        // Het resultaat is in ons geval een stuk tekst in JSON formaat.
-        // Daar moeten we de info die we willen tonen uit filteren (parsen).
-        // Dat kan met een JSONObject.
-        JSONArray balance_array;
+                String email1 = email.getString("email");
+                int balance = email.getInt("balance");
 
-        try {
-            // Top level json object
-            balance_array = new JSONArray(response);
+                Customer c = new Customer();
+                c.setBalance(balance);
+                c.setEmail(email1);
 
-            // Get all products and start looping
-            for (int idx = 0; idx < balance_array.length(); idx++) {
-                // array level objects and get user
-                JSONObject balance_object = balance_array.getJSONObject(idx);
-
-                Double balance = balance_object.getDouble("balance");
-
-                // Create new Balance object
-                Balance b = new Balance(balance);
-
-                Log.d(TAG, "onPostExecute: " + " balance: " + balance);
-                //
-                // call back with new balance data
-                //
-                listener.onBalanceAvailable(b);
+                listener.OnAccountAvailable(c);
 
             }
-        } catch( JSONException ex) {
-            Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -167,10 +159,6 @@ public class BalanceGetTask extends AsyncTask<String, Void, String> {
         }
 
         return sb.toString();
-    }
-
-    public interface OnBalanceAvailable {
-        void onBalanceAvailable(Balance balance);
     }
 }
 

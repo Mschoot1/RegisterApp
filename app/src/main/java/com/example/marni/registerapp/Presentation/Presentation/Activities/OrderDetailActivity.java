@@ -9,12 +9,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-//import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-import com.example.marni.registerapp.Presentation.AsyncKlassen.BalanceGetTask;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
-import com.example.marni.registerapp.Presentation.AsyncKlassen.EmailGetTask;
 import com.example.marni.registerapp.Presentation.Domain.Balance;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
@@ -32,7 +31,7 @@ import static java.lang.String.valueOf;
  */
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
-        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, EmailGetTask.OnEmailAvailable, BalanceGetTask.OnBalanceAvailable {
+        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, AccountGetTask.OnAccountAvailable {
     private final String TAG = getClass().getSimpleName();
     private ProductsListViewAdapter productAdapter;
     private ArrayList<Product> productsList = new ArrayList<>();
@@ -46,7 +45,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private double current_balance,d;
     private String orderid;
     DecimalFormat formatter = new DecimalFormat("#0.00");
-    //private StickyListHeadersListView stickyList;
+    private StickyListHeadersListView stickyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,35 +98,25 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         getEmail();
         getProducts(orderid);
 
-        email = (TextView) findViewById(R.id.customer_email);
+//        email = (TextView) findViewById(R.id.customer_email);
         textViewTotal = (TextView) findViewById(R.id.totalprice);
-        productListView = (ListView) findViewById(R.id.productdetail_listview);
-        productAdapter = new ProductsListViewAdapter(this, getLayoutInflater(), productsList);
-        productListView.setAdapter(productAdapter);
+        //productListView = (ListView) findViewById(R.id.productdetail_listview);
+        //productListView.setAdapter(productAdapter);
 
-        //stickyList = (StickyListHeadersListView) findViewById(R.id.productdetail_listview);
-        //stickyList.setAreHeadersSticky(true);
-    }
-
-    //GET methoden van balance
-    @Override
-    public void onBalanceAvailable(Balance balance) {
-        current_balance = balance.getBalance();
-    }
-
-    public void getBalance(){
-        BalanceGetTask balancetask = new BalanceGetTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/balance/284"};
-        balancetask.execute(urls3);
+        stickyList = (StickyListHeadersListView) findViewById(R.id.productdetail_listview);
+        stickyList.setAreHeadersSticky(true);
     }
 
     //GET klassen product hieronder
     public void OnAvailable(Product product) {
         productsList.add(product);
-        productAdapter.notifyDataSetChanged();
         getPriceTotal(product);
-        //stickyList.setAdapter(productAdapter);
-        textViewTotal.setText("Total: €" + formatter.format(priceTotal));
+
+        productAdapter = new ProductsListViewAdapter(this, getLayoutInflater(), productsList);
+        stickyList.setAdapter(productAdapter);
+        productAdapter.notifyDataSetChanged();
+
+        textViewTotal.setText("€ " + formatter.format(priceTotal));
 
     }
 
@@ -145,15 +134,24 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         return priceTotal;
     }
 
-    public void OnEmailAvailable (Customer customer){
-        email.setText("Customer: "+customer.getEmail());
+
+    ///ONACCOUNT AVAILABLE DINGEN
+    public void OnAccountAvailable (Customer customer){
+        //email.setText(""+customer.getEmail());
+        current_balance = customer.getBalance();
     }
 
     public void getEmail(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/email/264"};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
 
-        EmailGetTask e = new EmailGetTask(this);
+        AccountGetTask e = new AccountGetTask(this);
         e.execute(urls);
+    }
+
+    public void getBalance(){
+        AccountGetTask accounttask = new AccountGetTask(this);
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
+        accounttask.execute(urls3);
     }
 
     //PUT methoden hieronder

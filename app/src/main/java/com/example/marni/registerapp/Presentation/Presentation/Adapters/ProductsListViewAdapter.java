@@ -15,11 +15,13 @@ import org.w3c.dom.Text;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+
 /**
  * Created by Wallaard on 9-5-2017.
  */
 
-public class ProductsListViewAdapter extends BaseAdapter {
+public class ProductsListViewAdapter extends BaseAdapter implements StickyListHeadersAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<Product> products;
@@ -81,6 +83,35 @@ public class ProductsListViewAdapter extends BaseAdapter {
 
         return convertView;
 
+    }
+
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            convertView = layoutInflater.inflate(R.layout.listview_sectionheader_products, parent, false);
+            holder.textViewCategoryTitle = (TextView) convertView.findViewById(R.id.listViewOrders_categoryname);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+
+        Product product = products.get(position);
+
+        holder.textViewCategoryTitle.setText(product.getCategory());
+
+        return convertView;
+    }
+
+    private class HeaderViewHolder {
+        TextView textViewCategoryTitle;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        return products.get(position).getCategoryId();
     }
 
     private static class ViewHolder{

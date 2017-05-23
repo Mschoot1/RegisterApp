@@ -8,19 +8,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/informationcustomer">
+        android:id="@+id/informationcustomer"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/customer_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Customer:"
-            android:textSize="20sp"
-            android:textColor="@color/black_text"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp" />
+        <!--<TextView-->
+            <!--android:id="@+id/customer_email"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginTop="2dp"-->
+            <!--android:text="Customer:"-->
+            <!--android:textColor="@color/black_text"-->
+            <!--android:textSize="20sp" />-->
 
-</LinearLayout>
+    </LinearLayout>
 
     <!--<RelativeLayout-->
         <!--android:id="@+id/text_linearview"-->
@@ -54,47 +55,48 @@
             <!--android:layout_alignParentEnd="true" />-->
     <!--</RelativeLayout>-->
 
-    <!--<se.emilsjolander.stickylistheaders.StickyListHeadersListView-->
-        <!--android:id="@+id/productdetail_listview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@+id/totallayout"-->
-        <!--android:layout_below="@+id/informationcustomer"-->
-        <!--android:clipToPadding="false"-->
-        <!--android:dividerHeight="0dp"-->
-        <!--android:drawSelectorOnTop="true"-->
-        <!--android:fastScrollEnabled="true"-->
-        <!--android:overScrollMode="never"-->
-        <!--android:padding="0dp"-->
-        <!--android:scrollbarStyle="outsideOverlay" />-->
-
-    <ListView
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/productdetail_listview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/totallayout"
         android:layout_below="@+id/informationcustomer"
-        ></ListView>
+        android:clipToPadding="false"
+        android:dividerHeight="0dp"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="true"
+        android:overScrollMode="never"
+        android:padding="0dp"
+        android:scrollbarStyle="outsideOverlay" />
 
-    <LinearLayout
+    <!--<ListView-->
+        <!--android:id="@+id/productdetail_listview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/totallayout"-->
+        <!--android:layout_below="@+id/informationcustomer"-->
+        <!--&gt;</ListView>-->
+
+    <RelativeLayout
         android:background="@color/colorGrey"
         android:id="@+id/totallayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttons_linearlayout"
-        android:orientation="horizontal">
+        android:layout_above="@+id/buttons_linearlayout">
 
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/totalprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@android:color/white"
             android:text="Total"
-            android:textSize="22sp" />
-
-    </LinearLayout>
+            android:textSize="22sp"
+            android:layout_marginEnd="7dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <LinearLayout
         android:background="@color/colorGrey"

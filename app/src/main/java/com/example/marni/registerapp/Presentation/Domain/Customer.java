@@ -6,9 +6,14 @@ package com.example.marni.registerapp.Presentation.Domain;
 
 public class Customer {
     private String email;
+    private int balance;
 
-    public Customer(String email) {
-        this.email = email;
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     public String getEmail() {
