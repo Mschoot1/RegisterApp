@@ -75,8 +75,11 @@ public class OrderHistoryActivity extends AppCompatActivity implements LoyaltyCa
 
     @Override
     public void onRandomOrderAvailable(Order order) {
-        mOrderArrayList.add(order);
-        mCostumAdapter.notifyDataSetChanged();
+
+        if(order.getStatus() != 0) {
+            mOrderArrayList.add(order);
+            mCostumAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
