@@ -60,7 +60,7 @@ public class CostumAdapter extends BaseAdapter{
             viewHolder.textViewId = (TextView) convertView.findViewById(R.id.textViewId);
             viewHolder.textViewTimestamp = (TextView) convertView.findViewById(R.id.textViewTimestamp);
             viewHolder.textViewTotal_price = (TextView) convertView.findViewById(R.id.textViewTotal_price);
-            viewHolder.textViewStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
+            //viewHolder.textViewStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
             viewHolder.textViewCustomer_id = (TextView) convertView.findViewById(R.id.textViewCustomer_id);
 
             convertView.setTag(viewHolder);
@@ -74,11 +74,13 @@ public class CostumAdapter extends BaseAdapter{
         viewHolder.textViewId.setText("Order: "+order.getOrderId());
         viewHolder.textViewTimestamp.setText(order.getDateTime());
         viewHolder.textViewTotal_price.setText("€ "+formatter.format(order.getTotalPrice()));
-        if(order.getStatus() == 1) {
-            viewHolder.textViewStatus.setText("Paid");
-        } else {
-            viewHolder.textViewStatus.setText("Open");
-        }
+
+        //
+//        if(order.getStatus() == 1) {
+//            viewHolder.textViewStatus.setText("Paid");
+//        } else {
+//            viewHolder.textViewStatus.setText("Open");
+//        }
         viewHolder.textViewCustomer_id.setText("Customer: "+order.getCustomerid());
 
         return convertView;
