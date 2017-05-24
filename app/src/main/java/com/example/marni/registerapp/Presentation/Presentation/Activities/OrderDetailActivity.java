@@ -32,10 +32,11 @@ import static java.lang.String.valueOf;
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
         ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, AccountGetTask.OnAccountAvailable {
+
     private final String TAG = getClass().getSimpleName();
+
     private ProductsListViewAdapter productAdapter;
     private ArrayList<Product> productsList = new ArrayList<>();
-    private ListView productListView;
     private TextView textViewTotal;
     private double priceTotal;
     private Button cancelbutton;
@@ -52,10 +53,8 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         setContentView(R.layout.activity_order_details);
         getBalance();
 
-        //Bundle bundle = getIntent().getExtras();
-        //        orderid = bundle.getString("ACCOUNT");
-
-        orderid = "304";
+        Bundle bundle = getIntent().getExtras();
+        orderid = bundle.getString("ACCOUNT");
 
         cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +69,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         confirmbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v2) {
-                //String totalstring = textViewTotal.getText().toString();
                 Log.i(TAG,current_balance + " huidig balans");
                 Log.i(TAG,priceTotal + " totale prijs");
                 if(priceTotal < current_balance){
@@ -97,8 +95,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         getProducts(orderid);
 
         textViewTotal = (TextView) findViewById(R.id.totalprice);
-        //productListView = (ListView) findViewById(R.id.productdetail_listview);
-        //productListView.setAdapter(productAdapter);
 
         stickyList = (StickyListHeadersListView) findViewById(R.id.productdetail_listview);
         stickyList.setAreHeadersSticky(true);
@@ -118,7 +114,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     }
 
     public void getProducts(String orderid){
-        //String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/294"};
         String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
 
         ProductGenerator getProduct = new ProductGenerator(this);
@@ -134,7 +129,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
     ///ONACCOUNT AVAILABLE DINGEN
     public void OnAccountAvailable (Customer customer){
-        //email.setText(""+customer.getEmail());
         current_balance = customer.getBalance();
     }
 
