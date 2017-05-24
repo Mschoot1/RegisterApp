@@ -33,18 +33,8 @@ public class LogInActivity extends AppCompatActivity implements LoginTask.Succes
                 //EditText ed = (EditText) findViewById(R.id.editTextEmailaddress);
                 //EditText ed2 = (EditText) findViewById(R.id.editTextPassword);
 
-                if(isValidEmail(editTextEmail.getText().toString()))
-                {
-                    login("https://mysql-test-p4.herokuapp.com/login");
-                } else {
-                    Toast.makeText(LogInActivity.this,"Invalid email adress",Toast.LENGTH_SHORT).show();
-                }
+                login("https://mysql-test-p4.herokuapp.com/loginRegister");
 
-                //if(ed2_text.isEmpty() || ed2_text.length() == 0 || ed2_text.equals("") || ed2_text == null)
-                if(isValidEmail(editTextPassword.getText().toString()))
-                {
-                    editTextPassword.setError("Enter password");
-                }
             }
         });
     }

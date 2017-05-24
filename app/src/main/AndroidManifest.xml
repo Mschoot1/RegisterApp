@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Presentation.Presentation.Activities.OrderHistoryActivity">
+            android:name=".Presentation.Presentation.Activities.LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,6 +31,7 @@
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.OrderHistoryDetailActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.OrderDetailActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.OrderHistoryActivity"/>
 
     </application>
 </manifest>
