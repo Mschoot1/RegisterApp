@@ -7,7 +7,7 @@ package com.example.marni.registerapp.Presentation.AsyncKlassen;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.marni.registerapp.Presentation.Domain.Order;
+import com.example.marni.registerapp.Presentation.Domain.Register;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,11 +25,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class HttpHandler extends AsyncTask<String, Void, String> {
+public class RegisterGetTask extends AsyncTask<String, Void, String> {
 
     private final String TAG = getClass().getSimpleName();
 
-    public HttpHandler(OnRandomOrderAvailable listener) {
+    public RegisterGetTask(OnRandomRegisterAvailable listener) {
         this.listener = listener;
     }
 
@@ -113,7 +113,7 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
         return sb.toString();
     }
 
-    private OnRandomOrderAvailable listener = null;
+    private OnRandomRegisterAvailable listener = null;
 
     @Override
     protected void onPostExecute(String response) {
@@ -139,24 +139,19 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
             // Top level json object
             jsonArray = jsonObject.getJSONArray("results");
 
-            // Get all orders and start looping
             for(int idx = 0; idx < jsonArray.length(); idx++) {
-                JSONObject order = jsonArray.getJSONObject(idx);
+                JSONObject register = jsonArray.getJSONObject(idx);
 
-                    int id = order.getInt("id");
-                    int status = order.getInt("status");
-                    String timestamp = order.getString("timestamp");
-                    double price_total = order.getDouble("price_total");
-                    int customer_id = order.getInt("customer_id");
-                    Log.i(TAG, id + " " + status + " " + timestamp + " " + price_total + " " + customer_id);
-
+                    int id = register.getInt("order_id");
+                    String timestamp = register.getString("timestamp");
+                    double price_total = register.getDouble("price_total");
+                    int customer_id = register.getInt("customer_id");
                     String timestamp2 = getFormattedDate(timestamp);
 
-                    Order o = new Order(id,status,timestamp2,price_total,customer_id);
+                    Register o = new Register(id,timestamp2,price_total,customer_id);
 
-                    listener.onRandomOrderAvailable(o);
+                    listener.onRandomRegisterAvailable(o);
                 }
-                // array level objects and get orders
 
         } catch( JSONException ex) {
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
@@ -170,14 +165,14 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
         SimpleDateFormat sdf;
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date parsedDate = sdf.parse(s);
-        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String formattedDate = sdf.format(parsedDate);
 
         return formattedDate;
     }
 
-    public interface OnRandomOrderAvailable {
-        void onRandomOrderAvailable(Order order);
+    public interface OnRandomRegisterAvailable {
+        void onRandomRegisterAvailable(Register register);
     }
 
 }

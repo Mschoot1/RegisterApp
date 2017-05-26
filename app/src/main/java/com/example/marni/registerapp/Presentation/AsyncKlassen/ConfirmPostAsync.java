@@ -61,6 +61,8 @@ public class ConfirmPostAsync extends AsyncTask<String, Void, Boolean> {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("credit", params[1]);
             jsonParam.put("customer_id",params[2]);
+            jsonParam.put("order_id",params[3]);
+            jsonParam.put("register_id",params[4]);
 
             Log.i(TAG, String.valueOf(jsonParam));
 

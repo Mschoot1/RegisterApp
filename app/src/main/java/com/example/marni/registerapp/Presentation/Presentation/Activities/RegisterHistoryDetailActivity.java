@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.example.marni.registerapp.Presentation.Domain.Order;
+import com.example.marni.registerapp.Presentation.Domain.Register;
 import com.example.marni.registerapp.R;
 
 /**
  * Created by Wallaard on 17-5-2017.
  */
 
-public class OrderHistoryDetailActivity extends AppCompatActivity {
+public class RegisterHistoryDetailActivity extends AppCompatActivity {
     private TextView customeridView,idView,statusView,timestampView,totalpriceView;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +26,11 @@ public class OrderHistoryDetailActivity extends AppCompatActivity {
         totalpriceView = (TextView)findViewById(R.id.history_totalprice);
 
         Intent intent = getIntent();
-        Order order = (Order) intent.getSerializableExtra("ORDER");
+        Register register = (Register) intent.getSerializableExtra("REGISTER");
 
-        idView.setText(String.valueOf(order.getOrderId()));
-        if(order.getStatus() == 1) {
-            statusView.setText("Paid");
-        } else {
-            statusView.setText("Open");
-        }
-        customeridView.setText(String.valueOf(order.getCustomerid()));
-        timestampView.setText(order.getDateTime());
-        totalpriceView.setText(String.valueOf(order.getTotalPrice()));
+        idView.setText(String.valueOf(register.getOrderId()));
+        customeridView.setText(String.valueOf(register.getCustomerId()));
+        timestampView.setText(register.getDateTime());
+        totalpriceView.setText(String.valueOf(register.getTotalPrice()));
     }
 }

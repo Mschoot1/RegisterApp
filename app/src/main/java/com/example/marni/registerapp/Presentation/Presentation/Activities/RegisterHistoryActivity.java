@@ -11,26 +11,23 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductGenerator;
-import com.example.marni.registerapp.Presentation.Domain.Product;
-import com.example.marni.registerapp.Presentation.Presentation.Adapters.CostumAdapter;
-import com.example.marni.registerapp.Presentation.AsyncKlassen.HttpHandler;
-import com.example.marni.registerapp.Presentation.Domain.Order;
+import com.example.marni.registerapp.Presentation.Domain.Register;
+import com.example.marni.registerapp.Presentation.Presentation.Adapters.RegisterHistoryAdapter;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.RegisterGetTask;
 import com.example.marni.registerapp.Presentation.cardreader.LoyaltyCardReader;
 import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class OrderHistoryActivity extends AppCompatActivity implements LoyaltyCardReader.AccountCallback,
-        HttpHandler.OnRandomOrderAvailable,AdapterView.OnItemClickListener {
+public class RegisterHistoryActivity extends AppCompatActivity implements LoyaltyCardReader.AccountCallback,
+        RegisterGetTask.OnRandomRegisterAvailable,AdapterView.OnItemClickListener {
 
 
     private final String TAG = getClass().getSimpleName();
-    public static final String ORDER = "ORDER";
-    ListView mListViewOrders;
-    CostumAdapter mCostumAdapter;
-    private ArrayList<Order> mOrderArrayList = new ArrayList<>();
+    public static final String REGISTER = "REGISTER";
+    ListView mListViewRegisters;
+    RegisterHistoryAdapter mRegisterHistoryAdapter;
+    private ArrayList<Register> mRegisterArrayList = new ArrayList<>();
 
     public static int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     public LoyaltyCardReader mLoyaltyCardReader;
@@ -46,18 +43,18 @@ public class OrderHistoryActivity extends AppCompatActivity implements LoyaltyCa
         mLoyaltyCardReader = new LoyaltyCardReader(this);
         enableReaderMode();
 
-        mListViewOrders = (ListView) findViewById(R.id.listViewOrders);
+        mListViewRegisters = (ListView) findViewById(R.id.listViewOrders);
 
-        mCostumAdapter = new CostumAdapter(this, getLayoutInflater(), mOrderArrayList);
-        mListViewOrders.setAdapter(mCostumAdapter);
-        mListViewOrders.setOnItemClickListener(this);
+        mRegisterHistoryAdapter = new RegisterHistoryAdapter(this, getLayoutInflater(), mRegisterArrayList);
+        mListViewRegisters.setAdapter(mRegisterHistoryAdapter);
+        mListViewRegisters.setOnItemClickListener(this);
 
     }
 
     public void getData() {
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/orders/284"};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/register/284"};
 
-        HttpHandler g = new HttpHandler(this);
+        RegisterGetTask g = new RegisterGetTask(this);
         g.execute(urls);
     }
 
@@ -66,20 +63,18 @@ public class OrderHistoryActivity extends AppCompatActivity implements LoyaltyCa
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.e("item",position+"");
 
-        Order order = mOrderArrayList.get(position);
+        Register register = mRegisterArrayList.get(position);
 
-        Intent intent = new Intent(getApplicationContext(), OrderHistoryDetailActivity.class);
-        intent.putExtra(ORDER, order);
+        Intent intent = new Intent(getApplicationContext(), RegisterHistoryDetailActivity.class);
+        intent.putExtra(REGISTER, register);
         startActivity(intent);
     }
 
     @Override
-    public void onRandomOrderAvailable(Order order) {
+    public void onRandomRegisterAvailable(Register register) {
 
-        if(order.getStatus() != 0) {
-            mOrderArrayList.add(order);
-            mCostumAdapter.notifyDataSetChanged();
-        }
+        mRegisterArrayList.add(register);
+        mRegisterHistoryAdapter.notifyDataSetChanged();
     }
 
     @Override

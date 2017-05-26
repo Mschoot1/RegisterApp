@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -14,7 +13,6 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
-import com.example.marni.registerapp.Presentation.Domain.Balance;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.Presentation.Domain.Product;
@@ -54,13 +52,13 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         getBalance();
 
         Bundle bundle = getIntent().getExtras();
-        orderid = bundle.getString("ACCOUNT");
+        orderid = "394";
 
         cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OrderDetailActivity.this,OrderHistoryActivity.class);
+                Intent intent = new Intent(OrderDetailActivity.this,RegisterHistoryActivity.class);
                 startActivity(intent);
             }
         });
@@ -148,7 +146,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
         String[] urls2 = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), "284"
+                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), "284", orderid, "284"
         };
         confirmPostAsync.execute(urls2);
     }
@@ -158,7 +156,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         Log.i(TAG,succesful.toString());
         if(succesful){
             Log.i(TAG,"Gelukt");
-            Intent intent = new Intent(this, OrderHistoryActivity.class);
+            Intent intent = new Intent(this, RegisterHistoryActivity.class);
             startActivity(intent );
         } else {
             Log.i(TAG,"Mislukt");

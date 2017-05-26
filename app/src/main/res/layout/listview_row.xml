@@ -22,16 +22,28 @@
             android:paddingBottom="20dp"
             android:paddingTop="20dp">
 
-                <TextView
-                    android:textColor="@color/black_text"
-                    android:id="@+id/textViewCustomer_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/paddingProduct"
-                    android:text="customerid"
-                    android:textSize="@dimen/textsizeProduct"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignStart="@+id/textViewStatus" />
+            <TextView
+                android:textColor="@color/black_text"
+                android:id="@+id/textViewCustomer_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/paddingProduct"
+                android:text="customerid"
+                android:textSize="@dimen/textsizeProduct"
+                android:layout_below="@+id/textViewId"
+                android:layout_alignStart="@+id/textViewId" />
+
+            <TextView
+                android:textColor="@color/black_text"
+                android:id="@+id/textViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/paddingProduct"
+                android:text="orderid"
+                android:textSize="@dimen/textsizeProduct"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="22dp" />
 
             <TextView
                 android:textColor="@color/black_text"
@@ -46,17 +58,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:textColor="@color/black_text"
-                    android:id="@+id/textViewId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/paddingProduct"
-                    android:text="orderid"
-                    android:textSize="@dimen/textsizeProduct"
-                    android:layout_below="@+id/textViewCustomer_id"
-                    android:layout_alignStart="@+id/textViewCustomer_id" />
-
             <TextView
                 android:textColor="@color/black_text"
                 android:id="@+id/textViewTotal_price"
@@ -65,21 +66,21 @@
                 android:padding="@dimen/paddingProduct"
                 android:text="totaleprijs"
                 android:textSize="@dimen/textsizeProduct"
-                android:layout_below="@+id/textViewCustomer_id"
+                android:layout_below="@+id/textViewId"
                 android:layout_alignStart="@+id/textViewTimestamp" />
 
-                <!--<TextView-->
-                    <!--android:textColor="@color/black_text"-->
-                    <!--android:id="@+id/textViewStatus"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="13dp"-->
-                    <!--android:padding="@dimen/paddingProduct"-->
-                    <!--android:text="status"-->
-                    <!--android:textSize="@dimen/textsizeProduct"-->
-                    <!--android:layout_marginStart="15dp"-->
-                    <!--android:layout_below="@+id/textViewTotal_price"-->
-                    <!--android:layout_alignParentStart="true" />-->
+            <!--<TextView-->
+                <!--android:textColor="@color/black_text"-->
+                <!--android:id="@+id/textViewStatus"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="13dp"-->
+                <!--android:padding="@dimen/paddingProduct"-->
+                <!--android:text="status"-->
+                <!--android:textSize="@dimen/textsizeProduct"-->
+                <!--android:layout_marginStart="15dp"-->
+                <!--android:layout_below="@+id/textViewTotal_price"-->
+                <!--android:layout_alignParentStart="true" />-->
 
         </RelativeLayout>
 

@@ -29,9 +29,9 @@
 
         <activity android:name=".Presentation.Presentation.Activities.EditProductActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.OrderHistoryDetailActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryDetailActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.OrderDetailActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.OrderHistoryActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryActivity"/>
 
     </application>
 </manifest>
