@@ -4,6 +4,7 @@ package com.example.marni.registerapp.Presentation.AsyncKlassen;
  * Created by Wallaard on 16-5-2017.
  */
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -25,6 +26,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+
+import com.example.marni.registerapp.Presentation.Presentation.Activities.LogInActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,10 +50,20 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
 
     private SuccessListener listener;
 
-    public LoginTask(SuccessListener listener) {
+    private ProgressDialog dialog;
 
-        this.listener = listener;
+    public LoginTask(LogInActivity activity) {
+
+        this.listener = activity;
+        dialog = new ProgressDialog(activity);
     }
+
+    @Override
+    protected void onPreExecute() {
+        dialog.setMessage("Authenticating. Please wait..");
+        dialog.show();
+    }
+
 
     @Override
     protected Boolean doInBackground(String... params) {
@@ -104,7 +117,9 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
     }
 
     protected void onPostExecute(Boolean response) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         listener.successful(response);
     }
 

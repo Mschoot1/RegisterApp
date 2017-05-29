@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/paddingProduct"
-                android:text="customerid"
+                android:text="@string/customerid"
                 android:textSize="@dimen/textsizeProduct"
                 android:layout_below="@+id/textViewId"
                 android:layout_alignStart="@+id/textViewId" />
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/paddingProduct"
-                android:text="orderid"
+                android:text="@string/orderid"
                 android:textSize="@dimen/textsizeProduct"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
@@ -51,9 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
-                android:layout_marginRight="13dp"
                 android:padding="@dimen/paddingProduct"
-                android:text="timestamp"
+                android:text="@string/timestamp"
                 android:textSize="@dimen/textsizeProduct"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
@@ -64,66 +63,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/paddingProduct"
-                android:text="totaleprijs"
+                android:text="@string/totaleprijs"
                 android:textSize="@dimen/textsizeProduct"
                 android:layout_below="@+id/textViewId"
                 android:layout_alignStart="@+id/textViewTimestamp" />
 
-            <!--<TextView-->
-                <!--android:textColor="@color/black_text"-->
-                <!--android:id="@+id/textViewStatus"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="13dp"-->
-                <!--android:padding="@dimen/paddingProduct"-->
-                <!--android:text="status"-->
-                <!--android:textSize="@dimen/textsizeProduct"-->
-                <!--android:layout_marginStart="15dp"-->
-                <!--android:layout_below="@+id/textViewTotal_price"-->
-                <!--android:layout_alignParentStart="true" />-->
-
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewId"-->
-        <!--android:layout_width="160dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewTimestamp"-->
-        <!--android:layout_width="160dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/textViewId"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewTotal_price"-->
-        <!--android:layout_width="160dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_toRightOf="@+id/textViewId" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewStatus"-->
-        <!--android:layout_width="160dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/textViewTotal_price"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_toRightOf="@id/textViewTimestamp" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewCustomer_id"-->
-        <!--android:layout_width="160dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/textViewTimestamp"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp"/>-->
 
 </RelativeLayout>

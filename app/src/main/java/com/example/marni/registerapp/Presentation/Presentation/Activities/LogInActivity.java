@@ -15,7 +15,7 @@ import com.example.marni.registerapp.Presentation.AsyncKlassen.LoginTask;
 import com.example.marni.registerapp.R;
 
 public class LogInActivity extends AppCompatActivity implements LoginTask.SuccessListener {
-    private EditText editTextEmail,editTextPassword;
+    private EditText editTextEmail, editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +29,7 @@ public class LogInActivity extends AppCompatActivity implements LoginTask.Succes
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
             public void onClick(View V) {
-                //EditText ed = (EditText) findViewById(R.id.editTextEmailaddress);
-                //EditText ed2 = (EditText) findViewById(R.id.editTextPassword);
-
                 login("https://mysql-test-p4.herokuapp.com/loginRegister");
-
             }
         });
     }
