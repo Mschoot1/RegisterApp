@@ -13,7 +13,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.GetCustomerfromOrderTask;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
+import com.example.marni.registerapp.Presentation.Domain.Order;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductGenerator;
@@ -29,7 +31,7 @@ import static java.lang.String.valueOf;
  */
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
-        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, AccountGetTask.OnAccountAvailable {
+        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, AccountGetTask.OnAccountAvailable, GetCustomerfromOrderTask.OnCustomerIdAvailable {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -42,6 +44,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private Button deviceinfobutton;
     private double current_balance, d;
     private String orderid;
+    private int customerId;
     DecimalFormat formatter = new DecimalFormat("#0.00");
     private StickyListHeadersListView stickyList;
 
@@ -52,7 +55,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         getBalance();
 
         Bundle bundle = getIntent().getExtras();
-        orderid = "394";
+        orderid = bundle.getString("ACCOUNT");
 
         cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +94,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         });
 
         getProducts(orderid);
+        getCustomerId();
 
         textViewTotal = (TextView) findViewById(R.id.totalprice);
 
@@ -125,7 +129,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     }
 
 
-    ///ONACCOUNT AVAILABLE DINGEN
+    ///ONACCOUNT AVAILABLE
     public void OnAccountAvailable (Customer customer){
         current_balance = customer.getBalance();
     }
@@ -134,6 +138,12 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         AccountGetTask accounttask = new AccountGetTask(this);
         String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
         accounttask.execute(urls3);
+    }
+
+    public void getCustomerId(){
+        GetCustomerfromOrderTask customer = new GetCustomerfromOrderTask(this);
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid};
+        customer.execute(urls3);
     }
 
     //PUT methoden hieronder
@@ -146,7 +156,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
         String[] urls2 = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), "284", orderid, "284"
+                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), Integer.toString(customerId), orderid, "284"
         };
         confirmPostAsync.execute(urls2);
     }
@@ -161,5 +171,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         } else {
             Log.i(TAG,"Mislukt");
         }
+    }
+
+    @Override
+    public void onCustomerIdAvailable(Order order) {
+        customerId = order.getCustomerid();
     }
 }
