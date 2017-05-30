@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:textColor="@color/black_text">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Device information:"
-        android:textSize="20dp" />
+        android:layout_marginLeft="2dp"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/black_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Customer:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Customer: "/>
 
         <TextView
+            android:textColor="@color/black_text"
             android:id="@+id/device_customer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -34,18 +35,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Hardware:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Hardware: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_hardware"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -57,16 +58,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Type:"/>
+            android:textColor="@color/colordeviceinfo"
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Type: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -75,18 +77,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Model:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Model: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -96,18 +98,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Brand:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Brand: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_brand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -117,18 +119,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Device:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Device: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -137,18 +139,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Manufacturer:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Manufacturer: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_manufacturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -157,18 +159,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="User:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="User: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -177,18 +179,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Serial:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Serial: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_serial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -197,18 +199,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Host:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Host: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_host"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -217,18 +219,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="ID:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="ID: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -237,18 +239,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Bootloader:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Bootloader: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_bootloader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -257,18 +259,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Board:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Board: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
     </LinearLayout>
 
@@ -277,19 +279,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
-            android:text="Display:"/>
+            android:textSize="@dimen/textsizeDeviceinfo"
+            android:text="Display: "/>
 
         <TextView
+            android:textColor="@color/colordeviceinfo"
             android:id="@+id/device_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="15dp"
+            android:textSize="@dimen/textsizeDeviceinfo"
             android:text=""/>
+    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

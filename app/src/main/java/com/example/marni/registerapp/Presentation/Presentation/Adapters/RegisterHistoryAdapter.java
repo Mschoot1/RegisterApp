@@ -66,6 +66,7 @@ public class RegisterHistoryAdapter extends BaseAdapter{
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         Register register = (Register) mRegisterArrayList.get(position);
 
         DecimalFormat formatter = new DecimalFormat("#0.00");

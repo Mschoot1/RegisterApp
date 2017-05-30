@@ -142,16 +142,16 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
             for(int idx = 0; idx < jsonArray.length(); idx++) {
                 JSONObject register = jsonArray.getJSONObject(idx);
 
-                    int id = register.getInt("order_id");
-                    String timestamp = register.getString("timestamp");
-                    double price_total = register.getDouble("price_total");
-                    int customer_id = register.getInt("customer_id");
-                    String timestamp2 = getFormattedDate(timestamp);
+                int id = register.getInt("id");
+                String timestamp = register.getString("timestamp");
+                double price_total = register.getDouble("price_total");
+                int customer_id = register.getInt("customer_id");
+                String timestamp2 = getFormattedDate(timestamp);
 
-                    Register o = new Register(id,timestamp2,price_total,customer_id);
+                Register o = new Register(id,timestamp2,price_total,customer_id);
 
-                    listener.onRandomRegisterAvailable(o);
-                }
+                listener.onRandomRegisterAvailable(o);
+            }
 
         } catch( JSONException ex) {
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());

@@ -2,35 +2,92 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductGenerator;
+import com.example.marni.registerapp.Presentation.Domain.Order;
+import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.Domain.Register;
+import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.R;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
+import static com.example.marni.registerapp.Presentation.Presentation.Activities.RegisterHistoryActivity.ORDER;
 
 /**
  * Created by Wallaard on 17-5-2017.
  */
 
-public class RegisterHistoryDetailActivity extends AppCompatActivity {
-    private TextView customeridView,idView,statusView,timestampView,totalpriceView;
+public class RegisterHistoryDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable {
+    private final String TAG = getClass().getSimpleName();
+    DecimalFormat formatter = new DecimalFormat("#0.00");
+    private TextView textViewTotal;
+    private ProductsListViewAdapter productAdapter;
+    private ArrayList<Product> productsList = new ArrayList<>();
+    private double priceTotal;
+    private Button deviceinfobutton;
+    private StickyListHeadersListView stickyList;
+    private String orderid;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_single_item);
 
-        idView = (TextView)findViewById(R.id.history_id);
-        statusView = (TextView)findViewById(R.id.history_status);
-        customeridView= (TextView)findViewById(R.id.history_customerid);
-        timestampView = (TextView)findViewById(R.id.history_timestamp);
-        totalpriceView = (TextView)findViewById(R.id.history_totalprice);
-
         Intent intent = getIntent();
-        Register register = (Register) intent.getSerializableExtra("REGISTER");
+        final Register register = (Register) intent.getSerializableExtra("ORDER");
 
-        idView.setText(String.valueOf(register.getOrderId()));
-        customeridView.setText(String.valueOf(register.getCustomerId()));
-        timestampView.setText(register.getDateTime());
-        totalpriceView.setText(String.valueOf(register.getTotalPrice()));
+        orderid = String.valueOf(register.getOrderId());
+
+        deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton2);
+        deviceinfobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterHistoryDetailActivity.this,DeviceInformationActivity.class);
+                intent.putExtra(ORDER, register);
+                startActivity(intent);
+            }
+        });
+
+        getProducts(orderid);
+        textViewTotal = (TextView) findViewById(R.id.totalprice);
+
+        stickyList = (StickyListHeadersListView) findViewById(R.id.productdetail_listview);
+        stickyList.setAreHeadersSticky(true);
+    }
+
+    //GET klassen producten hieronder
+    public void OnAvailable(Product product) {
+        productsList.add(product);
+        getPriceTotal(product);
+
+        productAdapter = new ProductsListViewAdapter(this, getLayoutInflater(), productsList);
+        stickyList.setAdapter(productAdapter);
+        productAdapter.notifyDataSetChanged();
+
+        textViewTotal.setText("€ " + formatter.format(priceTotal));
+    }
+
+    public void getProducts(String orderid){
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
+
+        ProductGenerator getProduct = new ProductGenerator(this);
+        getProduct.execute(urls);
+    }
+    ////////
+
+    public Double getPriceTotal(Product product) {
+        priceTotal = priceTotal + (product.getPrice() * product.getQuantity());
+
+        return priceTotal;
     }
 }

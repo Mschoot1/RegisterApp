@@ -8,24 +8,22 @@
     tools:openDrawer="start"
     tools:context="com.example.marni.registerapp.Presentation.Presentation.Activities.RegisterHistoryActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <include
         android:id="@+id/toolbar_include"
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-    <ListView
-        android:id="@+id/listViewOrders"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:layout_below="@+id/toolbar_include" />
-
-    </RelativeLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listview_assortment">
+        </ListView>
+    </LinearLayout>
 
     <include layout="@layout/nav_view" />
 

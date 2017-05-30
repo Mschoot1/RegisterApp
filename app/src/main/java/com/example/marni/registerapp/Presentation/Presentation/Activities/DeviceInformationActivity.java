@@ -1,13 +1,18 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.DeviceInformationGetTask;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Domain.Deviceinformation;
+import com.example.marni.registerapp.Presentation.Domain.Order;
+import com.example.marni.registerapp.Presentation.Domain.Register;
 import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
@@ -18,11 +23,21 @@ import java.util.ArrayList;
 
 public class DeviceInformationActivity extends AppCompatActivity implements DeviceInformationGetTask.OnDeviceInformationAvailable, AccountGetTask.OnAccountAvailable {
     private TextView email,hardware,type,model,brand,device,manufacturer,user,serial,host,id,bootloader,board,display;
+    private final String TAG = getClass().getSimpleName();
+    private String customerid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle("Device Information");
+
+        Intent intent = getIntent();
+        Register register = (Register) intent.getSerializableExtra("ORDER");
+        customerid = String.valueOf(register.getCustomerId());
 
         getDeviceInformation();
         getAccount();
@@ -61,7 +76,8 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     }
 
     public void getDeviceInformation(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/customer/284/device/"};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/customer/"+customerid+"/device/"};
+        Log.i(TAG,customerid+"customerid");
 
         DeviceInformationGetTask g = new DeviceInformationGetTask(this);
         g.execute(urls);
@@ -72,7 +88,9 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     }
 
     public void getAccount(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
+        Order o = new Order();
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/"+customerid};
+        Log.i(TAG,customerid+"customerid");
 
         AccountGetTask e = new AccountGetTask(this);
         e.execute(urls);

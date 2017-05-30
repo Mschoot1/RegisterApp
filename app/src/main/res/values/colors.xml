@@ -11,4 +11,5 @@
     <color name="productName">#000</color>
     <color name="colorPrimaryLight">#F48FB1</color>
     <color name="backgroundcategoryheaders">#BDBDBD</color>
+    <color name="colordeviceinfo">#757575</color>
 </resources>

@@ -15,4 +15,6 @@
     <string name="orderid">orderid</string>
     <string name="totaleprijs">totaleprijs</string>
     <string name="timestamp">timestamp</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

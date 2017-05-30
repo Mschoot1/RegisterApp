@@ -3,6 +3,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="textsize">16sp</dimen>
     <dimen name="textsizeProduct">18sp</dimen>
+    <dimen name="textsizeDeviceinfo">16sp</dimen>
 
     <dimen name="paddingProduct">2sp</dimen>
     <dimen name="tvMargin">12sp</dimen>
