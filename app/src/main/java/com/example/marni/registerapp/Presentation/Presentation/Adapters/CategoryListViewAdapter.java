@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.marni.registerapp.Presentation.Domain.Category;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.R;
 import java.util.ArrayList;
@@ -19,12 +20,12 @@ import java.util.ArrayList;
 public class CategoryListViewAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<Product> categories;
+    private ArrayList<Category> categories;
 
-    public CategoryListViewAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Product> products){
+    public CategoryListViewAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Category> categories){
         this.context = context;
         this.layoutInflater = layoutInflater;
-        this.categories = products;
+        this.categories = categories;
     }
 
     @Override
@@ -46,6 +47,8 @@ public class CategoryListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
 
+        Category category = categories.get(position);
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.category_single_item, parent, false);
 
@@ -56,7 +59,7 @@ public class CategoryListViewAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textViewCategory.setText("HALLO");
+        viewHolder.textViewCategory.setText(category.getCategoryName());
         return convertView;
     }
 

@@ -23,6 +23,8 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.marni.registerapp.Presentation.AsyncKlassen.CategoriesGetTask;
+import com.example.marni.registerapp.Presentation.Domain.Category;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.R;
 import java.util.ArrayList;
@@ -39,10 +41,10 @@ import java.util.List;
  * Created by Wallaard on 31-5-2017.
  */
 
-public class CategoryFragment extends DialogFragment implements AdapterView.OnItemClickListener, AssortmentGetTask.OnProductAvailable {
+public class CategoryFragment extends DialogFragment implements AdapterView.OnItemClickListener, CategoriesGetTask.OnCategoryAvailable {
     ListView listviewcategories;
     CategoryListViewAdapter categoryListViewAdapter;
-    private ArrayList<Product> categoriesArrayList = new ArrayList<>();
+    private ArrayList<Category> categoriesArrayList = new ArrayList<>();
 
     public CategoryFragment() {
         // Empty constructor is required for DialogFragment
@@ -67,7 +69,7 @@ public class CategoryFragment extends DialogFragment implements AdapterView.OnIt
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getAssortment();
+        getCategory();
 
         Bundle bundle = savedInstanceState;
 
@@ -90,19 +92,18 @@ public class CategoryFragment extends DialogFragment implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
 
-    public void getAssortment(){
-        AssortmentGetTask assortmentGetTask = new AssortmentGetTask(this);
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/products"};
-        assortmentGetTask.execute(urls);
+    public void getCategory(){
+        CategoriesGetTask categoriesGetTask = new CategoriesGetTask(this);
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/product/categories"};
+        categoriesGetTask.execute(urls);
 
     }
 
     @Override
-    public void OnProductAvailable(Product product) {
-        categoriesArrayList.add(product);
+    public void OnCategoryAvailable(Category category) {
+        categoriesArrayList.add(category);
         categoryListViewAdapter.notifyDataSetChanged();
     }
-
 }
 
 
