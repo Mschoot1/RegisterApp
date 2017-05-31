@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Product {
+    private int id;
     private String name;
     private double price;
     private int size;
@@ -16,6 +17,14 @@ public class Product {
     private int categoryid;
     private double totalprice;
     private int quantity;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getCategoryid() {
         return categoryid;

@@ -4,10 +4,16 @@
     android:layout_height="match_parent"
     android:textColor="@color/black_text">
 
+    <include
+        android:id="@+id/toolbar_include"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
+        android:layout_marginLeft="4dp"
         android:orientation="vertical">
 
     <LinearLayout

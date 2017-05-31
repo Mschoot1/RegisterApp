@@ -18,11 +18,24 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
+        <Button
+            android:id="@+id/assortment_category_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/listview_assortmentt"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/toolbar_include"
+            android:text="Category"
+            />
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listview_assortment">
         </ListView>
+
+
     </LinearLayout>
 
     <include layout="@layout/nav_view" />

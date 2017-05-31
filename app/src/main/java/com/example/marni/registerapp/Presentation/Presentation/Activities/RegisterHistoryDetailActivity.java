@@ -43,6 +43,10 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_single_item);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Order Details");
+
         Intent intent = getIntent();
         final Register register = (Register) intent.getSerializableExtra("ORDER");
 

@@ -2,9 +2,14 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
@@ -21,7 +26,7 @@ import java.util.ArrayList;
  * Created by Wallaard on 16-5-2017.
  */
 
-public class DeviceInformationActivity extends AppCompatActivity implements DeviceInformationGetTask.OnDeviceInformationAvailable, AccountGetTask.OnAccountAvailable {
+public class DeviceInformationActivity extends AppCompatActivity implements DeviceInformationGetTask.OnDeviceInformationAvailable, AccountGetTask.OnAccountAvailable, NavigationView.OnNavigationItemSelectedListener {
     private TextView email,hardware,type,model,brand,device,manufacturer,user,serial,host,id,bootloader,board,display;
     private final String TAG = getClass().getSimpleName();
     private String customerid;
@@ -30,10 +35,6 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Device Information");
 
         Intent intent = getIntent();
         Register register = (Register) intent.getSerializableExtra("ORDER");
@@ -56,6 +57,10 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
         bootloader = (TextView)findViewById(R.id.device_bootloader);
         board = (TextView)findViewById(R.id.device_board);
         display = (TextView)findViewById(R.id.device_display);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Device Information");
     }
 
     @Override
@@ -94,5 +99,10 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
 
         AccountGetTask e = new AccountGetTask(this);
         e.execute(urls);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }

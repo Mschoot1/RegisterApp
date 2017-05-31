@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/toolbar_include"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,14 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/totallayout"
-        android:layout_below="@+id/informationcustomer"
         android:clipToPadding="false"
         android:dividerHeight="0dp"
         android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
         android:overScrollMode="never"
         android:padding="0dp"
-        android:scrollbarStyle="outsideOverlay" />
+        android:scrollbarStyle="outsideOverlay"
+        android:layout_below="@+id/toolbar_include" />
 
     <RelativeLayout
         android:background="@color/colorGrey"
