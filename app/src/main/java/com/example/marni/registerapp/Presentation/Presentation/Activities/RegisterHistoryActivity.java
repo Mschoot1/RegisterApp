@@ -162,6 +162,12 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         enableReaderMode();
     }
 
+    @Override
+    public void onStop(){
+        super.onStop();
+        disableReaderMode();
+    }
+
     private void enableReaderMode() {
         Log.i(TAG, "Enabling reader mode");
         Activity activity = this;

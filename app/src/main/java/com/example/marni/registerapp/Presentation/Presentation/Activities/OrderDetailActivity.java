@@ -76,15 +76,9 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         confirmbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v2) {
-                Log.i(TAG,current_balance + " huidig balans");
-                Log.i(TAG,priceTotal + " totale prijs");
-                if(priceTotal < current_balance){
-                    changeOrderStatus();
-                    Log.i(TAG,"");
-                } else {
-                    Log.i(TAG,"Het bedrag is te laag");
-                    Toast.makeText(OrderDetailActivity.this, "Customer's balance too low. € "+(priceTotal-current_balance), Toast.LENGTH_SHORT).show();
-                }
+                //changeOrderStatus();
+                Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
+                startActivity(intent);
             }
         });
 
