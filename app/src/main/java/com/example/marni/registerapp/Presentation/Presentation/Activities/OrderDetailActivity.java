@@ -32,8 +32,7 @@ import static java.lang.String.valueOf;
  * Created by Wallaard on 9-5-2017.
  */
 
-public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
-        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, AccountGetTask.OnAccountAvailable,
+public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable, AccountGetTask.OnAccountAvailable,
         GetCustomerfromOrderTask.OnCustomerIdAvailable, OrderPendingPutTask.PutSuccessListener {
 
     private final String TAG = getClass().getSimpleName();
@@ -77,9 +76,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         confirmbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v2) {
-                //changeOrderStatus();
                 Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
                 intent.putExtra("ORDERID", orderid);
+                intent.putExtra("PRICETOTAL", priceTotal);
+                intent.putExtra("CUSTOMERID", customerId);
                 startActivity(intent);
             }
         });
@@ -146,32 +146,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         customer.execute(urls3);
     }
 
-    //PUT methoden hieronder
-    public void changeOrderStatus(){
-        ConfirmAsync confirmAsync = new ConfirmAsync(this);
-        String[] urls = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/edit", "1", orderid
-        };
-        confirmAsync.execute(urls);
 
-        ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
-        String[] urls2 = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), Integer.toString(customerId), orderid, "284"
-        };
-        confirmPostAsync.execute(urls2);
-    }
-
-    @Override
-    public void successful(Boolean succesful){
-        Log.i(TAG,succesful.toString());
-        if(succesful){
-            Log.i(TAG,"Gelukt");
-            Intent intent = new Intent(this, RegisterHistoryActivity.class);
-            startActivity(intent );
-        } else {
-            Log.i(TAG,"Mislukt");
-        }
-    }
 
     @Override
     public void onCustomerIdAvailable(Order order) {
