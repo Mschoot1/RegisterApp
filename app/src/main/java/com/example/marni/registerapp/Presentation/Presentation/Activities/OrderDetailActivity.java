@@ -56,7 +56,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Order");
+        //getSupportActionBar().setTitle("Order");
 
         getBalance();
 
