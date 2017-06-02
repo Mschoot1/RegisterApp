@@ -47,7 +47,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderid);
+                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "2", orderid);
                 Intent intent = new Intent(PaymentPendingActivity.this, RegisterHistoryActivity.class);
                 startActivity(intent);
             }

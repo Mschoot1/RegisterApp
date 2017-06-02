@@ -68,7 +68,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         cancelbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderid);
+                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "2", orderid);
             }
         });
 
