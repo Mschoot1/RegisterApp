@@ -18,23 +18,18 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-        <Button
-            android:id="@+id/assortment_category_button"
+        <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+            android:id="@+id/listview_assortment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/listview_assortmentt"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/toolbar_include"
-            android:text="Category"
-            />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listview_assortment">
-        </ListView>
-
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:dividerHeight="0dp"
+            android:drawSelectorOnTop="true"
+            android:fastScrollEnabled="true"
+            android:overScrollMode="never"
+            android:padding="0dp"
+            android:layout_marginBottom="10dp"
+            android:scrollbarStyle="outsideOverlay" />
 
     </LinearLayout>
 

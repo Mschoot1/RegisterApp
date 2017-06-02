@@ -28,6 +28,8 @@ import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
 /**
  * Created by Wallaard on 30-5-2017.
  */
@@ -35,8 +37,8 @@ import java.util.ArrayList;
 public class AssortmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AccountGetTask.OnAccountAvailable, AssortmentGetTask.OnProductAvailable, AdapterView.OnItemClickListener {
     private TextView account_email;
     private Button CategoryButton;
+    private StickyListHeadersListView stickyList;
 
-    ListView mListViewAssortment;
     AssortmentListViewAdapter assortmentListViewAdapter;
     private ArrayList<Product> mProductArrayList = new ArrayList<>();
 
@@ -45,16 +47,7 @@ public class AssortmentActivity extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assortment);
 
-        CategoryButton = (Button) findViewById(R.id.assortment_category_button);
-        CategoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEditDialog();
-            }
-        });
-
         getEmail();
-        getAssortment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -67,23 +60,15 @@ public class AssortmentActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_assortment);
 
-        View headerView = navigationView.getHeaderView(0);
         account_email = (TextView)headerView.findViewById(R.id.nav_email);
 
-        mListViewAssortment = (ListView) findViewById(R.id.listview_assortment);
-
-        assortmentListViewAdapter = new AssortmentListViewAdapter(this, getLayoutInflater(), mProductArrayList);
-        mListViewAssortment.setAdapter(assortmentListViewAdapter);
-        mListViewAssortment.setOnItemClickListener(this);
-    }
-
-    public void showEditDialog() {
-        FragmentManager fm = getFragmentManager();
-        CategoryFragment alertDialog = CategoryFragment.newInstance("Some title");
-        alertDialog.show(fm, "fragment_alert");
+        getAssortment();
+        stickyList = (StickyListHeadersListView) findViewById(R.id.listview_assortment);
+        stickyList.setAreHeadersSticky(true);
     }
 
 
@@ -135,6 +120,9 @@ public class AssortmentActivity extends AppCompatActivity implements NavigationV
     @Override
     public void OnProductAvailable(Product product) {
         mProductArrayList.add(product);
+
+        assortmentListViewAdapter = new AssortmentListViewAdapter(this,this, getLayoutInflater(), mProductArrayList);
+        stickyList.setAdapter(assortmentListViewAdapter);
         assortmentListViewAdapter.notifyDataSetChanged();
     }
 

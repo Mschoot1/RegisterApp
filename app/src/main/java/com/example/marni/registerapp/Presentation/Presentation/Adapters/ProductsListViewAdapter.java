@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -72,6 +74,7 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         DecimalFormat formatter = new DecimalFormat("#0");
         DecimalFormat formatter2 = new DecimalFormat("#0.00");
 
+        Picasso.with(context).load(product.getImagesrc()).into((ImageView) convertView.findViewById(R.id.imageView_productimage));
         viewHolder.textViewName.setText(product.getName());
         viewHolder.textViewPrice.setText("€ "+formatter2.format(product.getPrice()));
         viewHolder.textViewSize.setText(product.getSize()+" ML");

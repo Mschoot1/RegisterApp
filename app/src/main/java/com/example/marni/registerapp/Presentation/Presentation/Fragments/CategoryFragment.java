@@ -2,16 +2,19 @@ package com.example.marni.registerapp.Presentation.Presentation.Fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +48,7 @@ public class CategoryFragment extends DialogFragment implements AdapterView.OnIt
     ListView listviewcategories;
     CategoryListViewAdapter categoryListViewAdapter;
     private ArrayList<Category> categoriesArrayList = new ArrayList<>();
+    private final String TAG = getClass().getSimpleName();
 
     public CategoryFragment() {
         // Empty constructor is required for DialogFragment
@@ -74,11 +78,28 @@ public class CategoryFragment extends DialogFragment implements AdapterView.OnIt
         Bundle bundle = savedInstanceState;
 
         Activity activity = getActivity();
-
+        final OnItemSelected listener = (OnItemSelected) activity;
         listviewcategories = (ListView) view.findViewById(R.id.category_listview);
+
+        ImageView iv = (ImageView) view.findViewById(R.id.imageView_cancelbuttoncategories);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "GELUKT");
+                dismiss();
+            }
+        });
 
         categoryListViewAdapter = new CategoryListViewAdapter(activity.getApplicationContext(),activity.getLayoutInflater(),categoriesArrayList);
         listviewcategories.setAdapter(categoryListViewAdapter);
+        listviewcategories.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listener.onItemSelected(categoriesArrayList.get(position).getCategoryId());
+                dismiss();
+            }
+        });
+
         listviewcategories.setOnItemClickListener(this);
 
         String title = getArguments().getString("title", "Enter Name");
@@ -103,6 +124,10 @@ public class CategoryFragment extends DialogFragment implements AdapterView.OnIt
     public void OnCategoryAvailable(Category category) {
         categoriesArrayList.add(category);
         categoryListViewAdapter.notifyDataSetChanged();
+    }
+
+    public interface OnItemSelected {
+        void onItemSelected(int i);
     }
 }
 

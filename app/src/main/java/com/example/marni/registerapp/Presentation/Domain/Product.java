@@ -17,10 +17,13 @@ public class Product {
     private int categoryid;
     private double totalprice;
     private int quantity;
+    private String imagesrc;
 
-    public int getId() {
-        return id;
-    }
+    public String getImagesrc() {return imagesrc;}
+
+    public void setImagesrc(String imagesrc) {this.imagesrc = imagesrc;}
+
+    public int getId() {return id;}
 
     public void setId(int id) {
         this.id = id;

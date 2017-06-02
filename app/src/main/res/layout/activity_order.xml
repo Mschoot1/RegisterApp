@@ -8,29 +8,34 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp">
 
+        <ImageView
+            android:id="@+id/imageView_productimage"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/textview_alcohol"
+            android:layout_alignTop="@+id/textview_product" />
+
         <TextView
             android:id="@+id/textview_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:text="Beer"
             android:textColor="@color/productName"
-            android:textSize="@dimen/textsizeProduct" />
+            android:textSize="@dimen/textsizeProduct"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/textview_size" />
 
         <TextView
             android:id="@+id/textview_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textview_product"
-            android:layout_alignStart="@+id/textview_product"
-            android:layout_below="@+id/textview_product"
-            android:layout_marginEnd="@dimen/tvMarginRight"
             android:layout_marginRight="@dimen/tvMarginRight"
             android:text="330ml"
             android:textSize="@dimen/textsizeProduct"
-            android:textColor="@color/black_text"/>
+            android:textColor="@color/black_text"
+            android:layout_below="@+id/textview_product"
+            android:layout_toEndOf="@+id/imageView_productimage"
+            android:layout_marginStart="12dp" />
 
         <TextView
             android:id="@+id/textview_price"
@@ -47,13 +52,13 @@
             android:id="@+id/textview_alcohol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textview_size"
-            android:layout_alignBottom="@+id/textview_size"
-            android:layout_toEndOf="@+id/textview_size"
-            android:layout_toRightOf="@+id/textview_size"
             android:text="5% Alc."
             android:textSize="@dimen/textsizeProduct"
-            android:textColor="@color/black_text"/>
+            android:textColor="@color/black_text"
+            android:layout_marginStart="7dp"
+            android:layout_alignBaseline="@+id/textview_size"
+            android:layout_alignBottom="@+id/textview_size"
+            android:layout_toEndOf="@+id/textview_size" />
 
         <TextView
             android:id="@+id/textview_quantity"

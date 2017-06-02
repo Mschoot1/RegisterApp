@@ -98,6 +98,8 @@ public class AssortmentGetTask extends AsyncTask<String, Void, String> {
                 int price = product.getInt("price");
                 int alcohol = product.getInt("alcohol");
                 String category = product.getString("category_name");
+                int categoryid = product.getInt("category_id");
+                String imagesrc = product.getString("image");
 
                 Product p = new Product();
                 p.setName(name);
@@ -106,6 +108,8 @@ public class AssortmentGetTask extends AsyncTask<String, Void, String> {
                 p.setAlcohol_percentage(alcohol);
                 p.setPrice(price);
                 p.setId(id);
+                p.setCategoryid(categoryid);
+                p.setImagesrc(imagesrc);
 
                 listener.OnProductAvailable(p);
 
