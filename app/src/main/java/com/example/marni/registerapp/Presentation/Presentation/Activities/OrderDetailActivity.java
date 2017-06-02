@@ -15,6 +15,7 @@ import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.GetCustomerfromOrderTask;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.OrderPendingPutTask;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Domain.Order;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
@@ -32,7 +33,8 @@ import static java.lang.String.valueOf;
  */
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
-        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, AccountGetTask.OnAccountAvailable, GetCustomerfromOrderTask.OnCustomerIdAvailable {
+        ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener, AccountGetTask.OnAccountAvailable,
+        GetCustomerfromOrderTask.OnCustomerIdAvailable, OrderPendingPutTask.PutSuccessListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -43,7 +45,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private Button cancelbutton;
     private Button confirmbutton;
     private Button deviceinfobutton;
-    private double current_balance, d;
+    private double current_balance;
     private String orderid;
     private int customerId;
     DecimalFormat formatter = new DecimalFormat("#0.00");
@@ -67,8 +69,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         cancelbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OrderDetailActivity.this,RegisterHistoryActivity.class);
-                startActivity(intent);
+                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderid);
             }
         });
 
@@ -78,11 +79,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             public void onClick(View v2) {
                 //changeOrderStatus();
                 Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
+                intent.putExtra("ORDERID", orderid);
                 startActivity(intent);
             }
         });
-
-
 
         deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton);
         deviceinfobutton.setOnClickListener(new View.OnClickListener() {
@@ -176,5 +176,17 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     @Override
     public void onCustomerIdAvailable(Order order) {
         customerId = order.getCustomerid();
+    }
+
+    public void putOrderPendingStatus(String apiUrl, String orderid, String pending) {
+        String[] urls = new String[]{apiUrl, orderid, pending};
+        OrderPendingPutTask task = new OrderPendingPutTask(this);
+        task.execute(urls);
+    }
+
+    @Override
+    public void putSuccessful(Boolean successful) {
+        Intent intent = new Intent(this, RegisterHistoryActivity.class);
+        startActivity(intent);
     }
 }
