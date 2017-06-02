@@ -25,6 +25,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     private String orderid;
     private Double priceTotal;
     private int customerId;
+    private Boolean cancel;
 
     public static int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     public LoyaltyCardReader mLoyaltyCardReader;
@@ -34,6 +35,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_pending);
 
+        cancel = false;
         mLoyaltyCardReader = new LoyaltyCardReader(this);
         enableReaderMode();
 
@@ -47,6 +49,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cancel = true;
                 putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "2", orderid);
                 Intent intent = new Intent(PaymentPendingActivity.this, RegisterHistoryActivity.class);
                 startActivity(intent);
@@ -91,7 +94,9 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                changeOrderStatus();
+                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderid);
+                Pay();
+                cancel = false;
             }
         });
     }
@@ -104,18 +109,19 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
 
     @Override
     public void putSuccessful(Boolean successful) {
-        Intent intent = new Intent(this, RegisterHistoryActivity.class);
-        startActivity(intent);
+        if(cancel == true){
+            Log.i(TAG, "Pending status has been changed to 2");
+            Toast.makeText(this, "Pending status has been changed to 2", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RegisterHistoryActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Pending status has been changed to 0", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Pending status has been changed to 0");
+        }
     }
 
     //PUT methoden hieronder
-    public void changeOrderStatus(){
-        ConfirmAsync confirmAsync = new ConfirmAsync(this);
-        String[] urls = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/edit", "1", orderid
-        };
-        confirmAsync.execute(urls);
-
+    public void Pay(){
         ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
         String[] urls2 = new String[]{
                 "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), Integer.toString(customerId), orderid, "284"
