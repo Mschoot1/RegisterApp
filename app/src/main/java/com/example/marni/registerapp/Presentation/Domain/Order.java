@@ -15,8 +15,16 @@ public class Order implements Serializable {
     private String dateTime;
     private double totalPrice;
     private ArrayList<Product> products;
+    private int pending;
 
-//    public Order(int orderId, int status, String dateTime, double totalPrice, int customerid) {
+    public int getPending() {
+        return pending;
+    }
+
+    public void setPending(int pending) {
+        this.pending = pending;
+    }
+    //    public Order(int orderId, int status, String dateTime, double totalPrice, int customerid) {
 //        this.orderId = orderId;
 //        Status = status;
 //        this.dateTime = dateTime;
