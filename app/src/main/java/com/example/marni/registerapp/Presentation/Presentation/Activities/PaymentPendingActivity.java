@@ -10,14 +10,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.OrderPendingPutTask;
 import com.example.marni.registerapp.Presentation.cardreader.LoyaltyCardReader;
 import com.example.marni.registerapp.R;
 
-public class PaymentPendingActivity extends AppCompatActivity implements LoyaltyCardReader.AccountCallback {
+public class PaymentPendingActivity extends AppCompatActivity implements LoyaltyCardReader.AccountCallback,
+        OrderPendingPutTask.PutSuccessListener,ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener {
 
     private final String TAG = getClass().getSimpleName();
 
     private Button cancelButton;
+    private String orderid;
+    private Double priceTotal;
+    private int customerId;
+    private Boolean cancel;
+
     public static int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     public LoyaltyCardReader mLoyaltyCardReader;
 
@@ -26,15 +35,23 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_pending);
 
+        cancel = false;
         mLoyaltyCardReader = new LoyaltyCardReader(this);
         enableReaderMode();
+
+        Bundle bundle = getIntent().getExtras();
+        orderid = bundle.getString("ORDERID");
+        priceTotal = bundle.getDouble("PRICETOTAL");
+        customerId = bundle.getInt("CUSTOMERID");
 
 
         cancelButton = (Button) findViewById(R.id.payment_pending_cancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PaymentPendingActivity.this,RegisterHistoryActivity.class);
+                cancel = true;
+                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "2", orderid);
+                Intent intent = new Intent(PaymentPendingActivity.this, RegisterHistoryActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,9 +94,50 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(PaymentPendingActivity.this, "Jaaaaaa", Toast.LENGTH_SHORT).show();
+                putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderid);
+                Pay();
+                cancel = false;
             }
         });
+    }
 
+    public void putOrderPendingStatus(String apiUrl, String orderid, String pending) {
+        String[] urls = new String[]{apiUrl, orderid, pending};
+        OrderPendingPutTask task = new OrderPendingPutTask(this);
+        task.execute(urls);
+    }
+
+    @Override
+    public void putSuccessful(Boolean successful) {
+        if(cancel == true){
+            Log.i(TAG, "Pending status has been changed to 2");
+            Toast.makeText(this, "Pending status has been changed to 2", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RegisterHistoryActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Pending status has been changed to 0", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Pending status has been changed to 0");
+        }
+    }
+
+    //PUT methoden hieronder
+    public void Pay(){
+        ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
+        String[] urls2 = new String[]{
+                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), Integer.toString(customerId), orderid, "284"
+        };
+        confirmPostAsync.execute(urls2);
+    }
+
+    @Override
+    public void successful(Boolean succesful){
+        Log.i(TAG,succesful.toString());
+        if(succesful){
+            Toast.makeText(this, "Payment succesful", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RegisterHistoryActivity.class);
+            startActivity(intent );
+        } else {
+            Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
+        }
     }
 }
