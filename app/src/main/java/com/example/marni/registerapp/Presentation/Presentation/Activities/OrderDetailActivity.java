@@ -179,7 +179,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             intent.putExtra("CUSTOMERID", customerId);
             startActivity(intent);
         } else{
-            Toast.makeText(getApplication(), "The customer has cancelled the order. Please press the Cancel button.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), "The customer has cancelled the order.", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(OrderDetailActivity.this,RegisterHistoryActivity.class);
             startActivity(intent);
         }
