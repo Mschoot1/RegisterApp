@@ -194,6 +194,8 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
 
 
     public void getPending(String account){
+        Log.i(TAG, account);
+
         PendingGetTask customer = new PendingGetTask(this);
         String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + account};
         customer.execute(urls3);
@@ -210,7 +212,6 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
                 orderId = account;
             }
         });
-
     }
 
     public void putOrderPendingStatus(String apiUrl, String orderId, String pending) {
@@ -222,6 +223,8 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     @Override
     public void onPendingAvailable(Order order) {
         pending = order.getPending();
+        Log.i(TAG, pending + "");
+
         if(pending == 2){
             putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderId);
             Toast.makeText(this, "The customer has cancelled his order.", Toast.LENGTH_SHORT).show();
