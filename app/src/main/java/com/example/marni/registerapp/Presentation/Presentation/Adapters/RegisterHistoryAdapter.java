@@ -18,11 +18,11 @@ import java.util.ArrayList;
  * Created by Erin :) on 9-5-2017.
  */
 
-public class RegisterHistoryAdapter extends BaseAdapter{
+public class RegisterHistoryAdapter extends BaseAdapter {
 
-    Context mContext;
-    LayoutInflater mInflator;
-    ArrayList mRegisterArrayList;
+    private Context mContext;
+    private LayoutInflater mInflator;
+    private ArrayList mRegisterArrayList;
 
     public RegisterHistoryAdapter(Context context, LayoutInflater layoutInflator, ArrayList<Register> registerArrayList) {
         mContext = context;
@@ -31,20 +31,18 @@ public class RegisterHistoryAdapter extends BaseAdapter{
     }
 
     @Override
-    public int getCount(){
-        int size = mRegisterArrayList.size();
-        Log.i("getCount()","=" + size);
-        return size;
+    public int getCount() {
+        return mRegisterArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        Log.i("getItem()","");
+        Log.i("getItem()", "");
         return mRegisterArrayList.get(position);
     }
 
     @Override
-    public long getItemId(int position){
+    public long getItemId(int position) {
         return position;
     }
 
@@ -71,19 +69,24 @@ public class RegisterHistoryAdapter extends BaseAdapter{
 
         DecimalFormat formatter = new DecimalFormat("#0.00");
 
-        viewHolder.textViewId.setText("Order: "+register.getOrderId());
-        viewHolder.textViewTimestamp.setText(register.getDateTime());
-        viewHolder.textViewTotal_price.setText("€ "+formatter.format(register.getTotalPrice()));
-        viewHolder.textViewCustomer_id.setText("Customer: "+register.getCustomerId());
+        String id = "Order: " + register.getOrderId();
+        String dateTime = register.getDateTime();
+        String price = "€ " + formatter.format(register.getTotalPrice());
+        String customerId = "Customer: " + register.getCustomerId();
+
+
+        viewHolder.textViewId.setText(id);
+        viewHolder.textViewTimestamp.setText(dateTime);
+        viewHolder.textViewTotal_price.setText(price);
+        viewHolder.textViewCustomer_id.setText(customerId);
 
         return convertView;
     }
 
-    private static class ViewHolder{
-        public TextView textViewId;
-        public TextView textViewStatus;
-        public TextView textViewTimestamp;
-        public TextView textViewTotal_price;
-        public TextView textViewCustomer_id;
+    private static class ViewHolder {
+        TextView textViewId;
+        TextView textViewTimestamp;
+        TextView textViewTotal_price;
+        TextView textViewCustomer_id;
     }
 }

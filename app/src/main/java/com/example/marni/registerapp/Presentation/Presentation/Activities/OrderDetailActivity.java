@@ -56,7 +56,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Order");
+//        getSupportActionBar().setTitle("Order");
 
         getBalance();
 
@@ -111,7 +111,9 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         stickyList.setAdapter(productAdapter);
         productAdapter.notifyDataSetChanged();
 
-        textViewTotal.setText("€ " + formatter.format(priceTotal));
+        String total = "€" + formatter.format(priceTotal);
+
+        textViewTotal.setText(total);
 
     }
 
