@@ -18,8 +18,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.OrderPendingPutTask;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.PendingGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductGenerator;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.RegisterGetTask;
 import com.example.marni.registerapp.Presentation.BusinessLogic.DrawerMenu;
@@ -35,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RegisterHistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoyaltyCardReader.AccountCallback,
-        RegisterGetTask.OnRandomRegisterAvailable,AdapterView.OnItemClickListener, AccountGetTask.OnAccountAvailable {
+        RegisterGetTask.OnRandomRegisterAvailable,AdapterView.OnItemClickListener, AccountGetTask.OnAccountAvailable, PendingGetTask.OnPendingAvailable, OrderPendingPutTask.PutSuccessListener {
 
 
     private final String TAG = getClass().getSimpleName();
@@ -47,6 +50,9 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     public static int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     public LoyaltyCardReader mLoyaltyCardReader;
     private TextView account_email;
+
+    private int pending;
+    private String orderId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,6 +192,13 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         }
     }
 
+
+    public void getPending(String account){
+        PendingGetTask customer = new PendingGetTask(this);
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + account};
+        customer.execute(urls3);
+    }
+
     @Override
     public void onAccountReceived(final String account) {
         // This callback is run on a background thread, but updates to UI elements must be performed
@@ -193,11 +206,33 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), OrderDetailActivity.class);
-                intent.putExtra("ACCOUNT", account);
-                startActivity(intent);
+                getPending(account);
+                orderId = account;
             }
         });
+
+    }
+
+    public void putOrderPendingStatus(String apiUrl, String orderId, String pending) {
+        String[] urls = new String[]{apiUrl, orderId, pending};
+        OrderPendingPutTask task = new OrderPendingPutTask(this);
+        task.execute(urls);
+    }
+
+    @Override
+    public void onPendingAvailable(Order order) {
+        pending = order.getPending();
+        if(pending == 2){
+            putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderId);
+            Toast.makeText(this, "The customer has cancelled his order.", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), OrderDetailActivity.class);
+            intent.putExtra("ACCOUNT", orderId);
+            startActivity(intent);
+        }
+    }
+    @Override
+    public void putSuccessful(Boolean successful) {
 
     }
 }

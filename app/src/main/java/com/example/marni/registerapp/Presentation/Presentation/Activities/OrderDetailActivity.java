@@ -16,6 +16,7 @@ import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ConfirmPostAsync;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.GetCustomerfromOrderTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.OrderPendingPutTask;
+import com.example.marni.registerapp.Presentation.AsyncKlassen.PendingGetTask;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Domain.Order;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
@@ -26,6 +27,7 @@ import com.example.marni.registerapp.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import static android.R.attr.order;
 import static java.lang.String.valueOf;
 
 /**
@@ -33,7 +35,7 @@ import static java.lang.String.valueOf;
  */
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable, AccountGetTask.OnAccountAvailable,
-        GetCustomerfromOrderTask.OnCustomerIdAvailable, OrderPendingPutTask.PutSuccessListener {
+        GetCustomerfromOrderTask.OnCustomerIdAvailable, OrderPendingPutTask.PutSuccessListener, PendingGetTask.OnPendingAvailable {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -47,6 +49,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     private double current_balance;
     private String orderid;
     private int customerId;
+    private int pending;
     DecimalFormat formatter = new DecimalFormat("#0.00");
     private StickyListHeadersListView stickyList;
 
@@ -76,11 +79,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         confirmbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v2) {
-                Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
-                intent.putExtra("ORDERID", orderid);
-                intent.putExtra("PRICETOTAL", priceTotal);
-                intent.putExtra("CUSTOMERID", customerId);
-                startActivity(intent);
+                getPending();
             }
         });
 
@@ -146,22 +145,43 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         customer.execute(urls3);
     }
 
+    public void putOrderPendingStatus(String apiUrl, String orderId, String pending) {
+        String[] urls = new String[]{apiUrl, orderId, pending};
+        OrderPendingPutTask task = new OrderPendingPutTask(this);
+        task.execute(urls);
+    }
 
+    public void getPending(){
+        PendingGetTask customer = new PendingGetTask(this);
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid};
+        customer.execute(urls3);
+    }
 
     @Override
     public void onCustomerIdAvailable(Order order) {
         customerId = order.getCustomerid();
     }
 
-    public void putOrderPendingStatus(String apiUrl, String orderid, String pending) {
-        String[] urls = new String[]{apiUrl, orderid, pending};
-        OrderPendingPutTask task = new OrderPendingPutTask(this);
-        task.execute(urls);
-    }
-
     @Override
     public void putSuccessful(Boolean successful) {
         Intent intent = new Intent(this, RegisterHistoryActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPendingAvailable(Order order) {
+        pending = order.getPending();
+        Log.i("test", pending + "");
+        if(pending == 1){
+            Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
+            intent.putExtra("ORDERID", orderid);
+            intent.putExtra("PRICETOTAL", priceTotal);
+            intent.putExtra("CUSTOMERID", customerId);
+            startActivity(intent);
+        } else{
+            Toast.makeText(getApplication(), "The customer has cancelled the order. Please press the Cancel button.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(OrderDetailActivity.this,RegisterHistoryActivity.class);
+            startActivity(intent);
+        }
     }
 }
