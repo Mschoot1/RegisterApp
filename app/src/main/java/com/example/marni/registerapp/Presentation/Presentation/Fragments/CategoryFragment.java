@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import android.content.Context;
@@ -48,7 +49,6 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
     CategoryListViewAdapter adapter;
     private ArrayList<Category> categories = new ArrayList<>();
     private final String TAG = getClass().getSimpleName();
-    private Activity activity;
 
     public CategoryFragment() {
         // Empty constructor is required for DialogFragment
@@ -74,10 +74,13 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
         super.onViewCreated(view, savedInstanceState);
         getCategory();
 
-        activity = getActivity();
+
+        Activity activity = getActivity();
         final OnItemSelected listener = (OnItemSelected) activity;
 
         ImageView iv = (ImageView) view.findViewById(R.id.imageView_cancelbuttoncategories);
+        ListView listView = (ListView) view.findViewById(R.id.category_listview);
+
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,8 +88,6 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
                 dismiss();
             }
         });
-
-        ListView listView = (ListView) view.findViewById(R.id.category_listview);
 
         adapter = new CategoryListViewAdapter(this, activity.getLayoutInflater(), categories);
         listView.setAdapter(adapter);
@@ -108,11 +109,10 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
         CategoriesGetTask categoriesGetTask = new CategoriesGetTask(this);
         String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/product/categories"};
         categoriesGetTask.execute(urls);
-
     }
 
     @Override
-    public void OnCategoryAvailable(Category category) {
+    public void onCategoryAvailable(Category category) {
         categories.add(category);
         adapter.notifyDataSetChanged();
     }

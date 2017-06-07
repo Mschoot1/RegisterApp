@@ -1,14 +1,9 @@
 package com.example.marni.registerapp.Presentation.AsyncKlassen;
 
-/**
- * Created by Wallaard on 31-5-2017.
- */
-
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.marni.registerapp.Presentation.Domain.Category;
-import com.example.marni.registerapp.Presentation.Domain.Product;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,8 +26,8 @@ public class CategoriesGetTask extends AsyncTask<String, Void, String> {
         this.listener = listener;
     }
 
-    public interface OnCategoryAvailable{
-        void OnCategoryAvailable(Category category);
+    public interface OnCategoryAvailable {
+        void onCategoryAvailable(Category category);
     }
 
     @Override
@@ -85,14 +80,14 @@ public class CategoriesGetTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String response){
+    protected void onPostExecute(String response) {
         JSONObject jsonObject;
         JSONArray jsonArray;
-        try{
+        try {
             jsonObject = new JSONObject(response);
             jsonArray = jsonObject.getJSONArray("results");
 
-            for (int i = 0; i < jsonArray.length();i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject category = jsonArray.getJSONObject(i);
 
                 String name = category.getString("name");
@@ -102,7 +97,7 @@ public class CategoriesGetTask extends AsyncTask<String, Void, String> {
                 c.setCategoryName(name);
                 c.setCategoryId(id);
 
-                listener.OnCategoryAvailable(c);
+                listener.onCategoryAvailable(c);
 
             }
         } catch (JSONException e) {
