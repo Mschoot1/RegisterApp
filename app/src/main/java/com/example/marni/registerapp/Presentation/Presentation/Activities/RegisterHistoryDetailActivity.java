@@ -46,6 +46,7 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Order Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         final Register register = (Register) intent.getSerializableExtra("ORDER");
