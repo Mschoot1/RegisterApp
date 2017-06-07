@@ -32,7 +32,13 @@
         <activity android:name=".Presentation.Presentation.Activities.AddItemActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.EditProductActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryDetailActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.Presentation.Activities.RegisterHistoryActivity"
+                />
+        </activity>
+
         <activity android:name=".Presentation.Presentation.Activities.OrderDetailActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.AssortmentActivity"/>
