@@ -1,12 +1,15 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,19 +18,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductDeleteTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductPutTask;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.Domain.Register;
 import com.example.marni.registerapp.R;
 import com.squareup.picasso.Picasso;
 
-public class AddItemActivity extends AppCompatActivity implements ProductPutTask.PutSuccessListener {
+public class AddItemActivity extends AppCompatActivity implements ProductPutTask.PutSuccessListener, ProductDeleteTask.SuccessListener {
 
     private EditText etName;
     private EditText etPrice;
     private EditText etSize;
     private EditText etAlcohol;
     private Spinner sCategory;
+    private Button delete, save;
+
+    private final String TAG = getClass().getSimpleName();
 
     ///
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -53,8 +60,8 @@ public class AddItemActivity extends AppCompatActivity implements ProductPutTask
         etSize.setText(String.valueOf(product.getSize()));
         etAlcohol.setText(String.valueOf(product.getAlcohol_percentage()));
 
-        Button button = (Button) findViewById(R.id.save_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        save = (Button) findViewById(R.id.save_button);
+        save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (allCellsAreFilled()) {
                     putProduct(
@@ -68,6 +75,36 @@ public class AddItemActivity extends AppCompatActivity implements ProductPutTask
                             etAlcohol.getText().toString(),
                             "1");
                 }
+            }
+        });
+
+        delete = (Button)findViewById(R.id.delete_button);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, product.getId() + "");
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(AddItemActivity.this);
+                alert.setTitle("Delete");
+                alert.setMessage("Are you sure you want to delete?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteProduct(Integer.toString(product.getId()));
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
             }
         });
     }
@@ -107,5 +144,18 @@ public class AddItemActivity extends AppCompatActivity implements ProductPutTask
     @Override
     public void putSuccessful(Boolean successful) {
         Toast.makeText(this, "Product successfully edited", Toast.LENGTH_LONG).show();
+    }
+
+    public void deleteProduct(String productid){
+        ProductDeleteTask product = new ProductDeleteTask(this);
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/product/delete/", productid};
+        product.execute(urls);
+    }
+
+    @Override
+    public void successful(Boolean successful) {
+        Toast.makeText(this, "Product succesfully deleted", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), AssortmentActivity.class);
+        startActivity(intent);
     }
 }
