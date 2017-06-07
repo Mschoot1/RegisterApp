@@ -96,9 +96,11 @@ public class CategoriesGetTask extends AsyncTask<String, Void, String> {
                 JSONObject category = jsonArray.getJSONObject(i);
 
                 String name = category.getString("name");
+                int id = category.getInt("id");
 
                 Category c = new Category();
                 c.setCategoryName(name);
+                c.setCategoryId(id);
 
                 listener.OnCategoryAvailable(c);
 

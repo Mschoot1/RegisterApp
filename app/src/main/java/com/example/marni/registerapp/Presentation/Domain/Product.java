@@ -1,12 +1,13 @@
 package com.example.marni.registerapp.Presentation.Domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Wallaard on 9-5-2017.
  */
 
-public class Product {
+public class Product implements Serializable {
     private int id;
     private String name;
     private double price;

@@ -13,7 +13,8 @@
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_alignBottom="@+id/assortment_size"
-            android:layout_alignTop="@+id/assortment_product" />
+            android:layout_alignTop="@+id/assortment_product"
+            />
 
         <TextView
             android:id="@+id/assortment_product"

@@ -1,6 +1,7 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -9,12 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.AdapterView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask;
@@ -26,6 +27,7 @@ import com.example.marni.registerapp.Presentation.Presentation.Adapters.Assortme
 import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoryFragment;
 import com.example.marni.registerapp.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -34,10 +36,19 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  * Created by Wallaard on 30-5-2017.
  */
 
-public class AssortmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AccountGetTask.OnAccountAvailable, AssortmentGetTask.OnProductAvailable, AdapterView.OnItemClickListener {
+public class AssortmentActivity extends AppCompatActivity implements
+        CategoryFragment.OnItemSelected, NavigationView.OnNavigationItemSelectedListener,
+        AccountGetTask.OnAccountAvailable, AssortmentGetTask.OnProductAvailable,
+        AdapterView.OnItemClickListener {
     private TextView account_email;
     private Button CategoryButton;
     private StickyListHeadersListView stickyList;
+
+    private final String TAG = getClass().getSimpleName();
+
+    private int j;
+
+    public static final String PRODUCT = "PRODUCT";
 
     AssortmentListViewAdapter assortmentListViewAdapter;
     private ArrayList<Product> mProductArrayList = new ArrayList<>();
@@ -69,6 +80,7 @@ public class AssortmentActivity extends AppCompatActivity implements NavigationV
         getAssortment();
         stickyList = (StickyListHeadersListView) findViewById(R.id.listview_assortment);
         stickyList.setAreHeadersSticky(true);
+        stickyList.setOnItemClickListener(this);
     }
 
 
@@ -128,6 +140,31 @@ public class AssortmentActivity extends AppCompatActivity implements NavigationV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Product product = mProductArrayList.get(position);
+
+        Intent intent = new Intent(getApplicationContext(), AddItemActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PRODUCT, (Serializable) product);
+
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(int i) {
+        j = 0;
+
+        for(Product p : mProductArrayList){
+            j++;
+            Log.i(TAG, "j: " + j);
+            Log.i(TAG, "i: " + i);
+            if(p.getCategoryid()==i){
+                stickyList.setSelection(j);
+                break;
+            }
+        }
 
     }
 }
