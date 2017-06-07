@@ -89,7 +89,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     }
 
     public void OnAccountAvailable (Customer customer){
-        account_email.setText(customer.getEmail());
+        account_email.setText("284");
     }
 
     public void getEmail(){
