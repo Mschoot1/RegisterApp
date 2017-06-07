@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 public class AddItemActivity extends AppCompatActivity {
     private Context context;
 
+    ///
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
