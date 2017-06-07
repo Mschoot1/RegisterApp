@@ -56,10 +56,9 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
         // Use `newInstance` instead as shown below
     }
 
-    public static CategoryFragment newInstance(String title) {
+    public static CategoryFragment newInstance() {
         CategoryFragment frag = new CategoryFragment();
         Bundle args = new Bundle();
-        args.putString("title", title);
         frag.setArguments(args);
         return frag;
     }
@@ -74,8 +73,6 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getCategory();
-
-        //Bundle bundle = savedInstanceState;
 
         activity = getActivity();
         final OnItemSelected listener = (OnItemSelected) activity;

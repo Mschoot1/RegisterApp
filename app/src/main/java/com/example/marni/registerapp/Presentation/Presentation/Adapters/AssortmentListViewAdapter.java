@@ -104,12 +104,12 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
 
             convertView = layoutInflater.inflate(R.layout.listview_sectionheader_products, parent, false);
             holder.textViewCategoryTitle = (TextView) convertView.findViewById(R.id.listViewOrders_categoryname);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.imageView_filter);
             convertView.setTag(holder);
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
         final Product product = products.get(position);
-        holder.imageView = (ImageView) convertView.findViewById(R.id.imageView_filter);
         holder.imageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -141,8 +141,7 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
 
     public void showEditDialog() {
         FragmentManager fm = activity.getFragmentManager();
-        CategoryFragment alertDialog = CategoryFragment.newInstance("Some title");
+        CategoryFragment alertDialog = CategoryFragment.newInstance();
         alertDialog.show(fm, "fragment_alert");
     }
-    //
 }
