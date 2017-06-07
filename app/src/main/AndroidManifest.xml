@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Presentation.Presentation.Activities.AddItemActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.EditProductActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryDetailActivity"/>

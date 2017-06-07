@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.Domain.Category;
 import com.example.marni.registerapp.Presentation.Domain.Product;
+import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoryFragment;
 import com.example.marni.registerapp.R;
 import java.util.ArrayList;
 
@@ -18,12 +19,12 @@ import java.util.ArrayList;
  */
 
 public class CategoryListViewAdapter extends BaseAdapter {
-    private Context context;
+    private CategoryFragment categoryFragment;
     private LayoutInflater layoutInflater;
     private ArrayList<Category> categories;
 
-    public CategoryListViewAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Category> categories){
-        this.context = context;
+    public CategoryListViewAdapter(CategoryFragment categoryFragment, LayoutInflater layoutInflater, ArrayList<Category> categories){
+        this.categoryFragment = categoryFragment;
         this.layoutInflater = layoutInflater;
         this.categories = categories;
     }
