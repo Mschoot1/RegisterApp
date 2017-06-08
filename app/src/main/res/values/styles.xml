@@ -22,11 +22,13 @@
 
     <style name="ActionBarThemeOverlay" parent="">
         <item name="android:textColorPrimary">#fff</item>
+        <item name="actionMenuTextColor">@color/white</item>
         <item name="colorControlNormal">#fff</item>
     </style>
 
-    <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" >
+    <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:background">@android:color/white</item>
+        <item name="actionMenuTextColor">@color/white</item>
     </style>
 
 </resources>
