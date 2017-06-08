@@ -30,10 +30,6 @@ import java.util.ArrayList;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-/**
- * Created by Wallaard on 30-5-2017.
- */
-
 public class AssortmentActivity extends AppCompatActivity implements
         CategoriesFragment.OnItemSelected, NavigationView.OnNavigationItemSelectedListener,
         AccountGetTask.OnAccountAvailable, AssortmentGetTask.OnProductAvailable,
