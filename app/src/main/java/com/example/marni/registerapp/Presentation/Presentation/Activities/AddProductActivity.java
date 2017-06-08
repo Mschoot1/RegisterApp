@@ -2,11 +2,16 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +33,7 @@ import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.Presentation.Fragments.AllergiesFragment;
 import com.example.marni.registerapp.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -48,6 +54,10 @@ public class AddProductActivity extends AppCompatActivity implements
 
     private LinearLayout linearLayout;
 
+    private ImageView imageViewProduct;
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private boolean imageChanged = false;
+
     private ImageView imageViewAddAllergy;
 
     private ArrayAdapter<String> adapter;
@@ -55,6 +65,16 @@ public class AddProductActivity extends AppCompatActivity implements
     private ArrayList<String> categories = new ArrayList<>();
 
     private Product product = new Product();
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
+            Uri selectedImage = data.getData();
+            imageViewProduct.setImageURI(selectedImage);
+            imageChanged = true;
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
@@ -67,7 +87,7 @@ public class AddProductActivity extends AppCompatActivity implements
         getSupportActionBar().setTitle("Add Product");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final ImageView iv = (ImageView) findViewById(R.id.image);
+        imageViewProduct = (ImageView) findViewById(R.id.image);
         etName = (EditText) findViewById(R.id.name);
         etPrice = (EditText) findViewById(R.id.price);
         etSize = (EditText) findViewById(R.id.size);
@@ -98,6 +118,14 @@ public class AddProductActivity extends AppCompatActivity implements
             }
         });
 
+        imageViewProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+            }
+        });
+
         imageViewAddAllergy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,10 +148,16 @@ public class AddProductActivity extends AppCompatActivity implements
                         i++;
                     }
                     Log.i(TAG, "strAllergies: " + strAllergies);
+
+                    Bitmap image =((BitmapDrawable) imageViewProduct.getDrawable()).getBitmap();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                    String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+
                     addProduct(
                             "https://mysql-test-p4.herokuapp.com/product/add",
                             strAllergies,
-                            "",
+                            encodedImage,
                             etName.getText().toString(),
                             etPrice.getText().toString(),
                             etSize.getText().toString(),
@@ -190,12 +224,19 @@ public class AddProductActivity extends AppCompatActivity implements
             Toast.makeText(this, "Enter alcohol percentage", Toast.LENGTH_SHORT).show();
             return false;
         }
+
+        if (imageChanged == false) {
+            Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
     @Override
     public void postSuccessful(Boolean successful) {
         Toast.makeText(this, "Product successfully added", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getApplicationContext(), AssortmentActivity.class);
+        startActivity(intent);
     }
 
     @Override
