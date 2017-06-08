@@ -79,7 +79,10 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
         DecimalFormat formatter = new DecimalFormat("#0");
         DecimalFormat formatter2 = new DecimalFormat("#0.00");
 
-        Picasso.with(context).load(product.getImagesrc()).into((ImageView) convertView.findViewById(R.id.imageView_assortmentimage));
+        if(!product.getImagesrc().equals("")){
+            Picasso.with(context).load(product.getImagesrc()).into((ImageView) convertView.findViewById(R.id.imageView_assortmentimage));
+        }
+
         viewHolder.textViewName.setText(product.getName());
         viewHolder.textViewPrice.setText("€ "+formatter2.format(product.getPrice()));
         viewHolder.textViewSize.setText(product.getSize()+" ML");

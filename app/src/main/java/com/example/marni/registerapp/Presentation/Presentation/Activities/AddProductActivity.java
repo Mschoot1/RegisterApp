@@ -65,10 +65,8 @@ public class AddProductActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Edit Product");
+        getSupportActionBar().setTitle("Add Product");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        product = (Product) getIntent().getExtras().getSerializable(PRODUCT);
 
         final ImageView iv = (ImageView) findViewById(R.id.image);
         etName = (EditText) findViewById(R.id.name);
@@ -78,15 +76,6 @@ public class AddProductActivity extends AppCompatActivity implements
         final Spinner sCategory = (Spinner) findViewById(R.id.category_spinner);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         imageViewAddAllergy = (ImageView) findViewById(R.id.imageViewAddAllergy);
-
-        assert product != null;
-        Picasso.with(getApplicationContext()).load(product.getImagesrc()).into(iv);
-        etName.setText(product.getName());
-        etPrice.setText(String.valueOf(product.getPrice()));
-        etSize.setText(String.valueOf(product.getSize()));
-        etAlcohol.setText(String.valueOf(product.getAlcohol_percentage()));
-
-        setAllergyIcons();
 
         getCategories("https://mysql-test-p4.herokuapp.com/product/categories");
 
@@ -107,20 +96,12 @@ public class AddProductActivity extends AppCompatActivity implements
                 if (allCellsAreFilled()) {
 
                     String strAllergies = "";
-                    int i = 1;
-                    for (Allergy a : product.getAllergies()) {
-                        strAllergies += a.getInformationText();
-                        if (i < product.getAllergies().size()) {
-                            strAllergies += ",";
-                        }
-                        i++;
-                    }
+
                     Log.i(TAG, "strAllergies: " + strAllergies);
                     addProduct(
                             "https://mysql-test-p4.herokuapp.com/product/add",
                             strAllergies,
-                            product.getId() + "",
-                            product.getImagesrc(),
+                            "",
                             etName.getText().toString(),
                             etPrice.getText().toString(),
                             etSize.getText().toString(),
@@ -158,8 +139,8 @@ public class AddProductActivity extends AppCompatActivity implements
         categoriesGetTask.execute(urls);
     }
 
-    private void addProduct(String apiUrl, String allergies, String productId, String img_url, String name, String price, String size, String alcohol, String categoryId) {
-        String[] urls = new String[]{apiUrl, allergies, productId, img_url, name, price, size, alcohol, categoryId};
+    private void addProduct(String apiUrl, String allergies, String img_url, String name, String price, String size, String alcohol, String categoryId) {
+        String[] urls = new String[]{apiUrl, allergies, img_url, name, price, size, alcohol, categoryId};
         ProductAddTask task = new ProductAddTask(this);
         task.execute(urls);
     }
@@ -214,12 +195,6 @@ public class AddProductActivity extends AppCompatActivity implements
         imageView.setImageResource(id);
 
         return imageView;
-    }
-
-    public void deleteProduct(String productid){
-        ProductDeleteTask product = new ProductDeleteTask(this);
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/product/delete/", productid};
-        product.execute(urls);
     }
 
     @Override

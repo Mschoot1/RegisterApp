@@ -80,7 +80,9 @@ public class EditProductActivity extends AppCompatActivity implements
         imageViewAddAllergy = (ImageView) findViewById(R.id.imageViewAddAllergy);
 
         assert product != null;
-        Picasso.with(getApplicationContext()).load(product.getImagesrc()).into(iv);
+        if(!product.getImagesrc().equals("")){
+            Picasso.with(getApplicationContext()).load(product.getImagesrc()).into(iv);
+        }
         etName.setText(product.getName());
         etPrice.setText(String.valueOf(product.getPrice()));
         etSize.setText(String.valueOf(product.getSize()));
