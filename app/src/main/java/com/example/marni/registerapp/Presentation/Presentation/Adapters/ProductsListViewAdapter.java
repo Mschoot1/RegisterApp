@@ -1,5 +1,7 @@
 package com.example.marni.registerapp.Presentation.Presentation.Adapters;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.Domain.Product;
+import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -27,8 +30,10 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
     private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<Product> products;
+    private Activity activity;
 
-    public ProductsListViewAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Product> products){
+    public ProductsListViewAdapter(Activity activity, Context context, LayoutInflater layoutInflater, ArrayList<Product> products){
+        this.activity = activity;
         this.context = context;
         this.layoutInflater = layoutInflater;
         this.products = products;
@@ -97,6 +102,7 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
             holder = new HeaderViewHolder();
             convertView = layoutInflater.inflate(R.layout.listview_sectionheader_products, parent, false);
             holder.textViewCategoryTitle = (TextView) convertView.findViewById(R.id.listViewOrders_categoryname);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.imageView_filter);
             convertView.setTag(holder);
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
@@ -104,6 +110,12 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
 
         Product product = products.get(position);
 
+        holder.imageView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                showEditDialog();
+            }
+        });
         holder.textViewCategoryTitle.setText(product.getCategoryName());
 
         return convertView;
@@ -111,6 +123,7 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
 
     private class HeaderViewHolder {
         TextView textViewCategoryTitle;
+        ImageView imageView;
     }
 
     @Override
@@ -124,6 +137,12 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         TextView textViewSize;
         TextView textViewQuantity;
         TextView textViewAlcohol;
+    }
+
+    public void showEditDialog() {
+        FragmentManager fm = activity.getFragmentManager();
+        CategoriesFragment alertDialog = CategoriesFragment.newInstance();
+        alertDialog.show(fm, "fragment_alert");
     }
     //
 }

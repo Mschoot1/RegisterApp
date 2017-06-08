@@ -88,6 +88,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             @Override
             public void onClick(View v3) {
                 Intent intent3 = new Intent(OrderDetailActivity.this,DeviceInformationActivity.class);
+                moveTaskToBack(true);
                 startActivity(intent3);
             }
         });
@@ -106,7 +107,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         productsList.add(product);
         getPriceTotal(product);
 
-        productAdapter = new ProductsListViewAdapter(this, getLayoutInflater(), productsList);
+        productAdapter = new ProductsListViewAdapter(this,this, getLayoutInflater(), productsList);
         stickyList.setAdapter(productAdapter);
         productAdapter.notifyDataSetChanged();
 

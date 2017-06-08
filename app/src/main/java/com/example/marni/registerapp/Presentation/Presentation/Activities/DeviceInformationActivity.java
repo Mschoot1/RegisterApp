@@ -30,6 +30,8 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     private TextView email,hardware,type,model,brand,device,manufacturer,user,serial,host,id,bootloader,board,display;
     private final String TAG = getClass().getSimpleName();
     private String customerid;
+    private Register register;
+    public static final String ORDER = "ORDER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
         setContentView(R.layout.activity_device_information);
 
         Intent intent = getIntent();
-        Register register = (Register) intent.getSerializableExtra("ORDER");
+        register = (Register) intent.getSerializableExtra("ORDER");
         customerid = String.valueOf(register.getCustomerId());
 
         getDeviceInformation();
@@ -61,6 +63,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Device Information");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -102,7 +105,21 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(TAG,"TESTEN HAHA");
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
+    }
+
+
 }
