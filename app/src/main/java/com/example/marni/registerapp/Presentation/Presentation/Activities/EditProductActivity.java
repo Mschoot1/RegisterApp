@@ -11,16 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.marni.registerapp.Presentation.AsyncKlassen.CategoriesGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductDeleteTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductPutTask;
 import com.example.marni.registerapp.Presentation.Domain.Allergy;
@@ -36,7 +33,6 @@ import static com.example.marni.registerapp.Presentation.Presentation.Activities
 
 public class EditProductActivity extends AppCompatActivity implements
         ProductPutTask.PutSuccessListener,
-        CategoriesGetTask.OnCategoryAvailable,
         ProductDeleteTask.SuccessListener,
         AllergiesFragment.OnItemsSelected {
 
@@ -52,10 +48,6 @@ public class EditProductActivity extends AppCompatActivity implements
     private LinearLayout linearLayout;
 
     private ImageView imageViewAddAllergy;
-
-    private ArrayAdapter<String> adapter;
-
-    private ArrayList<String> categories = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
@@ -75,7 +67,6 @@ public class EditProductActivity extends AppCompatActivity implements
         etPrice = (EditText) findViewById(R.id.price);
         etSize = (EditText) findViewById(R.id.size);
         etAlcohol = (EditText) findViewById(R.id.alcohol_percentage);
-        final Spinner sCategory = (Spinner) findViewById(R.id.category_spinner);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         imageViewAddAllergy = (ImageView) findViewById(R.id.imageViewAddAllergy);
 
@@ -83,18 +74,22 @@ public class EditProductActivity extends AppCompatActivity implements
         if(!product.getImagesrc().equals("")){
             Picasso.with(getApplicationContext()).load(product.getImagesrc()).into(iv);
         }
-        etName.setText(product.getName());
-        etPrice.setText(String.valueOf(product.getPrice()));
-        etSize.setText(String.valueOf(product.getSize()));
-        etAlcohol.setText(String.valueOf(product.getAlcohol_percentage()));
+
+        String name = product.getName();
+        String price = product.getPrice() + "";
+        String size = product.getSize() + "";
+        String alcohol = product.getAlcohol_percentage() + "";
+
+        etName.setText(name);
+        etPrice.setText(price);
+        etSize.setText(size);
+        etAlcohol.setText(alcohol);
+
+        if (product.getAlcohol_percentage() == 0) {
+            etAlcohol.setEnabled(false);
+        }
 
         setAllergyIcons();
-
-        getCategories("https://mysql-test-p4.herokuapp.com/product/categories");
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sCategory.setAdapter(adapter);
 
         imageViewAddAllergy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +122,7 @@ public class EditProductActivity extends AppCompatActivity implements
                             etPrice.getText().toString(),
                             etSize.getText().toString(),
                             etAlcohol.getText().toString(),
-                            sCategory.getSelectedItem().toString());
+                            product.getCategoryName());
                 }
             }
         });
@@ -184,14 +179,8 @@ public class EditProductActivity extends AppCompatActivity implements
         alertDialog.show(fm, "fragment_alert");
     }
 
-    private void getCategories(String apiUrl) {
-        CategoriesGetTask categoriesGetTask = new CategoriesGetTask(this);
-        String[] urls = new String[]{ apiUrl };
-        categoriesGetTask.execute(urls);
-    }
-
-    private void putProduct(String apiUrl, String allergies, String productId, String img_url, String name, String price, String size, String alcohol, String categoryId) {
-        String[] urls = new String[]{apiUrl, allergies, productId, img_url, name, price, size, alcohol, categoryId};
+    private void putProduct(String apiUrl, String allergies, String productId, String img_url, String name, String price, String size, String alcohol, String categoryName) {
+        String[] urls = new String[]{apiUrl, allergies, productId, img_url, name, price, size, alcohol, categoryName};
         ProductPutTask task = new ProductPutTask(this);
         task.execute(urls);
     }
@@ -225,13 +214,6 @@ public class EditProductActivity extends AppCompatActivity implements
     @Override
     public void putSuccessful(Boolean successful) {
         Toast.makeText(this, "Product successfully edited", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onCategoryAvailable(Category category) {
-        Log.i(TAG, "category.getCategoryName(): " + category.getCategoryName());
-        categories.add(category.getCategoryName());
-        adapter.notifyDataSetChanged();
     }
 
     private ImageView getImageView(Allergy allergy) {

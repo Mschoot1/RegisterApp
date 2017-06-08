@@ -103,72 +103,49 @@
         android:layout_alignStart="@+id/size"
         android:layout_below="@+id/size"
         android:maxLines="1"
-        android:text="" />
-
-    <TextView
-        android:id="@+id/category_spinner_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/category_spinner"
-        android:layout_alignStart="@+id/alcohol_percentagetext"
-        android:layout_alignTop="@+id/category_spinner"
-        android:text="Category"
-        android:textColor="@color/black_text"
-        android:textSize="@dimen/textsizeProduct" />
-
-    <Spinner
-        android:id="@+id/category_spinner"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/alcohol_percentage"
-        android:layout_alignStart="@+id/alcohol_percentage"
-        android:layout_below="@+id/alcohol_percentage"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
-        android:contextClickable="true"
-        android:dropDownWidth="fill_parent"
-        android:entries="@array/array_name" />
+        android:text="0.0" />
 
     <TextView
         android:id="@+id/allergy_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageViewAddAllergy"
-        android:layout_alignStart="@+id/category_spinner_text"
-        android:layout_below="@+id/category_spinner"
+        android:layout_alignStart="@+id/alcohol_percentagetext"
         android:text="Allergies"
         android:textColor="@color/black_text"
-        android:textSize="@dimen/textsizeProduct" />
+        android:textSize="@dimen/textsizeProduct"
+        android:layout_alignTop="@+id/imageViewAddAllergy" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/allergy_text"
-        android:layout_alignStart="@+id/category_spinner"
-        android:layout_below="@+id/category_spinner"
+        android:layout_alignStart="@+id/alcohol_percentage"
         android:layout_toStartOf="@+id/imageViewAddAllergy"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        android:layout_alignTop="@+id/imageViewAddAllergy" />
 
     <TextView
         android:id="@+id/textViewNoAllergies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/allergy_text"
-        android:layout_alignStart="@+id/category_spinner"
-        android:layout_below="@+id/category_spinner"
+        android:layout_alignStart="@+id/alcohol_percentage"
         android:layout_toStartOf="@+id/imageViewAddAllergy"
         android:text="None"
         android:textColor="@color/black_text"
         android:textSize="@dimen/textsizeProduct"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imageViewAddAllergy"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_alignEnd="@+id/category_spinner"
-        android:layout_below="@+id/category_spinner"
+        android:layout_marginTop="12dp"
+        android:layout_alignEnd="@+id/alcohol_percentage"
+        android:layout_below="@+id/alcohol_percentage"
         android:src="@drawable/ic_add_circle_black_24dp"
         android:tint="#FFC107" />
 

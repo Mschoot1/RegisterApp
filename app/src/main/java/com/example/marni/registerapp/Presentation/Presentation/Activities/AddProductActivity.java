@@ -1,16 +1,15 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,11 +27,9 @@ import com.example.marni.registerapp.Presentation.Domain.Category;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.Presentation.Fragments.AllergiesFragment;
 import com.example.marni.registerapp.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static com.example.marni.registerapp.Presentation.Presentation.Activities.AssortmentActivity.PRODUCT;
 
 public class AddProductActivity extends AppCompatActivity implements
         ProductAddTask.PostSuccessListener,
@@ -42,12 +39,12 @@ public class AddProductActivity extends AppCompatActivity implements
 
     private final String TAG = getClass().getSimpleName();
 
-    private Product product;
-
     private EditText etName;
     private EditText etPrice;
     private EditText etSize;
     private EditText etAlcohol;
+
+    private Spinner sCategory;
 
     private LinearLayout linearLayout;
 
@@ -56,6 +53,8 @@ public class AddProductActivity extends AppCompatActivity implements
     private ArrayAdapter<String> adapter;
 
     private ArrayList<String> categories = new ArrayList<>();
+
+    private Product product = new Product();
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
@@ -73,7 +72,7 @@ public class AddProductActivity extends AppCompatActivity implements
         etPrice = (EditText) findViewById(R.id.price);
         etSize = (EditText) findViewById(R.id.size);
         etAlcohol = (EditText) findViewById(R.id.alcohol_percentage);
-        final Spinner sCategory = (Spinner) findViewById(R.id.category_spinner);
+        sCategory = (Spinner) findViewById(R.id.category_spinner);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         imageViewAddAllergy = (ImageView) findViewById(R.id.imageViewAddAllergy);
 
@@ -82,6 +81,22 @@ public class AddProductActivity extends AppCompatActivity implements
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sCategory.setAdapter(adapter);
+        sCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(categories.get(position).equals("Non-alcoholic beverage")) {
+                    etAlcohol.setText("0.0");
+                    etAlcohol.setEnabled(false);
+                } else {
+                    etAlcohol.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         imageViewAddAllergy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +111,14 @@ public class AddProductActivity extends AppCompatActivity implements
                 if (allCellsAreFilled()) {
 
                     String strAllergies = "";
-
+                    int i = 1;
+                    for (Allergy a : product.getAllergies()) {
+                        strAllergies += a.getInformationText();
+                        if (i < product.getAllergies().size()) {
+                            strAllergies += ",";
+                        }
+                        i++;
+                    }
                     Log.i(TAG, "strAllergies: " + strAllergies);
                     addProduct(
                             "https://mysql-test-p4.herokuapp.com/product/add",
@@ -181,6 +203,15 @@ public class AddProductActivity extends AppCompatActivity implements
         Log.i(TAG, "category.getCategoryName(): " + category.getCategoryName());
         categories.add(category.getCategoryName());
         adapter.notifyDataSetChanged();
+        if(product.getCategoryId() == category.getCategoryId()) {
+            int i = 0;
+            for(String categoryName : categories) {
+                if (categoryName.equals(category.getCategoryName())) {
+                    sCategory.setSelection(i);
+                }
+                i++;
+            }
+        }
     }
 
     private ImageView getImageView(Allergy allergy) {
@@ -199,7 +230,7 @@ public class AddProductActivity extends AppCompatActivity implements
 
     @Override
     public void successful(Boolean successful) {
-        Toast.makeText(this, "Product succesfully deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Product successfully deleted", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), AssortmentActivity.class);
         startActivity(intent);
     }
