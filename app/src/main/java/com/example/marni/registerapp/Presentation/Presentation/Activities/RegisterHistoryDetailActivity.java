@@ -71,6 +71,7 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
                 startActivity(intent);
             }
         });
+        //
 
         getProducts(orderid);
         textViewTotal = (TextView) findViewById(R.id.totalprice);
