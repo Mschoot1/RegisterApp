@@ -1,30 +1,24 @@
 package com.example.marni.registerapp.Presentation.Presentation.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.Domain.Category;
-import com.example.marni.registerapp.Presentation.Domain.Product;
-import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoryFragment;
+import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
 import java.util.ArrayList;
 
-/**
- * Created by Wallaard on 31-5-2017.
- */
+public class CategoriesFragmentListViewAdapter extends BaseAdapter {
 
-public class CategoryListViewAdapter extends BaseAdapter {
-    private CategoryFragment categoryFragment;
+    private CategoriesFragment categoriesFragment;
     private LayoutInflater layoutInflater;
     private ArrayList<Category> categories;
 
-    public CategoryListViewAdapter(CategoryFragment categoryFragment, LayoutInflater layoutInflater, ArrayList<Category> categories){
-        this.categoryFragment = categoryFragment;
+    public CategoriesFragmentListViewAdapter(CategoriesFragment categoriesFragment, LayoutInflater layoutInflater, ArrayList<Category> categories){
+        this.categoriesFragment = categoriesFragment;
         this.layoutInflater = layoutInflater;
         this.categories = categories;
     }

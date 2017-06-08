@@ -3,6 +3,7 @@ package com.example.marni.registerapp.Presentation.AsyncKlassen;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.marni.registerapp.Presentation.Domain.Allergy;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 
@@ -18,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 
 public class AssortmentGetTask extends AsyncTask<String, Void, String> {
@@ -92,24 +94,39 @@ public class AssortmentGetTask extends AsyncTask<String, Void, String> {
             for (int i = 0; i < jsonArray.length();i++){
                 JSONObject product = jsonArray.getJSONObject(i);
 
+                JSONArray allergies = product.getJSONArray("allergies");
+
+                Log.i(TAG, "allergies.length(): " + allergies.length());
+
+                ArrayList<Allergy> as = new ArrayList<>();
+                for (int j = 0; j < allergies.length(); j++) {
+
+                    JSONObject allergy = allergies.getJSONObject(j);
+                    Allergy a = new Allergy(allergy.getString("image"), allergy.getString("description"));
+                    as.add(a);
+                }
+
                 String name = product.getString("name");
                 int id = product.getInt("id");
                 int size = product.getInt("size");
                 int price = product.getInt("price");
                 int alcohol = product.getInt("alcohol");
-                String category = product.getString("category_name");
-                int categoryid = product.getInt("category_id");
+                String categoryName = product.getString("category_name");
+                int categoryId = product.getInt("category_id");
                 String imagesrc = product.getString("product_image");
+
+                Log.i(TAG, "name: " + name);
 
                 Product p = new Product();
                 p.setName(name);
-                p.setCategory(category);
+                p.setCategoryName(categoryName);
                 p.setSize(size);
                 p.setAlcohol_percentage(alcohol);
                 p.setPrice(price);
                 p.setId(id);
-                p.setCategoryid(categoryid);
+                p.setCategoryId(categoryId);
                 p.setImagesrc(imagesrc);
+                p.setAllergies(as);
 
                 listener.OnProductAvailable(p);
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/textview_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="12dp"
+            android:overScrollMode="never"
+            android:text="@string/allergies"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/imageView_cancelbutton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textview_category"
+            android:layout_marginEnd="11dp"
+            android:src="@drawable/ic_close_black_24dp" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/allergies_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="244dp"
+        android:overScrollMode="never"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/relativeLayout2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout2">
+
+        <Button
+            android:id="@+id/fragmentAllergiesCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toStartOf="@+id/view"
+            android:text="Cancel" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
+
+        <Button
+            android:id="@+id/fragmentAllergiesContinue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/fragmentAllergiesCancel"
+            android:layout_alignBottom="@+id/fragmentAllergiesCancel"
+            android:layout_margin="5dp"
+            android:layout_toEndOf="@+id/view"
+            android:text="Continue" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

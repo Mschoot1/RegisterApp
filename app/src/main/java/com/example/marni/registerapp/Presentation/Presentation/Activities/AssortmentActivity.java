@@ -1,6 +1,5 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,10 +23,9 @@ import com.example.marni.registerapp.Presentation.BusinessLogic.DrawerMenu;
 import com.example.marni.registerapp.Presentation.Domain.Customer;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.AssortmentListViewAdapter;
-import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoryFragment;
+import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -37,7 +35,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  */
 
 public class AssortmentActivity extends AppCompatActivity implements
-        CategoryFragment.OnItemSelected, NavigationView.OnNavigationItemSelectedListener,
+        CategoriesFragment.OnItemSelected, NavigationView.OnNavigationItemSelectedListener,
         AccountGetTask.OnAccountAvailable, AssortmentGetTask.OnProductAvailable,
         AdapterView.OnItemClickListener {
     private TextView account_email;
@@ -142,10 +140,10 @@ public class AssortmentActivity extends AppCompatActivity implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Product product = mProductArrayList.get(position);
 
-        Intent intent = new Intent(getApplicationContext(), AddItemActivity.class);
+        Intent intent = new Intent(getApplicationContext(), EditProductActivity.class);
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(PRODUCT, (Serializable) product);
+        bundle.putSerializable(PRODUCT, product);
 
         intent.putExtras(bundle);
 
@@ -160,7 +158,7 @@ public class AssortmentActivity extends AppCompatActivity implements
             j++;
             Log.i(TAG, "j: " + j);
             Log.i(TAG, "i: " + i);
-            if(p.getCategoryid()==i){
+            if(p.getCategoryId()==i){
                 stickyList.setSelection(j);
                 break;
             }

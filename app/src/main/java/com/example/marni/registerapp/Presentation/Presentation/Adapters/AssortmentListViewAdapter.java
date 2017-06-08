@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.Domain.Product;
-import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoryFragment;
+import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -116,7 +115,7 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
                 showEditDialog();
             }
         });
-        holder.textViewCategoryTitle.setText(product.getCategory());
+        holder.textViewCategoryTitle.setText(product.getCategoryName());
 
         return convertView;
     }
@@ -141,7 +140,7 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
 
     public void showEditDialog() {
         FragmentManager fm = activity.getFragmentManager();
-        CategoryFragment alertDialog = CategoryFragment.newInstance();
+        CategoriesFragment alertDialog = CategoriesFragment.newInstance();
         alertDialog.show(fm, "fragment_alert");
     }
 }

@@ -49,12 +49,12 @@ public class ProductPutTask extends AsyncTask<String, Void, Boolean> {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("allergies", params[1]);
             jsonParam.put("product_id", params[2]);
-            jsonParam.put("product_image", params[3]);
+            jsonParam.put("image", params[3]);
             jsonParam.put("name", params[4]);
             jsonParam.put("price", params[5]);
             jsonParam.put("size", params[6]);
             jsonParam.put("alcohol", params[7]);
-            jsonParam.put("category_id", params[8]);
+            jsonParam.put("category_name", params[8]);
 
             Log.i(TAG, String.valueOf(jsonParam));
 

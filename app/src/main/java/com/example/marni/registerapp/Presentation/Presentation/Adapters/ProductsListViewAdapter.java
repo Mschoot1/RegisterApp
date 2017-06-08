@@ -104,7 +104,7 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
 
         Product product = products.get(position);
 
-        holder.textViewCategoryTitle.setText(product.getCategory());
+        holder.textViewCategoryTitle.setText(product.getCategoryName());
 
         return convertView;
     }

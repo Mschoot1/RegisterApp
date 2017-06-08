@@ -103,8 +103,8 @@ public class ProductGenerator extends AsyncTask<String,Void,String>{
                 int size = product.getInt("size");
                 int quantity = product.getInt("quantity");
                 int alcohol = product.getInt("alcohol");
-                String category = product.getString("category_name");
-                int categoryid = product.getInt("category_id");
+                String categoryName = product.getString("category_name");
+                int categoryId = product.getInt("category_id");
                 String imagesrc = product.getString("product_image");
 
                 Product p = new Product();
@@ -113,8 +113,8 @@ public class ProductGenerator extends AsyncTask<String,Void,String>{
                 p.setSize(size);
                 p.setQuantity(quantity);
                 p.setAlcohol_percentage(alcohol);
-                p.setCategory(category);
-                p.setCategoryid(categoryid);
+                p.setCategoryName(categoryName);
+                p.setCategoryId(categoryId);
                 p.setImagesrc(imagesrc);
 
                 //,string2,string3,string4

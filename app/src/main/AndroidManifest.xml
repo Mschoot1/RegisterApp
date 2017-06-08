@@ -29,13 +29,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Presentation.Presentation.Activities.AddItemActivity">
+        <activity android:name=".Presentation.Presentation.Activities.EditProductActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".Presentation.Presentation.Activities.AssortmentActivity"
             />
         </activity>
-        <activity android:name=".Presentation.Presentation.Activities.EditProductActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.AddProductActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryDetailActivity">
             <meta-data

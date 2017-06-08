@@ -3,21 +3,17 @@ package com.example.marni.registerapp.Presentation.Domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Wallaard on 9-5-2017.
- */
-
 public class Product implements Serializable {
+
     private int id;
     private String name;
     private double price;
     private int size;
     private double alcohol_percentage;
-    private String category;
-    private ArrayList allergies;
-    private int categoryid;
-    private double totalprice;
+    private ArrayList<Allergy> allergies = new ArrayList<>();
+    private int categoryId;
     private int quantity;
+    private String categoryName;
     private String imagesrc;
 
     public String getImagesrc() {return imagesrc;}
@@ -28,10 +24,6 @@ public class Product implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCategoryid() {
-        return categoryid;
     }
 
     public int getQuantity() {
@@ -74,28 +66,31 @@ public class Product implements Serializable {
         this.alcohol_percentage = alcohol_percentage;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public int getCategoryId() {
-        return categoryid;
+        return categoryId;
     }
 
-    public void setCategoryid(int categoryid) {
-        this.categoryid = categoryid;
+    public void setCategoryId(int categoryid) {
+        this.categoryId = categoryid;
     }
 
-    public ArrayList getAllergies() {
+    public ArrayList<Allergy> getAllergies() {
         return allergies;
     }
 
-    public void setAllergies(ArrayList allergies) {
+    public void setAllergies(ArrayList<Allergy> allergies) {
         this.allergies = allergies;
     }
 
+    public void addAllergy(Allergy allergy) {
+        allergies.add(allergy);
+    }
 }

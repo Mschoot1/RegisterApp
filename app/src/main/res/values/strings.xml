@@ -18,6 +18,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="categories">Categories</string>
+    <string name="allergies">Allergies</string>
     <string-array name="array_name">
         <item>Array Item One</item>
         <item>Array Item Two</item>

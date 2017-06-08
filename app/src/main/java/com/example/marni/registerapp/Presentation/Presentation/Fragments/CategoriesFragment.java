@@ -2,62 +2,36 @@ package com.example.marni.registerapp.Presentation.Presentation.Fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.marni.registerapp.Presentation.AsyncKlassen.CategoriesGetTask;
 import com.example.marni.registerapp.Presentation.Domain.Category;
-import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.R;
 import java.util.ArrayList;
 
-import com.example.marni.registerapp.Presentation.AsyncKlassen.AssortmentGetTask;
-import com.example.marni.registerapp.Presentation.Domain.Product;
-import com.example.marni.registerapp.Presentation.Presentation.Adapters.CategoryListViewAdapter;
-import com.example.marni.registerapp.R;
+import com.example.marni.registerapp.Presentation.Presentation.Adapters.CategoriesFragmentListViewAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by Wallaard on 31-5-2017.
- */
-
-public class CategoryFragment extends DialogFragment implements CategoriesGetTask.OnCategoryAvailable {
-    CategoryListViewAdapter adapter;
+public class CategoriesFragment extends DialogFragment implements CategoriesGetTask.OnCategoryAvailable {
+    CategoriesFragmentListViewAdapter adapter;
     private ArrayList<Category> categories = new ArrayList<>();
     private final String TAG = getClass().getSimpleName();
 
-    public CategoryFragment() {
+    public CategoriesFragment() {
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
         // Use `newInstance` instead as shown below
     }
 
-    public static CategoryFragment newInstance() {
-        CategoryFragment frag = new CategoryFragment();
+    public static CategoriesFragment newInstance() {
+        CategoriesFragment frag = new CategoriesFragment();
         Bundle args = new Bundle();
         frag.setArguments(args);
         return frag;
@@ -66,14 +40,13 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.category_selection, container);
+        return inflater.inflate(R.layout.categories_fragment, container);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getCategory();
-
+        getCategories("https://mysql-test-p4.herokuapp.com/product/categories");
 
         Activity activity = getActivity();
         final OnItemSelected listener = (OnItemSelected) activity;
@@ -89,7 +62,7 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
             }
         });
 
-        adapter = new CategoryListViewAdapter(this, activity.getLayoutInflater(), categories);
+        adapter = new CategoriesFragmentListViewAdapter(this, activity.getLayoutInflater(), categories);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -105,9 +78,9 @@ public class CategoryFragment extends DialogFragment implements CategoriesGetTas
         listView.requestFocus();
     }
 
-    public void getCategory(){
+    public void getCategories(String apiUrl){
         CategoriesGetTask categoriesGetTask = new CategoriesGetTask(this);
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/product/categories"};
+        String[] urls = new String[]{apiUrl};
         categoriesGetTask.execute(urls);
     }
 
