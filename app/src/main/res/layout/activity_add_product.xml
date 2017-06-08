@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.marni.registerapp.Presentation.Presentation.Activities.EditProductActivity">
+
+    <TextView
+        android:id="@+id/add_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change item"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Name"
+        android:layout_below="@+id/add_item"/>
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Price"
+        android:layout_below="@+id/name"/>
+
+    <EditText
+        android:id="@+id/size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Size"
+        android:layout_below="@+id/price"/>
+
+    <EditText
+        android:id="@+id/alcohol_percentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Alcohol percentage"
+        android:layout_below="@+id/size"/>
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="113dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/alcohol_percentage"
+        android:layout_marginTop="210dp"/>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="113dp"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_alignBaseline="@+id/cancel_button"
+        android:layout_alignBottom="@+id/cancel_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="113dp"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
+        android:layout_alignBaseline="@+id/cancel_button"
+        android:layout_alignBottom="@+id/cancel_button"
+        android:layout_alignRight="@+id/alcohol_percentage"
+        android:layout_alignEnd="@+id/alcohol_percentage"/>
+
+</RelativeLayout>
