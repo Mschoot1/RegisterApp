@@ -109,7 +109,7 @@ public class AssortmentGetTask extends AsyncTask<String, Void, String> {
                 String name = product.getString("name");
                 int id = product.getInt("id");
                 int size = product.getInt("size");
-                int price = product.getInt("price");
+                double price = product.getDouble("price");
                 int alcohol = product.getInt("alcohol");
                 String categoryName = product.getString("category_name");
                 int categoryId = product.getInt("category_id");
