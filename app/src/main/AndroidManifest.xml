@@ -35,7 +35,12 @@
             android:value=".Presentation.Presentation.Activities.AssortmentActivity"
             />
         </activity>
-        <activity android:name=".Presentation.Presentation.Activities.AddProductActivity"/>
+        <activity android:name=".Presentation.Presentation.Activities.AddProductActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.Presentation.Activities.AssortmentActivity"
+                />
+        </activity>
         <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
         <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryDetailActivity">
             <meta-data
