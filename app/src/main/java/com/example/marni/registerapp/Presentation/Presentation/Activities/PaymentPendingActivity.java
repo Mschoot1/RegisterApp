@@ -50,6 +50,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
             @Override
             public void onClick(View v) {
                 cancel = true;
+                Toast.makeText(PaymentPendingActivity.this, "Order canceled", Toast.LENGTH_LONG).show();
                 putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "2", orderid);
                 Intent intent = new Intent(PaymentPendingActivity.this, RegisterHistoryActivity.class);
                 startActivity(intent);
@@ -111,11 +112,9 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     public void putSuccessful(Boolean successful) {
         if(cancel == true){
             Log.i(TAG, "Pending status has been changed to 2");
-            Toast.makeText(this, "Pending status has been changed to 2", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, RegisterHistoryActivity.class);
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Pending status has been changed to 0", Toast.LENGTH_SHORT).show();
             Log.i(TAG, "Pending status has been changed to 0");
         }
     }
