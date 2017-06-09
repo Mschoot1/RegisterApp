@@ -73,6 +73,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         cancelbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(OrderDetailActivity.this, "Order canceled", Toast.LENGTH_LONG).show();
                 putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "2", orderid);
             }
         });
@@ -87,8 +88,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         getProducts(orderid);
         getCustomerId();
-
-
 
         deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton);
         deviceinfobutton.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +117,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         productAdapter.notifyDataSetChanged();
 
         textViewTotal.setText("€ " + formatter.format(priceTotal));
-
     }
 
     public void getProducts(String orderid){
