@@ -146,8 +146,8 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         customer.execute(urls3);
     }
 
-    public void putOrderPendingStatus(String apiUrl, String orderId, String pending) {
-        String[] urls = new String[]{apiUrl, orderId, pending};
+    public void putOrderPendingStatus(String apiUrl, String pending, String orderId) {
+        String[] urls = new String[]{apiUrl, pending, orderId};
         OrderPendingPutTask task = new OrderPendingPutTask(this);
         task.execute(urls);
     }
