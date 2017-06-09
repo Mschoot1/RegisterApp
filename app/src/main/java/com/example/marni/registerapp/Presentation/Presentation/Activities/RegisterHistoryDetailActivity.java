@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static com.example.marni.registerapp.Presentation.Presentation.Activities.DeviceInformationActivity.REGISTER;
 import static com.example.marni.registerapp.Presentation.Presentation.Activities.RegisterHistoryActivity.ORDER;
 
 /**
@@ -66,7 +67,8 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterHistoryDetailActivity.this,DeviceInformationActivity.class);
-                intent.putExtra(ORDER, register);
+                intent.putExtra("flag","H");
+                intent.putExtra(REGISTER, register);
                 moveTaskToBack(true);
                 startActivity(intent);
             }
