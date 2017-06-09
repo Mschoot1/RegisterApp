@@ -22,16 +22,22 @@ import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
 
+import static com.example.marni.registerapp.R.string.customerid;
+import static com.example.marni.registerapp.R.string.orderid;
+
 /**
  * Created by Wallaard on 16-5-2017.
  */
 
-public class DeviceInformationActivity extends AppCompatActivity implements DeviceInformationGetTask.OnDeviceInformationAvailable, AccountGetTask.OnAccountAvailable, NavigationView.OnNavigationItemSelectedListener {
+public class DeviceInformationActivity extends AppCompatActivity implements DeviceInformationGetTask.OnDeviceInformationAvailable,
+        AccountGetTask.OnAccountAvailable, NavigationView.OnNavigationItemSelectedListener {
     private TextView email,hardware,type,model,brand,device,manufacturer,user,serial,host,id,bootloader,board,display;
     private final String TAG = getClass().getSimpleName();
     private String customerid;
     private Register register;
-    public static final String ORDER = "ORDER";
+    private int order;
+    public static final String CUSTOMERID = "CUSTOMERID";
+    public static final String REGISTER = "REGISTER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +45,15 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
         setContentView(R.layout.activity_device_information);
 
         Intent intent = getIntent();
-        register = (Register) intent.getSerializableExtra("ORDER");
-        customerid = String.valueOf(register.getCustomerId());
+        String checkFlag = intent.getStringExtra("flag");
+
+        if(checkFlag.equals("H")) {
+            register = (Register) intent.getSerializableExtra("REGISTER");
+            customerid = String.valueOf(register.getCustomerId());
+        } else if (checkFlag.equals("O")){
+            order = (int) intent.getSerializableExtra("CUSTOMERID");
+            customerid = String.valueOf(order);
+        }
 
         getDeviceInformation();
         getAccount();
@@ -96,7 +109,6 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     }
 
     public void getAccount(){
-        Order o = new Order();
         String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/"+customerid};
         Log.i(TAG,customerid+"customerid");
 

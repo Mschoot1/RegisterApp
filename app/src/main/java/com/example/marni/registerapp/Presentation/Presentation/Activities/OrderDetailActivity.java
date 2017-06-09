@@ -28,6 +28,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static android.R.attr.order;
+import static com.example.marni.registerapp.Presentation.Presentation.Activities.DeviceInformationActivity.CUSTOMERID;
+//import static com.example.marni.registerapp.Presentation.Presentation.Activities.DeviceInformationActivity.ORDER;
 import static java.lang.String.valueOf;
 
 /**
@@ -83,18 +85,22 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             }
         });
 
+        getProducts(orderid);
+        getCustomerId();
+
+
+
         deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton);
         deviceinfobutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v3) {
                 Intent intent3 = new Intent(OrderDetailActivity.this,DeviceInformationActivity.class);
+                intent3.putExtra("flag","O");
+                intent3.putExtra(CUSTOMERID,customerId);
                 moveTaskToBack(true);
                 startActivity(intent3);
             }
         });
-
-        getProducts(orderid);
-        getCustomerId();
 
         textViewTotal = (TextView) findViewById(R.id.totalprice);
 
