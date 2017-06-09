@@ -226,7 +226,6 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         Log.i(TAG, pending + "");
 
         if(pending == 2){
-            putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderId);
             Toast.makeText(this, "The customer has cancelled his order.", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), OrderDetailActivity.class);
