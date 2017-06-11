@@ -32,7 +32,6 @@ import com.example.marni.registerapp.Presentation.Domain.Category;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.Presentation.Fragments.AllergiesFragment;
 import com.example.marni.registerapp.R;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -70,15 +69,11 @@ public class AddProductActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-                Uri selectedImage = data.getData();
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
 
-                Picasso.with(this).load(selectedImage).resize(50,50).centerCrop().into(imageViewProduct);
-                imageChanged = true;
-            }
-        } catch (Exception e) {
-            Toast.makeText(AddProductActivity.this, "Error selecting image", Toast.LENGTH_SHORT).show();
+            imageViewProduct.setImageURI(selectedImage);
+            imageChanged = true;
         }
     }
 

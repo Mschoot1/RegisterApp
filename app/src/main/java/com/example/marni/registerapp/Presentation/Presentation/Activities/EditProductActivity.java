@@ -66,7 +66,7 @@ public class EditProductActivity extends AppCompatActivity implements
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
             Uri selectedImage = data.getData();
 
-            Picasso.with(this).load(selectedImage).resize(50,50).centerCrop().into(imageViewProduct);
+            imageViewProduct.setImageURI(selectedImage);
             imageChanged = true;
         }
     }
