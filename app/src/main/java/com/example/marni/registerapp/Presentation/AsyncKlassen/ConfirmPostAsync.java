@@ -57,6 +57,7 @@ public class ConfirmPostAsync extends AsyncTask<String, Void, Boolean> {
             httpConnection.setDoInput(true);
             httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             httpConnection.setRequestMethod("POST");
+            httpConnection.setRequestProperty("Authorization", "Bearer " + params[5]);
 
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("credit", params[1]);

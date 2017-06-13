@@ -1,7 +1,9 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -55,6 +57,11 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     DecimalFormat formatter = new DecimalFormat("#0.00");
     private StickyListHeadersListView stickyList;
 
+    public static final String JWT_STR = "jwt_str";
+    public static final String USER = "user";
+    String jwt;
+    String user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +70,11 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle("Order");
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
+        user = prefs.getString(USER, "");
 
         getBalance();
 
@@ -120,7 +132,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     }
 
     public void getProducts(String orderid){
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid, jwt};
 
         ProductGenerator getProduct = new ProductGenerator(this);
         getProduct.execute(urls);
@@ -140,25 +152,25 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
     public void getBalance(){
         AccountGetTask accounttask = new AccountGetTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/" + user, jwt};
         accounttask.execute(urls3);
     }
 
     public void getCustomerId(){
         GetCustomerfromOrderTask customer = new GetCustomerfromOrderTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid};
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid, jwt};
         customer.execute(urls3);
     }
 
     public void putOrderPendingStatus(String apiUrl, String pending, String orderId) {
-        String[] urls = new String[]{apiUrl, pending, orderId};
+        String[] urls = new String[]{apiUrl, pending, orderId, jwt};
         OrderPendingPutTask task = new OrderPendingPutTask(this);
         task.execute(urls);
     }
 
     public void getPending(){
         PendingGetTask customer = new PendingGetTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid};
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid, jwt};
         customer.execute(urls3);
     }
 

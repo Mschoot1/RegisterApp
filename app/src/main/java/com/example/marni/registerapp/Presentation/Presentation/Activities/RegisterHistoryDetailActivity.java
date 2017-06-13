@@ -1,7 +1,9 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -47,10 +49,18 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
     private StickyListHeadersListView stickyList;
     private String orderid;
 
+    public static final String JWT_STR = "jwt_str";
+    String jwt;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_order_history_single_item);
+
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -95,7 +105,7 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
     }
 
     public void getProducts(String orderid){
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid, jwt};
 
         ProductGenerator getProduct = new ProductGenerator(this);
         getProduct.execute(urls);

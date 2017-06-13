@@ -2,7 +2,9 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,10 +32,21 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     public static int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     public LoyaltyCardReader mLoyaltyCardReader;
 
+    public static final String JWT_STR = "jwt_str";
+    public static final String USER = "user";
+    String jwt;
+    String user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_pending);
+
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
+        user = prefs.getString(USER, "");
 
         cancel = false;
         mLoyaltyCardReader = new LoyaltyCardReader(this);
@@ -103,7 +116,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     }
 
     public void putOrderPendingStatus(String apiUrl, String orderid, String pending) {
-        String[] urls = new String[]{apiUrl, orderid, pending};
+        String[] urls = new String[]{apiUrl, orderid, pending, jwt};
         OrderPendingPutTask task = new OrderPendingPutTask(this);
         task.execute(urls);
     }
@@ -123,7 +136,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     public void Pay(){
         ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
         String[] urls2 = new String[]{
-                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), Integer.toString(customerId), orderid, "284"
+                "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), Integer.toString(customerId), orderid, user, jwt
         };
         confirmPostAsync.execute(urls2);
     }

@@ -2,10 +2,12 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +68,9 @@ public class AddProductActivity extends AppCompatActivity implements
 
     private Product product = new Product();
 
+    public static final String JWT_STR = "jwt_str";
+    String jwt;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -82,6 +87,10 @@ public class AddProductActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -192,12 +201,12 @@ public class AddProductActivity extends AppCompatActivity implements
 
     private void getCategories(String apiUrl) {
         CategoriesGetTask categoriesGetTask = new CategoriesGetTask(this);
-        String[] urls = new String[]{ apiUrl };
+        String[] urls = new String[]{ apiUrl, jwt };
         categoriesGetTask.execute(urls);
     }
 
     private void addProduct(String apiUrl, String allergies, String img_url, String name, String price, String size, String alcohol, String categoryId) {
-        String[] urls = new String[]{apiUrl, allergies, img_url, name, price, size, alcohol, categoryId};
+        String[] urls = new String[]{apiUrl, allergies, img_url, name, price, size, alcohol, categoryId, jwt};
         ProductAddTask task = new ProductAddTask(this);
         task.execute(urls);
     }

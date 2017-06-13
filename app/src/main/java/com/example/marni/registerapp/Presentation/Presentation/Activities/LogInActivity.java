@@ -1,21 +1,29 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.auth0.android.jwt.Claim;
+import com.auth0.android.jwt.JWT;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.LoginTask;
+import static com.example.marni.registerapp.Presentation.AsyncKlassen.LoginTask.UNAUTHORIZED;
 import com.example.marni.registerapp.R;
 
 public class LogInActivity extends AppCompatActivity implements LoginTask.SuccessListener {
     private EditText editTextEmail, editTextPassword;
+    public static final String JWT_STR = "jwt_str";
+    public static final String USER = "user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +42,22 @@ public class LogInActivity extends AppCompatActivity implements LoginTask.Succes
         });
     }
 
-    public void successful(Boolean successful) {
-        if (successful) {
+    public void successful(String response) {
+
+        if (response.equals(UNAUTHORIZED)) {
+            Toast.makeText(this, "Login failed, please try again.", Toast.LENGTH_LONG).show();
+        } else {
             Toast.makeText(this, "Logged in", Toast.LENGTH_LONG).show();
+
+            JWT jwt = new JWT(response);
+            Claim user = jwt.getClaim("user");
             Intent intent = new Intent(getApplicationContext(), RegisterHistoryActivity.class);
 
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.edit().putString(JWT_STR, jwt.toString()).apply();
+            prefs.edit().putString(USER, String.valueOf(user.asInt())).apply();
+
             startActivity(intent);
-        } else {
-            Toast.makeText(this, "Login failed, please try again.", Toast.LENGTH_LONG).show();
         }
     }
 

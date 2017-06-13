@@ -48,6 +48,7 @@ public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
 
             httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             httpConnection.setRequestMethod("PUT");
+            httpConnection.setRequestProperty("Authorization", "Bearer " + params[3]);
 
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("pending", params[1]);

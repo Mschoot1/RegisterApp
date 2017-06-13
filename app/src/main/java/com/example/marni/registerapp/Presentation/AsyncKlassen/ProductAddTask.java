@@ -50,6 +50,7 @@ public class ProductAddTask extends AsyncTask<String, Void, Boolean> {
             httpConnection.setDoInput(true);
             httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             httpConnection.setRequestMethod("POST");
+            httpConnection.setRequestProperty("Authorization", "Bearer " + params[8]);
 
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("allergies", params[1]);

@@ -46,6 +46,7 @@ public class ProductDeleteTask extends AsyncTask<String, Void, Boolean> {
 
             httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             httpConnection.setRequestMethod("DELETE");
+            httpConnection.setRequestProperty("Authorization", "Bearer " + params[2]);
 
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("product_id", params[1]);

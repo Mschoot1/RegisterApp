@@ -3,10 +3,12 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
@@ -60,6 +62,9 @@ public class EditProductActivity extends AppCompatActivity implements
 
     private ImageView imageViewAddAllergy;
 
+    public static final String JWT_STR = "jwt_str";
+    String jwt;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -76,6 +81,10 @@ public class EditProductActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -223,7 +232,7 @@ public class EditProductActivity extends AppCompatActivity implements
     }
 
     private void putProduct(String apiUrl, String allergies, String productId, String img_url, String name, String price, String size, String alcohol, String categoryName) {
-        String[] urls = new String[]{apiUrl, allergies, productId, img_url, name, price, size, alcohol, categoryName};
+        String[] urls = new String[]{apiUrl, allergies, productId, img_url, name, price, size, alcohol, categoryName, jwt};
         ProductPutTask task = new ProductPutTask(this);
         task.execute(urls);
     }
@@ -275,7 +284,7 @@ public class EditProductActivity extends AppCompatActivity implements
 
     public void deleteProduct(String productid){
         ProductDeleteTask product = new ProductDeleteTask(this);
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/product/delete/", productid};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/product/delete/", productid, jwt};
         product.execute(urls);
     }
 

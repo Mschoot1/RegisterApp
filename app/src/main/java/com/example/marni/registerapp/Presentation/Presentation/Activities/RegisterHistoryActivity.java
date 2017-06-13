@@ -2,7 +2,9 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -54,9 +56,20 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     private int pending;
     private String orderId;
 
+    public static final String JWT_STR = "jwt_str";
+    public static final String USER = "user";
+    String jwt;
+    String user;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
+        user = prefs.getString(USER, "");
+
         getData();
         getEmail();
 
@@ -89,12 +102,12 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     }
 
     public void OnAccountAvailable (Customer customer){
-        account_email.setText("284");
+        account_email.setText(user);
     }
 
     public void getEmail(){
         AccountGetTask accounttask = new AccountGetTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/" + user, jwt};
         accounttask.execute(urls3);
     }
 
@@ -132,7 +145,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     /////////
 
     public void getData() {
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/orders/284"};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/orders/" + user, jwt};
 
         RegisterGetTask g = new RegisterGetTask(this);
         g.execute(urls);
@@ -197,7 +210,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         Log.i(TAG, account);
 
         PendingGetTask customer = new PendingGetTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + account};
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + account, jwt};
         customer.execute(urls3);
     }
 

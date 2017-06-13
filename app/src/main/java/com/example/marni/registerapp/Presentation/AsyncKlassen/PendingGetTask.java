@@ -52,6 +52,7 @@ public class PendingGetTask extends AsyncTask<String, Void, String> {
             httpConnection.setAllowUserInteraction(false);
             httpConnection.setInstanceFollowRedirects(true);
             httpConnection.setRequestMethod("GET");
+            httpConnection.setRequestProperty("Authorization", "Bearer " + params[1]);
 
             httpConnection.connect();
 
