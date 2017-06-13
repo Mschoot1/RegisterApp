@@ -84,7 +84,7 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
         }
 
         viewHolder.textViewName.setText(product.getName());
-        viewHolder.textViewPrice.setText("€ "+formatter2.format(product.getPrice()));
+        viewHolder.textViewPrice.setText("€ " +formatter2.format(product.getPrice()));
         viewHolder.textViewSize.setText(product.getSize()+" ML");
 
         if(product.getAlcohol_percentage()==0) {

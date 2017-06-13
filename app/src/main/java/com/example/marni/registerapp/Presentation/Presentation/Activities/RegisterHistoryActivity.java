@@ -226,7 +226,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         Log.i(TAG, pending + "");
 
         if(pending == 2){
-            Toast.makeText(this, "The customer has cancelled his order.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Customer scanned but order was cancelled by register", Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), OrderDetailActivity.class);
             intent.putExtra("ACCOUNT", orderId);

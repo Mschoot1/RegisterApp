@@ -176,7 +176,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     @Override
     public void onPendingAvailable(Order order) {
         pending = order.getPending();
-        Log.i("test", pending + "");
+        Log.i("OrderDetailActivity", pending + "");
         if(pending == 1){
             Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
             intent.putExtra("ORDERID", orderid);
