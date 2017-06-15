@@ -97,7 +97,7 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
                 try {
                     isoDep.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "doInBackground IOException " + e.getLocalizedMessage());
                 }
             }
         }
