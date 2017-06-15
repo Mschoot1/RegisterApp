@@ -25,6 +25,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask.getStringFromInputStream;
+
 public class RegisterGetTask extends AsyncTask<String, Void, String> {
 
     private final String tag = getClass().getSimpleName();
@@ -86,33 +88,6 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
         return response;
     }
 
-    private static String getStringFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return sb.toString();
-    }
 
     private OnRandomRegisterAvailable listener = null;
 

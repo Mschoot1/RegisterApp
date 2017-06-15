@@ -93,6 +93,8 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Error communicating with card: " + e.toString());
+            } finally {
+
             }
         }
     }
