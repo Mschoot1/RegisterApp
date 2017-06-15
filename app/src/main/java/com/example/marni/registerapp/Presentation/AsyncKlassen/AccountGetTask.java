@@ -8,26 +8,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.marni.registerapp.Presentation.Domain.Customer;
-import com.example.marni.registerapp.Presentation.Domain.Deviceinformation;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.example.marni.registerapp.Presentation.Domain.Deviceinformation;
-import com.example.marni.registerapp.Presentation.Domain.Product;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +27,7 @@ import java.net.URLConnection;
  */
 
 public class AccountGetTask extends AsyncTask<String, Void, String> {
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
     private OnAccountAvailable listener = null;
 
     public AccountGetTask(OnAccountAvailable listener) {
@@ -68,7 +48,7 @@ public class AccountGetTask extends AsyncTask<String, Void, String> {
         // Het resultaat dat we gaan retourneren
         String response = "";
 
-        Log.i(TAG, "doInBackground - " + orderUrl);
+        Log.i(tag, "doInBackground - " + orderUrl);
         try {
             // Maak een URL object
             URL url = new URL(orderUrl);
@@ -94,15 +74,15 @@ public class AccountGetTask extends AsyncTask<String, Void, String> {
             if (responsCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
-                // Log.i(TAG, "doInBackground response = " + response);
+                // Log.i(tag, "doInBackground response = " + response);
             } else {
-                Log.e(TAG, "Error, invalid response");
+                Log.e(tag, "Error, invalid response");
             }
         } catch (MalformedURLException e) {
-            Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e("TAG", "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         }
         return response;
@@ -130,11 +110,11 @@ public class AccountGetTask extends AsyncTask<String, Void, String> {
 
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(tag, "onPostExecute JSONException " + e.getLocalizedMessage());
         }
     }
 
-    private static String getStringFromInputStream(InputStream is) {
+    public static String getStringFromInputStream(InputStream is) {
 
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
@@ -148,13 +128,13 @@ public class AccountGetTask extends AsyncTask<String, Void, String> {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("", "getStringFromInputStream " + e.getLocalizedMessage());
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("", "getStringFromInputStream " + e.getLocalizedMessage());
                 }
             }
         }

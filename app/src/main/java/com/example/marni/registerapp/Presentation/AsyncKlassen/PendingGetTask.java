@@ -22,6 +22,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask.getStringFromInputStream;
+
 public class PendingGetTask extends AsyncTask<String, Void, String> {
 
     private final String TAG = getClass().getSimpleName();
@@ -32,6 +34,7 @@ public class PendingGetTask extends AsyncTask<String, Void, String> {
         this.listener = listener;
     }
 
+    @Override
     protected String doInBackground(String... params) {
 
         InputStream inputStream = null;
@@ -104,34 +107,6 @@ public class PendingGetTask extends AsyncTask<String, Void, String> {
         } catch (JSONException ex) {
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
         }
-    }
-
-    private static String getStringFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return sb.toString();
     }
 
     public interface OnPendingAvailable {

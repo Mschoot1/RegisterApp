@@ -84,7 +84,8 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         viewHolder.textViewPrice.setText("€ "+formatter2.format(product.getPrice()));
         viewHolder.textViewSize.setText(product.getSize()+" ML");
         viewHolder.textViewQuantity.setText(product.getQuantity()+"");
-        if(product.getAlcohol_percentage()==0) {
+
+        if (Double.compare(product.getAlcohol_percentage(), 0.0) == 1) {
             viewHolder.textViewAlcohol.setText("");
         }else{
             viewHolder.textViewAlcohol.setText(formatter.format(product.getAlcohol_percentage()) + "% Alc.");

@@ -42,15 +42,14 @@ import java.util.HashMap;
 public class RegisterHistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoyaltyCardReader.AccountCallback,
         RegisterGetTask.OnRandomRegisterAvailable,AdapterView.OnItemClickListener, AccountGetTask.OnAccountAvailable, PendingGetTask.OnPendingAvailable, OrderPendingPutTask.PutSuccessListener {
 
-
     private final String TAG = getClass().getSimpleName();
     public static final String ORDER = "ORDER";
     ListView mListViewOrders;
     RegisterHistoryAdapter mCostumAdapter;
     private ArrayList<Register> mOrderArrayList = new ArrayList<>();
 
-    public static int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
-    public LoyaltyCardReader mLoyaltyCardReader;
+    private static final int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
+    private LoyaltyCardReader mLoyaltyCardReader;
     private TextView account_email;
 
     private int pending;

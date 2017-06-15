@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class RegisterGetTask extends AsyncTask<String, Void, String> {
 
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     public RegisterGetTask(OnRandomRegisterAvailable listener) {
         this.listener = listener;
@@ -43,7 +43,7 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
         // Het resultaat dat we gaan retourneren
         String response = "";
 
-        Log.i(TAG, "doInBackground - " + orderUrl);
+        Log.i(tag, "doInBackground - " + orderUrl);
         try {
             // Maak een URL object
             URL url = new URL(orderUrl);
@@ -69,15 +69,15 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
             if (responsCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
-                // Log.i(TAG, "doInBackground response = " + response);
+                // Log.i(tag, "doInBackground response = " + response);
             } else {
-                Log.e(TAG, "Error, invalid response");
+                Log.e(tag, "Error, invalid response");
             }
         } catch (MalformedURLException e) {
-            Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e("TAG", "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         }
 
@@ -119,11 +119,11 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String response) {
 
-        Log.i(TAG, "onPostExecute " + response);
+        Log.i(tag, "onPostExecute " + response);
 
         // Check of er een response is
         if(response == null || response == "") {
-            Log.e(TAG, "onPostExecute kreeg een lege response!");
+            Log.e(tag, "onPostExecute kreeg een lege response!");
             return;
         }
 
@@ -155,9 +155,9 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
             }
 
         } catch( JSONException ex) {
-            Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
+            Log.e(tag, "onPostExecute JSONException " + ex.getLocalizedMessage());
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e(tag, "onPostExecute ParseException " + e.getLocalizedMessage());
         }
     }
 

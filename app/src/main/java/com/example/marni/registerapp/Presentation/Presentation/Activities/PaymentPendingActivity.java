@@ -29,11 +29,12 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     private int customerId;
     private Boolean cancel;
 
-    public static int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
-    public LoyaltyCardReader mLoyaltyCardReader;
+    private static final int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
+    private LoyaltyCardReader mLoyaltyCardReader;
 
     public static final String JWT_STR = "jwt_str";
     public static final String USER = "user";
+
     String jwt;
     String user;
 

@@ -19,7 +19,7 @@ import java.net.URLConnection;
 
 public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
 
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     private PutSuccessListener listener;
 
@@ -35,7 +35,7 @@ public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
 
         Boolean response = null;
 
-        Log.i(TAG, "doInBackground - " + balanceUrl);
+        Log.i(tag, "doInBackground - " + balanceUrl);
         try {
             URL url = new URL(balanceUrl);
             URLConnection urlConnection = url.openConnection();
@@ -54,7 +54,7 @@ public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
             jsonParam.put("pending", params[1]);
             jsonParam.put("order_id", params[2]);
 
-            Log.i(TAG, String.valueOf(jsonParam));
+            Log.i(tag, String.valueOf(jsonParam));
 
             DataOutputStream localDataOutputStream = new DataOutputStream(httpConnection.getOutputStream());
             localDataOutputStream.writeBytes(jsonParam.toString());
@@ -65,13 +65,13 @@ public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
             responseCode = httpConnection.getResponseCode();
             response = (responseCode == HttpURLConnection.HTTP_OK);
         } catch (MalformedURLException e) {
-            Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e(TAG, "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(tag, "onPostExecute JSONException " + e.getLocalizedMessage());
         }
 
         return response;

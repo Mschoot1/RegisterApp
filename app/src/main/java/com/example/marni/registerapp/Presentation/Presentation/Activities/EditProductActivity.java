@@ -116,7 +116,7 @@ public class EditProductActivity extends AppCompatActivity implements
         etSize.setText(size);
         etAlcohol.setText(alcohol);
 
-        if (product.getAlcohol_percentage() == 0) {
+        if (Double.compare(product.getAlcohol_percentage(), 0.0) == 1) {
             etAlcohol.setEnabled(false);
         }
 
