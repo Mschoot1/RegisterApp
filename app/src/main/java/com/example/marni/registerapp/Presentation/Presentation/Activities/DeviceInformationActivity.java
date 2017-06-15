@@ -1,7 +1,9 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -39,10 +41,17 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     public static final String CUSTOMERID = "CUSTOMERID";
     public static final String REGISTER = "REGISTER";
 
+    public static final String JWT_STR = "jwt_str";
+    String jwt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
 
         Intent intent = getIntent();
         String checkFlag = intent.getStringExtra("flag");
@@ -97,7 +106,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     }
 
     public void getDeviceInformation(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/customer/"+customerid+"/device/"};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/customer/"+customerid+"/device/", jwt};
         Log.i(TAG,customerid+"customerid");
 
         DeviceInformationGetTask g = new DeviceInformationGetTask(this);
@@ -109,7 +118,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
     }
 
     public void getAccount(){
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/"+customerid};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/"+customerid, jwt};
         Log.i(TAG,customerid+"customerid");
 
         AccountGetTask e = new AccountGetTask(this);
@@ -118,7 +127,6 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG,"TESTEN HAHA");
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();

@@ -13,44 +13,33 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
-import static android.content.ContentValues.TAG;
-
-import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 import com.example.marni.registerapp.Presentation.Presentation.Activities.LogInActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-
 import static android.content.ContentValues.TAG;
+import static com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask.getStringFromInputStream;
 
 /**
  * Created by marni on 4-5-2017.
  */
 
 @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-public class LoginTask extends AsyncTask<String, Void, Boolean> {
+public class LoginTask extends AsyncTask<String, Void, String> {
 
     private SuccessListener listener;
+    private final String tag = getClass().getSimpleName();
 
     private ProgressDialog dialog;
+
+    public static final String UNAUTHORIZED = "Unauthorized";
 
     public LoginTask(LogInActivity activity) {
 
@@ -66,14 +55,15 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
 
 
     @Override
-    protected Boolean doInBackground(String... params) {
+    protected String doInBackground(String... params) {
 
+        InputStream inputStream = null;
         int responseCode;
         String balanceUrl = params[0];
 
-        Boolean response = null;
+        String response = null;
 
-        Log.i(TAG, "doInBackground - " + balanceUrl);
+        Log.i(tag, "doInBackground - " + balanceUrl);
         try {
             URL url = new URL(balanceUrl);
             URLConnection urlConnection = url.openConnection();
@@ -93,7 +83,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
             jsonParam.put("email", params[1]);
             jsonParam.put("password", params[2]);
 
-            Log.i(TAG, String.valueOf(jsonParam));
+            Log.i(tag, String.valueOf(jsonParam));
 
             DataOutputStream localDataOutputStream = new DataOutputStream(httpConnection.getOutputStream());
             localDataOutputStream.writeBytes(jsonParam.toString());
@@ -102,29 +92,36 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
             httpConnection.connect();
 
             responseCode = httpConnection.getResponseCode();
-            response = (responseCode == HttpURLConnection.HTTP_OK);
-        } catch (MalformedURLException e) {
-            Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                inputStream = httpConnection.getInputStream();
+                response = getStringFromInputStream(inputStream).replace("\"", "");
+            } else {
+                response = UNAUTHORIZED;
+            }        } catch (MalformedURLException e) {
+            Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e(TAG, "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(tag, "onPostExecute JSONException " + e.getLocalizedMessage());
         }
 
         return response;
     }
 
-    protected void onPostExecute(Boolean response) {
+    protected void onPostExecute(String response) {
+
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
+        Log.i(tag, "response: " + response);
+
         listener.successful(response);
     }
 
     public interface SuccessListener {
-        void successful(Boolean successful);
+        void successful(String response);
     }
 }
 

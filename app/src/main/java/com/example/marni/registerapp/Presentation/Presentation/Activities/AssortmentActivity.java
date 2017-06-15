@@ -1,7 +1,9 @@
 package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,10 +49,20 @@ public class AssortmentActivity extends AppCompatActivity implements
     AssortmentListViewAdapter assortmentListViewAdapter;
     private ArrayList<Product> mProductArrayList = new ArrayList<>();
 
+    public static final String JWT_STR = "jwt_str";
+    public static final String USER = "user";
+    String jwt;
+    String user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assortment);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        jwt = prefs.getString(JWT_STR, "");
+        user = prefs.getString(USER, "");
 
         getEmail();
 
@@ -122,18 +134,18 @@ public class AssortmentActivity extends AppCompatActivity implements
     }
 
     public void OnAccountAvailable (Customer customer){
-        account_email.setText("284");
+        account_email.setText(user);
     }
 
     public void getEmail(){
         AccountGetTask accounttask = new AccountGetTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/284"};
+        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/" + user, jwt};
         accounttask.execute(urls3);
     }
 
     public void getAssortment(){
         AssortmentGetTask assortmentGetTask = new AssortmentGetTask(this);
-        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/products"};
+        String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/products", jwt};
         assortmentGetTask.execute(urls);
 
     }

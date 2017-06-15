@@ -22,9 +22,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask.getStringFromInputStream;
+
 public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
 
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     private OnCustomerIdAvailable listener = null;
 
@@ -32,6 +34,7 @@ public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
         this.listener = listener;
     }
 
+    @Override
     protected String doInBackground(String... params) {
 
         InputStream inputStream = null;
@@ -39,7 +42,7 @@ public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
         String personUrl = params[0];
         String response = "";
 
-        Log.i(TAG, "doInBackground - " + personUrl);
+        Log.i(tag, "doInBackground - " + personUrl);
         try {
             URL url = new URL(personUrl);
             URLConnection urlConnection = url.openConnection();
@@ -52,6 +55,7 @@ public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
             httpConnection.setAllowUserInteraction(false);
             httpConnection.setInstanceFollowRedirects(true);
             httpConnection.setRequestMethod("GET");
+            httpConnection.setRequestProperty("Authorization", "Bearer " + params[1]);
 
             httpConnection.connect();
 
@@ -60,13 +64,13 @@ public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
             } else {
-                Log.e(TAG, "Error, invalid response");
+                Log.e(tag, "Error, invalid response");
             }
         } catch (MalformedURLException e) {
-            Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e(TAG, "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         }
 
@@ -75,10 +79,10 @@ public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String response) {
 
-        Log.i(TAG, "onPostExecute " + response);
+        Log.i(tag, "onPostExecute " + response);
 
         if (response == null || response == "") {
-            Log.e(TAG, "onPostExecute kreeg een lege response!");
+            Log.e(tag, "onPostExecute kreeg een lege response!");
             return;
         }
 
@@ -86,7 +90,7 @@ public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("results");
 
-            Log.i(TAG, "results.length(): " + jsonArray.length());
+            Log.i(tag, "results.length(): " + jsonArray.length());
 
             for (int idx = 0; idx < jsonArray.length(); idx++) {
                 JSONObject order = jsonArray.getJSONObject(idx);
@@ -101,36 +105,8 @@ public class GetCustomerfromOrderTask extends AsyncTask<String, Void, String> {
                 listener.onCustomerIdAvailable(o);
             }
         } catch (JSONException ex) {
-            Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
+            Log.e(tag, "onPostExecute JSONException " + ex.getLocalizedMessage());
         }
-    }
-
-    private static String getStringFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return sb.toString();
     }
 
     public interface OnCustomerIdAvailable {

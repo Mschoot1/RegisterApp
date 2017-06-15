@@ -1,6 +1,5 @@
 package com.example.marni.registerapp.Presentation.AsyncKlassen;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -19,9 +18,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static com.example.marni.registerapp.Presentation.AsyncKlassen.AccountGetTask.getStringFromInputStream;
+
 public class AllergiesGetTask extends AsyncTask<String, Void, String> {
 
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     private OnAllergyAvailable listener = null;
 
@@ -39,7 +40,7 @@ public class AllergiesGetTask extends AsyncTask<String, Void, String> {
         // Het resultaat dat we gaan retourneren
         String response = "";
 
-        Log.i(TAG, "doInBackground - " + personUrl);
+        Log.i(tag, "doInBackground - " + personUrl);
         try {
             // Maak een URL object
             URL url = new URL(personUrl);
@@ -54,6 +55,7 @@ public class AllergiesGetTask extends AsyncTask<String, Void, String> {
             HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
             httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             httpConnection.setRequestMethod("GET");
+            httpConnection.setRequestProperty("Authorization", "Bearer " + params[1]);
 
             // Voer het request uit via de HTTP connectie op de URL
             httpConnection.connect();
@@ -63,15 +65,15 @@ public class AllergiesGetTask extends AsyncTask<String, Void, String> {
             if (responsCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
-                // Log.i(TAG, "doInBackground response = " + response);
+                // Log.i(tag, "doInBackground response = " + response);
             } else {
-                Log.e(TAG, "Error, invalid response");
+                Log.e(tag, "Error, invalid response");
             }
         } catch (MalformedURLException e) {
-            Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e("TAG", "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e("tag", "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         }
 
@@ -101,42 +103,12 @@ public class AllergiesGetTask extends AsyncTask<String, Void, String> {
                 listener.onAllergyAvailable(a);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-
+            Log.e(tag, "onPostExecute JSONException " + e.getLocalizedMessage());
         }
     }
 
     public interface OnAllergyAvailable {
         void onAllergyAvailable(Allergy allergy);
     }
-
-    private static String getStringFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return sb.toString();
-    }
-
 }
 

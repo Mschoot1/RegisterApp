@@ -2,7 +2,9 @@ package com.example.marni.registerapp.Presentation.Presentation.Fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,9 @@ public class CategoriesFragment extends DialogFragment implements CategoriesGetT
     CategoriesFragmentListViewAdapter adapter;
     private ArrayList<Category> categories = new ArrayList<>();
     private final String TAG = getClass().getSimpleName();
+
+    public static final String JWT_STR = "jwt_str";
+    String jwt;
 
     public CategoriesFragment() {
         // Empty constructor is required for DialogFragment
@@ -46,6 +51,9 @@ public class CategoriesFragment extends DialogFragment implements CategoriesGetT
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        jwt = prefs.getString(JWT_STR, "");
         getCategories("https://mysql-test-p4.herokuapp.com/product/categories");
 
         Activity activity = getActivity();
@@ -77,7 +85,7 @@ public class CategoriesFragment extends DialogFragment implements CategoriesGetT
 
     public void getCategories(String apiUrl){
         CategoriesGetTask categoriesGetTask = new CategoriesGetTask(this);
-        String[] urls = new String[]{apiUrl};
+        String[] urls = new String[]{apiUrl, jwt};
         categoriesGetTask.execute(urls);
     }
 

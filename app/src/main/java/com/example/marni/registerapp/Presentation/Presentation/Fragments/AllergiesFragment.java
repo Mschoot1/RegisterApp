@@ -2,7 +2,9 @@ package com.example.marni.registerapp.Presentation.Presentation.Fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +30,9 @@ public class AllergiesFragment extends DialogFragment implements AllergiesGetTas
     private ArrayList<Allergy> allergies = new ArrayList<>();
     private final String TAG = getClass().getSimpleName();
 
+    public static final String JWT_STR = "jwt_str";
+    String jwt;
+
     public AllergiesFragment() {
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
@@ -51,6 +56,9 @@ public class AllergiesFragment extends DialogFragment implements AllergiesGetTas
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        jwt = prefs.getString(JWT_STR, "");
         getAllergies("https://mysql-test-p4.herokuapp.com/product/allergies");
 
         Activity activity = getActivity();
@@ -89,7 +97,7 @@ public class AllergiesFragment extends DialogFragment implements AllergiesGetTas
 
     public void getAllergies(String apiUrl) {
         AllergiesGetTask task = new AllergiesGetTask(this);
-        String[] urls = new String[]{apiUrl};
+        String[] urls = new String[]{apiUrl, jwt};
         task.execute(urls);
     }
 
