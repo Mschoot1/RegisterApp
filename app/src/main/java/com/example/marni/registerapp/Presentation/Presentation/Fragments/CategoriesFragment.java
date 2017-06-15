@@ -72,9 +72,6 @@ public class CategoriesFragment extends DialogFragment implements CategoriesGetT
             }
         });
 
-        String title = getArguments().getString("title", "Enter Name");
-        getDialog().setTitle(title);
-
         listView.requestFocus();
     }
 

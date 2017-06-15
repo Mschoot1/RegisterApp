@@ -2,8 +2,6 @@ package com.example.marni.registerapp.Presentation.Presentation.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,14 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.marni.registerapp.Presentation.AsyncKlassen.AssortmentGetTask;
-import com.example.marni.registerapp.Presentation.AsyncKlassen.CategoriesGetTask;
 import com.example.marni.registerapp.Presentation.AsyncKlassen.ProductGenerator;
-import com.example.marni.registerapp.Presentation.Domain.Category;
-import com.example.marni.registerapp.Presentation.Domain.Order;
 import com.example.marni.registerapp.Presentation.Domain.Product;
 import com.example.marni.registerapp.Presentation.Domain.Register;
-import com.example.marni.registerapp.Presentation.Presentation.Adapters.AssortmentListViewAdapter;
 import com.example.marni.registerapp.Presentation.Presentation.Adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.Presentation.Presentation.Fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
@@ -28,13 +21,7 @@ import java.util.ArrayList;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.example.marni.registerapp.Presentation.Presentation.Activities.DeviceInformationActivity.REGISTER;
-import static com.example.marni.registerapp.Presentation.Presentation.Activities.RegisterHistoryActivity.ORDER;
-
-/**
- * Created by Wallaard on 17-5-2017.
- */
 
 public class RegisterHistoryDetailActivity extends AppCompatActivity implements CategoriesFragment.OnItemSelected, ProductGenerator.OnAvailable {
     private final String TAG = getClass().getSimpleName();
