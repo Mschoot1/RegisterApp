@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Activities;
+package com.example.marni.registerapp.presentation.presentation.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +20,8 @@ import static com.example.marni.registerapp.presentation.asyncklassen.LoginTask.
 import com.example.marni.registerapp.R;
 
 public class LogInActivity extends AppCompatActivity implements LoginTask.SuccessListener {
-    private EditText editTextEmail, editTextPassword;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
     public static final String JWT_STR = "jwt_str";
     public static final String USER = "user";
 
@@ -35,7 +36,7 @@ public class LogInActivity extends AppCompatActivity implements LoginTask.Succes
 
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
-            public void onClick(View V) {
+            public void onClick(View v) {
                 login("https://mysql-test-p4.herokuapp.com/loginRegister");
             }
         });
@@ -61,11 +62,11 @@ public class LogInActivity extends AppCompatActivity implements LoginTask.Succes
     }
 
 
-    void login(String ApiUrl) {
+    void login(String apiUrl) {
 
         LoginTask task = new LoginTask(this);
         String[] urls = new String[]{
-                ApiUrl, editTextEmail.getText().toString(), editTextPassword.getText().toString(),
+                apiUrl, editTextEmail.getText().toString(), editTextPassword.getText().toString(),
         };
         task.execute(urls);
     }

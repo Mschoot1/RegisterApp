@@ -1,7 +1,7 @@
 package com.example.marni.registerapp.presentation.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Wallaard on 11-5-2017.
@@ -11,10 +11,10 @@ public class Order implements Serializable {
 
     private int orderId;
     private int customerid;
-    private int Status;
+    private int status;
     private String dateTime;
     private double totalPrice;
-    private ArrayList<Product> products;
+    private List<Product> products;
     private int pending;
 
     public int getPending() {
@@ -24,13 +24,6 @@ public class Order implements Serializable {
     public void setPending(int pending) {
         this.pending = pending;
     }
-    //    public Order(int orderId, int status, String dateTime, double totalPrice, int customerid) {
-//        this.orderId = orderId;
-//        Status = status;
-//        this.dateTime = dateTime;
-//        this.totalPrice = totalPrice;
-//        this.customerid = customerid;
-//    }
 
     public double getTotalPrice() {
         return totalPrice;
@@ -53,11 +46,11 @@ public class Order implements Serializable {
     }
 
     public int getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(int status) {
-        Status = status;
+        this.status = status;
     }
 
     public String getDateTime() {
@@ -73,11 +66,11 @@ public class Order implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 }

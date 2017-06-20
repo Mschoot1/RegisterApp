@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Activities;
+package com.example.marni.registerapp.presentation.presentation.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.example.marni.registerapp.presentation.asyncklassen.ProductGenerator;
 import com.example.marni.registerapp.presentation.domain.Product;
 import com.example.marni.registerapp.presentation.domain.Register;
-import com.example.marni.registerapp.presentation.presentation.Adapters.ProductsListViewAdapter;
-import com.example.marni.registerapp.presentation.presentation.Fragments.CategoriesFragment;
+import com.example.marni.registerapp.presentation.presentation.adapters.ProductsListViewAdapter;
+import com.example.marni.registerapp.presentation.presentation.fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
 
 import java.text.DecimalFormat;
@@ -23,27 +23,25 @@ import java.util.ArrayList;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-import static com.example.marni.registerapp.presentation.presentation.Activities.DeviceInformationActivity.REGISTER;
+import static com.example.marni.registerapp.presentation.presentation.activities.DeviceInformationActivity.REGISTER;
 
 public class RegisterHistoryDetailActivity extends AppCompatActivity implements CategoriesFragment.OnItemSelected, ProductGenerator.OnAvailable {
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
     DecimalFormat formatter = new DecimalFormat("#0.00");
     private TextView textViewTotal;
-    private ProductsListViewAdapter productAdapter;
     private ArrayList<Product> productsList = new ArrayList<>();
     private double priceTotal;
-    private Button deviceinfobutton;
     private StickyListHeadersListView stickyList;
-    private String orderid;
+
 
     public static final String JWT_STR = "jwt_str";
     String jwt;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_order_history_single_item);
-
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -57,9 +55,9 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
         Intent intent = getIntent();
         final Register register = (Register) intent.getSerializableExtra("ORDER");
 
-        orderid = String.valueOf(register.getOrderId());
+        String orderid = String.valueOf(register.getOrderId());
 
-        deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton2);
+        Button deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton2);
         deviceinfobutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +68,6 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
                 startActivity(intent);
             }
         });
-        //
 
         getProducts(orderid);
         textViewTotal = (TextView) findViewById(R.id.totalprice);
@@ -80,11 +77,11 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
     }
 
     //GET klassen producten hieronder
-    public void OnAvailable(Product product) {
+    public void onAvailable(Product product) {
         productsList.add(product);
         getPriceTotal(product);
 
-        productAdapter = new ProductsListViewAdapter(this,this, getLayoutInflater(), productsList);
+        ProductsListViewAdapter productAdapter = new ProductsListViewAdapter(this,this, getLayoutInflater(), productsList);
         stickyList.setAdapter(productAdapter);
         productAdapter.notifyDataSetChanged();
 
@@ -111,8 +108,8 @@ public class RegisterHistoryDetailActivity extends AppCompatActivity implements 
 
         for(Product p : productsList){
             j++;
-            Log.i(TAG, "j: " + j);
-            Log.i(TAG, "i: " + i);
+            Log.i(tag, "j: " + j);
+            Log.i(tag, "i: " + i);
             if(p.getCategoryId()==i){
                 stickyList.setSelection(j);
                 break;

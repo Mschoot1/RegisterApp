@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Adapters;
+package com.example.marni.registerapp.presentation.presentation.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,19 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.presentation.domain.Allergy;
-import com.example.marni.registerapp.presentation.presentation.Fragments.AllergiesFragment;
+import com.example.marni.registerapp.presentation.presentation.fragments.AllergiesFragment;
 import com.example.marni.registerapp.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class AllergiesFragmentListViewAdapter extends BaseAdapter {
 
     private final Context context;
     private AllergiesFragment allergiesFragment;
     private LayoutInflater layoutInflater;
-    private ArrayList<Allergy> allergies;
+    private List<Allergy> allergies;
 
-    public AllergiesFragmentListViewAdapter(Activity activity, AllergiesFragment allergiesFragment, LayoutInflater layoutInflater, ArrayList<Allergy> allergies) {
+    public AllergiesFragmentListViewAdapter(Activity activity, AllergiesFragment allergiesFragment, LayoutInflater layoutInflater, List<Allergy> allergies) {
         this.context = activity.getApplicationContext();
         this.allergiesFragment = allergiesFragment;
         this.layoutInflater = layoutInflater;
@@ -47,25 +47,26 @@ public class AllergiesFragmentListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
         final ViewHolder viewHolder;
 
         final Allergy allergy = allergies.get(position);
 
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.allergy_item, parent, false);
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.allergy_item, parent, false);
 
             viewHolder = new ViewHolder();
-            viewHolder.textViewCategory = (TextView) convertView.findViewById(R.id.textView_allergy_description);
-            viewHolder.imageViewAllergyIcon = (ImageView) convertView.findViewById(R.id.imageViewAllergyIcon);
-            viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBoxAllergy);
+            viewHolder.textViewCategory = (TextView)view.findViewById(R.id.textView_allergy_description);
+            viewHolder.imageViewAllergyIcon = (ImageView) view.findViewById(R.id.imageViewAllergyIcon);
+            viewHolder.checkBox = (CheckBox) view.findViewById(R.id.checkBoxAllergy);
 
-            convertView.setTag(viewHolder);
+            view.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.textViewCategory.setText(allergy.getInformationText());
 
-        String imageName = "@mipmap/" + String.valueOf(allergy.getImage_url());
+        String imageName = "@mipmap/" + allergy.getImageurl();
         int imageId = context.getResources().getIdentifier(imageName, null, context.getPackageName());
         viewHolder.imageViewAllergyIcon.setImageResource(imageId);
 
@@ -77,7 +78,7 @@ public class AllergiesFragmentListViewAdapter extends BaseAdapter {
             }
         });
 
-        return convertView;
+        return view;
     }
 
     private static class ViewHolder {

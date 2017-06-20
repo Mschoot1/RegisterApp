@@ -23,7 +23,7 @@ import static com.example.marni.registerapp.presentation.asyncklassen.AccountGet
 
 public class PendingGetTask extends AsyncTask<String, Void, String> {
 
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     private OnPendingAvailable listener = null;
 
@@ -39,7 +39,7 @@ public class PendingGetTask extends AsyncTask<String, Void, String> {
         String personUrl = params[0];
         String response = "";
 
-        Log.i(TAG, "doInBackground - " + personUrl);
+        Log.i(tag, "doInBackground - " + personUrl);
         try {
             URL url = new URL(personUrl);
             URLConnection urlConnection = url.openConnection();
@@ -61,25 +61,26 @@ public class PendingGetTask extends AsyncTask<String, Void, String> {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
             } else {
-                Log.e(TAG, "Error, invalid response");
+                Log.e(tag, "Error, invalid response");
             }
         } catch (MalformedURLException e) {
-            Log.e(TAG, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
             return null;
         } catch (IOException e) {
-            Log.e(TAG, "doInBackground IOException " + e.getLocalizedMessage());
+            Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
             return null;
         }
 
         return response;
     }
 
+    @Override
     protected void onPostExecute(String response) {
 
-        Log.i(TAG, "onPostExecute " + response);
+        Log.i(tag, "onPostExecute " + response);
 
         if (response == null || response == "") {
-            Log.e(TAG, "onPostExecute kreeg een lege response!");
+            Log.e(tag, "onPostExecute kreeg een lege response!");
             return;
         }
 
@@ -87,7 +88,7 @@ public class PendingGetTask extends AsyncTask<String, Void, String> {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("results");
 
-            Log.i(TAG, "results.length(): " + jsonArray.length());
+            Log.i(tag, "results.length(): " + jsonArray.length());
 
             for (int idx = 0; idx < jsonArray.length(); idx++) {
                 JSONObject order = jsonArray.getJSONObject(idx);
@@ -102,7 +103,7 @@ public class PendingGetTask extends AsyncTask<String, Void, String> {
                 listener.onPendingAvailable(o);
             }
         } catch (JSONException ex) {
-            Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
+            Log.e(tag, "onPostExecute JSONException " + ex.getLocalizedMessage());
         }
     }
 

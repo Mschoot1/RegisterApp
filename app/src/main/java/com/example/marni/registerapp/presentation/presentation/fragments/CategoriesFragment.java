@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Fragments;
+package com.example.marni.registerapp.presentation.presentation.fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -19,12 +19,12 @@ import com.example.marni.registerapp.presentation.domain.Category;
 import com.example.marni.registerapp.R;
 import java.util.ArrayList;
 
-import com.example.marni.registerapp.presentation.presentation.Adapters.CategoriesFragmentListViewAdapter;
+import com.example.marni.registerapp.presentation.presentation.adapters.CategoriesFragmentListViewAdapter;
 
 public class CategoriesFragment extends DialogFragment implements CategoriesGetTask.OnCategoryAvailable {
     CategoriesFragmentListViewAdapter adapter;
     private ArrayList<Category> categories = new ArrayList<>();
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     public static final String JWT_STR = "jwt_str";
     String jwt;
@@ -65,7 +65,7 @@ public class CategoriesFragment extends DialogFragment implements CategoriesGetT
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "GELUKT");
+                Log.i(tag, "GELUKT");
                 dismiss();
             }
         });

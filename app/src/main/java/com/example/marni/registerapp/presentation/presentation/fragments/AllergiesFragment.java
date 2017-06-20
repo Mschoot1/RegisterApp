@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Fragments;
+package com.example.marni.registerapp.presentation.presentation.fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -16,18 +16,19 @@ import android.widget.ListView;
 
 import com.example.marni.registerapp.presentation.asyncklassen.AllergiesGetTask;
 import com.example.marni.registerapp.presentation.domain.Allergy;
-import com.example.marni.registerapp.presentation.presentation.Adapters.AllergiesFragmentListViewAdapter;
+import com.example.marni.registerapp.presentation.presentation.adapters.AllergiesFragmentListViewAdapter;
 import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AllergiesFragment extends DialogFragment implements AllergiesGetTask.OnAllergyAvailable, View.OnClickListener {
 
-    private static ArrayList<Allergy> aa;
+    private static List<Allergy> aa;
 
     private AllergiesFragmentListViewAdapter adapter;
-    private ArrayList<Allergy> allergies = new ArrayList<>();
-    private final String TAG = getClass().getSimpleName();
+    private List<Allergy> allergies = new ArrayList<>();
+    private final String tag = getClass().getSimpleName();
 
     public static final String JWT_STR = "jwt_str";
     String jwt;
@@ -38,7 +39,7 @@ public class AllergiesFragment extends DialogFragment implements AllergiesGetTas
         // Use `newInstance` instead as shown below
     }
 
-    public static AllergiesFragment newInstance(ArrayList<Allergy> allergies) {
+    public static AllergiesFragment newInstance(List<Allergy> allergies) {
         AllergiesFragment frag = new AllergiesFragment();
         Bundle args = new Bundle();
         aa = allergies;
@@ -109,12 +110,12 @@ public class AllergiesFragment extends DialogFragment implements AllergiesGetTas
 
     @Override
     public void onClick(View v) {
-        Log.i(TAG, "GELUKT");
+        Log.i(tag, "GELUKT");
         dismiss();
     }
 
     public interface OnItemsSelected {
-        void onItemsSelected(ArrayList<Allergy> allergies);
+        void onItemsSelected(List<Allergy> allergies);
     }
 
     private void setCurrentAllergiesChecked() {

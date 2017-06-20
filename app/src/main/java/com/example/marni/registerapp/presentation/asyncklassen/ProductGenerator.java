@@ -30,7 +30,7 @@ public class ProductGenerator extends AsyncTask<String,Void,String>{
     }
 
     public interface OnAvailable{
-        void OnAvailable(Product product);
+        void onAvailable(Product product);
     }
 
     @Override
@@ -69,7 +69,6 @@ public class ProductGenerator extends AsyncTask<String,Void,String>{
             if (responsCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
-                // Log.i(tag, "doInBackground response = " + response);
             } else {
                 Log.e(tag, "Error, invalid response");
             }
@@ -112,14 +111,14 @@ public class ProductGenerator extends AsyncTask<String,Void,String>{
                 p.setPrice(price);
                 p.setSize(size);
                 p.setQuantity(quantity);
-                p.setAlcohol_percentage(alcohol);
+                p.setAlcoholpercentage(alcohol);
                 p.setCategoryName(categoryName);
                 p.setCategoryId(categoryId);
                 p.setImagesrc(imagesrc);
 
                 //,string2,string3,string4
 
-                listener.OnAvailable(p);
+                listener.onAvailable(p);
 
             }
         } catch (JSONException e) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.marni.registerapp.Presentation.Presentation.Activities.AddProductActivity">
+    tools:context="com.example.marni.registerapp.presentation.presentation.activities.AddProductActivity">
 
     <include
         android:id="@+id/toolbar_include"
@@ -94,15 +94,15 @@
         android:id="@+id/alcohol_percentagetext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/alcohol_percentage"
-        android:layout_alignBottom="@+id/alcohol_percentage"
+        android:layout_alignBaseline="@+id/alcoholpercentage"
+        android:layout_alignBottom="@+id/alcoholpercentage"
         android:layout_alignStart="@+id/sizetext"
         android:text="Alcohol %"
         android:textColor="@color/black_text"
         android:textSize="@dimen/textsizeProduct" />
 
     <EditText
-        android:id="@+id/alcohol_percentage"
+        android:id="@+id/alcoholpercentage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/size"
@@ -126,9 +126,9 @@
         android:id="@+id/category_spinner"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/alcohol_percentage"
-        android:layout_alignStart="@+id/alcohol_percentage"
-        android:layout_below="@+id/alcohol_percentage"
+        android:layout_alignEnd="@+id/alcoholpercentage"
+        android:layout_alignStart="@+id/alcoholpercentage"
+        android:layout_below="@+id/alcoholpercentage"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
         android:contextClickable="true"

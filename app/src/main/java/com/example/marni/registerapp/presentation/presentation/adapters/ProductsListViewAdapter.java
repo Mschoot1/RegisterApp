@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Adapters;
+package com.example.marni.registerapp.presentation.presentation.adapters;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -11,12 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.presentation.domain.Product;
-import com.example.marni.registerapp.presentation.presentation.Fragments.CategoriesFragment;
+import com.example.marni.registerapp.presentation.presentation.fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
@@ -27,10 +27,10 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 public class ProductsListViewAdapter extends BaseAdapter implements StickyListHeadersAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<Product> products;
+    private List<Product> products;
     private Activity activity;
 
-    public ProductsListViewAdapter(Activity activity, Context context, LayoutInflater layoutInflater, ArrayList<Product> products){
+    public ProductsListViewAdapter(Activity activity, Context context, LayoutInflater layoutInflater, List<Product> products){
         this.activity = activity;
         this.context = context;
         this.layoutInflater = layoutInflater;
@@ -54,22 +54,23 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
+        View view = convertView;
         final ViewHolder viewHolder;
 
-        if (convertView == null){
-            convertView = layoutInflater.inflate(R.layout.activity_order,parent,false);
+        if (view == null){
+            view = layoutInflater.inflate(R.layout.activity_order,parent,false);
 
             viewHolder = new ViewHolder();
-            viewHolder.textViewName = (TextView) convertView.findViewById(R.id.textview_product);
-            viewHolder.textViewPrice = (TextView) convertView.findViewById(R.id.textview_price);
-            viewHolder.textViewQuantity = (TextView) convertView.findViewById(R.id.textview_quantity);
-            viewHolder.textViewSize = (TextView) convertView.findViewById(R.id.textview_size);
-            viewHolder.textViewAlcohol = (TextView) convertView.findViewById(R.id.textview_alcohol);
+            viewHolder.textViewName = (TextView) view.findViewById(R.id.textview_product);
+            viewHolder.textViewPrice = (TextView) view.findViewById(R.id.textview_price);
+            viewHolder.textViewQuantity = (TextView) view.findViewById(R.id.textview_quantity);
+            viewHolder.textViewSize = (TextView) view.findViewById(R.id.textview_size);
+            viewHolder.textViewAlcohol = (TextView) view.findViewById(R.id.textview_alcohol);
 
 
-            convertView.setTag(viewHolder);
+            view.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) view.getTag();
         }
 
         Product product = products.get(position);
@@ -77,34 +78,35 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         DecimalFormat formatter = new DecimalFormat("#0");
         DecimalFormat formatter2 = new DecimalFormat("#0.00");
 
-        Picasso.with(context).load(product.getImagesrc()).into((ImageView) convertView.findViewById(R.id.imageView_productimage));
+        Picasso.with(context).load(product.getImagesrc()).into((ImageView) view.findViewById(R.id.imageView_productimage));
         viewHolder.textViewName.setText(product.getName());
         viewHolder.textViewPrice.setText("€ "+formatter2.format(product.getPrice()));
         viewHolder.textViewSize.setText(product.getSize()+" ML");
-        viewHolder.textViewQuantity.setText(product.getQuantity()+"");
+        viewHolder.textViewQuantity.setText(Integer.toString(product.getQuantity()));
 
-        if (Double.compare(product.getAlcohol_percentage(), 0.0) == 1) {
+        if (Double.compare(product.getAlcoholpercentage(), 0.0) == 1) {
             viewHolder.textViewAlcohol.setText("");
         }else{
-            viewHolder.textViewAlcohol.setText(formatter.format(product.getAlcohol_percentage()) + "% Alc.");
+            viewHolder.textViewAlcohol.setText(formatter.format(product.getAlcoholpercentage()) + "% Alc.");
         }
 
-        return convertView;
+        return view;
 
     }
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
         HeaderViewHolder holder;
 
-        if (convertView == null) {
+        if (view== null) {
             holder = new HeaderViewHolder();
-            convertView = layoutInflater.inflate(R.layout.listview_sectionheader_products, parent, false);
-            holder.textViewCategoryTitle = (TextView) convertView.findViewById(R.id.listViewOrders_categoryname);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.imageView_filter);
-            convertView.setTag(holder);
+            view = layoutInflater.inflate(R.layout.listview_sectionheader_products, parent, false);
+            holder.textViewCategoryTitle = (TextView) view.findViewById(R.id.listViewOrders_categoryname);
+            holder.imageView = (ImageView) view.findViewById(R.id.imageView_filter);
+            view.setTag(holder);
         } else {
-            holder = (HeaderViewHolder) convertView.getTag();
+            holder = (HeaderViewHolder) view.getTag();
         }
 
         Product product = products.get(position);
@@ -117,7 +119,7 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         });
         holder.textViewCategoryTitle.setText(product.getCategoryName());
 
-        return convertView;
+        return view;
     }
 
     private class HeaderViewHolder {
@@ -143,5 +145,5 @@ public class ProductsListViewAdapter extends BaseAdapter implements StickyListHe
         CategoriesFragment alertDialog = CategoriesFragment.newInstance();
         alertDialog.show(fm, "fragment_alert");
     }
-    //
+
 }

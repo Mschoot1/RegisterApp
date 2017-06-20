@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Adapters;
+package com.example.marni.registerapp.presentation.presentation.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,17 +7,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.presentation.domain.Category;
-import com.example.marni.registerapp.presentation.presentation.Fragments.CategoriesFragment;
+import com.example.marni.registerapp.presentation.presentation.fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
-import java.util.ArrayList;
+import java.util.List;
 
 public class CategoriesFragmentListViewAdapter extends BaseAdapter {
 
     private CategoriesFragment categoriesFragment;
     private LayoutInflater layoutInflater;
-    private ArrayList<Category> categories;
+    private List<Category> categories;
 
-    public CategoriesFragmentListViewAdapter(CategoriesFragment categoriesFragment, LayoutInflater layoutInflater, ArrayList<Category> categories){
+    public CategoriesFragmentListViewAdapter(CategoriesFragment categoriesFragment, LayoutInflater layoutInflater, List<Category> categories){
         this.categoriesFragment = categoriesFragment;
         this.layoutInflater = layoutInflater;
         this.categories = categories;
@@ -40,22 +40,23 @@ public class CategoriesFragmentListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
         final ViewHolder viewHolder;
 
         Category category = categories.get(position);
 
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.category_single_item, parent, false);
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.category_single_item, parent, false);
 
             viewHolder = new ViewHolder();
-            viewHolder.textViewCategory = (TextView) convertView.findViewById(R.id.category_textview);
+            viewHolder.textViewCategory = (TextView) view.findViewById(R.id.category_textview);
 
-            convertView.setTag(viewHolder);
+            view.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.textViewCategory.setText(category.getCategoryName());
-        return convertView;
+        return view;
     }
 
     private static class ViewHolder {

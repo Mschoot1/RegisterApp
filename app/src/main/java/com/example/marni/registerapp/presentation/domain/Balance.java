@@ -5,17 +5,17 @@ package com.example.marni.registerapp.presentation.domain;
  */
 
 public class Balance {
-    private double balance;
+    private double customerbalance;
 
     public Balance(double balance) {
-        this.balance = balance;
+        this.customerbalance = balance;
     }
 
-    public double getBalance() {
-        return balance;
+    public double getCustomerbalance() {
+        return customerbalance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void setCustomerbalance(double customerbalance) {
+        this.customerbalance = customerbalance;
     }
 }

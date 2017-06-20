@@ -48,7 +48,7 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
     }
 
     public LoyaltyCardReader(AccountCallback accountCallback) {
-        mAccountCallback = new WeakReference<AccountCallback>(accountCallback);
+        mAccountCallback = new WeakReference<>(accountCallback);
     }
 
     /**
@@ -74,9 +74,9 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
                 // Build SELECT AID command for our loyalty card service.
                 // This command tells the remote device which service we wish to communicate with.
                 Log.i(TAG, "Requesting remote AID: " + SAMPLE_LOYALTY_CARD_AID);
-                byte[] command = BuildSelectApdu(SAMPLE_LOYALTY_CARD_AID);
+                byte[] command = buildSelectApdu(SAMPLE_LOYALTY_CARD_AID);
                 // Send command to remote device
-                Log.i(TAG, "Sending: " + ByteArrayToHexString(command));
+                Log.i(TAG, "Sending: " + byteArrayToHexString(command));
                 byte[] result = isoDep.transceive(command);
                 // If AID is successfully selected, 0x9000 is returned as the status word (last 2
                 // bytes of the result) by convention. Everything before the status word is
@@ -110,9 +110,9 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
      * @param aid Application ID (AID) to select
      * @return APDU for SELECT AID command
      */
-    public static byte[] BuildSelectApdu(String aid) {
+    public static byte[] buildSelectApdu(String aid) {
         // Format: [CLASS | INSTRUCTION | PARAMETER 1 | PARAMETER 2 | LENGTH | DATA]
-        return HexStringToByteArray(SELECT_APDU_HEADER + String.format("%02X", aid.length() / 2) + aid);
+        return hexStringToByteArray(SELECT_APDU_HEADER + String.format("%02X", aid.length() / 2) + aid);
     }
 
     /**
@@ -121,7 +121,7 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
      * @param bytes Bytes to convert
      * @return String, containing hexadecimal representation.
      */
-    public static String ByteArrayToHexString(byte[] bytes) {
+    public static String byteArrayToHexString(byte[] bytes) {
         final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
         char[] hexChars = new char[bytes.length * 2];
         int v;
@@ -141,7 +141,7 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
      * @param s String containing hexadecimal characters to convert
      * @return Byte array generated from input
      */
-    public static byte[] HexStringToByteArray(String s) {
+    public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {

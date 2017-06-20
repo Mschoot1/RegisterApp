@@ -41,7 +41,7 @@ public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
             URLConnection urlConnection = url.openConnection();
 
             if (!(urlConnection instanceof HttpURLConnection)) {
-                return null;
+                return false;
             }
 
             HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
@@ -66,10 +66,10 @@ public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
             response = (responseCode == HttpURLConnection.HTTP_OK);
         } catch (MalformedURLException e) {
             Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
-            return null;
+            return false;
         } catch (IOException e) {
             Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
-            return null;
+            return false;
         } catch (JSONException e) {
             Log.e(tag, "onPostExecute JSONException " + e.getLocalizedMessage());
         }
@@ -77,6 +77,7 @@ public class OrderPendingPutTask extends AsyncTask<String, Void, Boolean> {
         return response;
     }
 
+    @Override
     protected void onPostExecute(Boolean response) {
         listener.putSuccessful(response);
     }

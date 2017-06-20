@@ -5,7 +5,19 @@ package com.example.marni.registerapp.presentation.domain;
  */
 
 public class Deviceinformation {
-    String hardware,type,model,brand,device,manufacturer,user,serial,host,id,bootloader,board,display;
+    String hardware;
+    String type;
+    String model;
+    String brand;
+    String device;
+    String manufacturer;
+    String user;
+    String serial;
+    String host;
+    String id;
+    String bootloader;
+    String board;
+    String display;
 
     public Deviceinformation(String hardware, String type, String model, String brand, String device, String manufacturer, String user, String serial, String host, String id, String bootloader, String board, String display) {
         this.hardware = hardware;

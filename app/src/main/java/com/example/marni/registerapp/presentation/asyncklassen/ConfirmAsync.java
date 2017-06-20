@@ -29,17 +29,17 @@ public class ConfirmAsync extends AsyncTask<String, Void, Boolean> {
     protected Boolean doInBackground(String... params) {
 
         int responseCode;
-        String ConfirmUrl = params[0];
+        String confirmUrl = params[0];
 
         Boolean response = null;
 
-        Log.i(tag, "doInBackground - " + ConfirmUrl);
+        Log.i(tag, "doInBackground - " + confirmUrl);
         try {
-            URL url = new URL(ConfirmUrl);
+            URL url = new URL(confirmUrl);
             URLConnection urlConnection = url.openConnection();
 
             if (!(urlConnection instanceof HttpURLConnection)) {
-                return null;
+                return false;
             }
 
             HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
@@ -66,10 +66,10 @@ public class ConfirmAsync extends AsyncTask<String, Void, Boolean> {
             response = (responseCode == HttpURLConnection.HTTP_OK);
         } catch (MalformedURLException e) {
             Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
-            return null;
+            return false;
         } catch (IOException e) {
             Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
-            return null;
+            return false;
         } catch (JSONException e) {
             Log.e(tag, "onPostExecute JSONException " + e.getLocalizedMessage());
         }

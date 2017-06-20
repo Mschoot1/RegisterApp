@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Activities;
+package com.example.marni.registerapp.presentation.presentation.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,14 +16,9 @@ import com.example.marni.registerapp.presentation.asyncklassen.AccountGetTask;
 import com.example.marni.registerapp.presentation.asyncklassen.DeviceInformationGetTask;
 import com.example.marni.registerapp.presentation.domain.Customer;
 import com.example.marni.registerapp.presentation.domain.Deviceinformation;
-import com.example.marni.registerapp.presentation.domain.Order;
 import com.example.marni.registerapp.presentation.domain.Register;
 import com.example.marni.registerapp.R;
 
-import java.util.ArrayList;
-
-import static com.example.marni.registerapp.R.string.customerid;
-import static com.example.marni.registerapp.R.string.orderid;
 
 /**
  * Created by Wallaard on 16-5-2017.
@@ -31,11 +26,23 @@ import static com.example.marni.registerapp.R.string.orderid;
 
 public class DeviceInformationActivity extends AppCompatActivity implements DeviceInformationGetTask.OnDeviceInformationAvailable,
         AccountGetTask.OnAccountAvailable, NavigationView.OnNavigationItemSelectedListener {
-    private TextView email,hardware,type,model,brand,device,manufacturer,user,serial,host,id,bootloader,board,display;
-    private final String TAG = getClass().getSimpleName();
+    private TextView email;
+    private TextView hardware;
+    private TextView type;
+    private TextView model;
+    private TextView brand;
+    private TextView device;
+    private TextView manufacturer;
+    private TextView user;
+    private TextView serial;
+    private TextView host;
+    private TextView id;
+    private TextView bootloader;
+    private TextView board;
+    private TextView display;
+
+    private final String tag = getClass().getSimpleName();
     private String customerid;
-    private Register register;
-    private int order;
     public static final String CUSTOMERID = "CUSTOMERID";
     public static final String REGISTER = "REGISTER";
 
@@ -53,6 +60,9 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
 
         Intent intent = getIntent();
         String checkFlag = intent.getStringExtra("flag");
+
+        Register register;
+        int order;
 
         if(checkFlag.equals("H")) {
             register = (Register) intent.getSerializableExtra("REGISTER");
@@ -105,7 +115,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
 
     public void getDeviceInformation(){
         String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/customer/"+customerid+"/device/", jwt};
-        Log.i(TAG,customerid+"customerid");
+        Log.i(tag,customerid+"customerid");
 
         DeviceInformationGetTask g = new DeviceInformationGetTask(this);
         g.execute(urls);
@@ -117,7 +127,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
 
     public void getAccount(){
         String[] urls = new String[]{"https://mysql-test-p4.herokuapp.com/account/"+customerid, jwt};
-        Log.i(TAG,customerid+"customerid");
+        Log.i(tag,customerid+"customerid");
 
         AccountGetTask e = new AccountGetTask(this);
         e.execute(urls);
@@ -125,8 +135,8 @@ public class DeviceInformationActivity extends AppCompatActivity implements Devi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
+        int itemid = item.getItemId();
+        if (itemid == android.R.id.home) {
             finish();
             return  true;
         }

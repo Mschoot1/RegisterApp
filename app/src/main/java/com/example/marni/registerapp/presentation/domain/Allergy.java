@@ -6,17 +6,17 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class Allergy implements Serializable, Parcelable {
-    private String image_url;
+    private String imageurl;
     private String informationText;
     private Boolean checked = false;
 
-    public Allergy(String image_url, String informationText){
-        this.image_url = image_url;
+    public Allergy(String imageurl, String informationText){
+        this.imageurl = imageurl;
         this.informationText = informationText;
     }
 
     protected Allergy(Parcel in) {
-        image_url = in.readString();
+        imageurl = in.readString();
         informationText = in.readString();
     }
 
@@ -32,8 +32,8 @@ public class Allergy implements Serializable, Parcelable {
         }
     };
 
-    public String getImage_url(){
-        return image_url;
+    public String getImageurl(){
+        return imageurl;
     }
 
     public String getInformationText(){
@@ -41,7 +41,7 @@ public class Allergy implements Serializable, Parcelable {
     }
 
     public void setImage(String imageid){
-        this.image_url = imageid;
+        this.imageurl = imageid;
     }
 
     public void setInformationText(String informationText){
@@ -55,7 +55,7 @@ public class Allergy implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        throw new UnsupportedOperationException();
     }
 
     public Boolean checked() {

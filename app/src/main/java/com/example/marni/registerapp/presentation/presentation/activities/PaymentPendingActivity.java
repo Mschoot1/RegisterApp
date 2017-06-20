@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Activities;
+package com.example.marni.registerapp.presentation.presentation.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,9 +21,8 @@ import com.example.marni.registerapp.R;
 public class PaymentPendingActivity extends AppCompatActivity implements LoyaltyCardReader.AccountCallback,
         OrderPendingPutTask.PutSuccessListener,ConfirmAsync.SuccessListener, ConfirmPostAsync.SuccessListener {
 
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
-    private Button cancelButton;
     private String orderid;
     private Double priceTotal;
     private int customerId;
@@ -33,7 +32,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     private LoyaltyCardReader mLoyaltyCardReader;
 
     public static final String JWT_STR = "jwt_str";
-    public static final String USER = "user";
+    public static final String USER_KEY = "user";
 
     String jwt;
     String user;
@@ -47,7 +46,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         jwt = prefs.getString(JWT_STR, "");
-        user = prefs.getString(USER, "");
+        user = prefs.getString(USER_KEY, "");
 
         cancel = false;
         mLoyaltyCardReader = new LoyaltyCardReader(this);
@@ -59,7 +58,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         customerId = bundle.getInt("CUSTOMERID");
 
 
-        cancelButton = (Button) findViewById(R.id.payment_pending_cancel);
+        Button cancelButton = (Button) findViewById(R.id.payment_pending_cancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +84,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     }
 
     private void enableReaderMode() {
-        Log.i(TAG, "Enabling reader mode");
+        Log.i(tag, "Enabling reader mode");
         Activity activity = this;
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(activity);
         if (nfc != null) {
@@ -94,7 +93,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
     }
 
     private void disableReaderMode() {
-        Log.i(TAG, "Disabling reader mode");
+        Log.i(tag, "Disabling reader mode");
         Activity activity = this;
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(activity);
         if (nfc != null) {
@@ -110,7 +109,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
             @Override
             public void run() {
                 putOrderPendingStatus("https://mysql-test-p4.herokuapp.com/order/pending", "0", orderid);
-                Pay();
+                pay();
                 cancel = false;
             }
         });
@@ -124,17 +123,17 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
 
     @Override
     public void putSuccessful(Boolean successful) {
-        if(cancel == true){
-            Log.i(TAG, "Pending status has been changed to 2");
+        if(cancel){
+            Log.i(tag, "Pending status has been changed to 2");
             Intent intent = new Intent(this, RegisterHistoryActivity.class);
             startActivity(intent);
         } else {
-            Log.i(TAG, "Pending status has been changed to 0");
+            Log.i(tag, "Pending status has been changed to 0");
         }
     }
 
     //PUT methoden hieronder
-    public void Pay(){
+    public void pay(){
         ConfirmPostAsync confirmPostAsync = new ConfirmPostAsync(this);
         String[] urls2 = new String[]{
                 "https://mysql-test-p4.herokuapp.com/order/pay", Double.toString(priceTotal), Integer.toString(customerId), orderid, user, jwt
@@ -144,7 +143,7 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
 
     @Override
     public void successful(Boolean succesful){
-        Log.i(TAG,succesful.toString());
+        Log.i(tag,succesful.toString());
         if(succesful){
             Toast.makeText(this, "Payment succesful", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, RegisterHistoryActivity.class);

@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Adapters;
+package com.example.marni.registerapp.presentation.presentation.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +12,7 @@ import com.example.marni.registerapp.presentation.domain.Register;
 import com.example.marni.registerapp.R;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Erin :) on 9-5-2017.
@@ -22,9 +22,9 @@ public class RegisterHistoryAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflator;
-    private ArrayList mRegisterArrayList;
+    private List mRegisterArrayList;
 
-    public RegisterHistoryAdapter(Context context, LayoutInflater layoutInflator, ArrayList<Register> registerArrayList) {
+    public RegisterHistoryAdapter(Context context, LayoutInflater layoutInflator, List<Register> registerArrayList) {
         mContext = context;
         mInflator = layoutInflator;
         mRegisterArrayList = registerArrayList;
@@ -47,22 +47,21 @@ public class RegisterHistoryAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
+        final ViewHolder viewHolder;
 
-        ViewHolder viewHolder;
-
-        if (convertView == null) {
-            convertView = mInflator.inflate(R.layout.listview_row, null);
-
+        if (view == null) {
+            view = mInflator.inflate(R.layout.listview_row, null);
 
             viewHolder = new ViewHolder();
-            viewHolder.textViewId = (TextView) convertView.findViewById(R.id.textViewId);
-            viewHolder.textViewTimestamp = (TextView) convertView.findViewById(R.id.textViewTimestamp);
-            viewHolder.textViewTotal_price = (TextView) convertView.findViewById(R.id.textViewTotal_price);
-            viewHolder.textViewCustomer_id = (TextView) convertView.findViewById(R.id.textViewCustomer_id);
+            viewHolder.textViewId = (TextView) view.findViewById(R.id.textViewId);
+            viewHolder.textViewTimestamp = (TextView) view.findViewById(R.id.textViewTimestamp);
+            viewHolder.textViewTotalprice = (TextView) view.findViewById(R.id.textViewTotal_price);
+            viewHolder.textViewCustomerid = (TextView) view.findViewById(R.id.textViewCustomer_id);
 
-            convertView.setTag(viewHolder);
+            view.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) view.getTag();
         }
 
         Register register = (Register) mRegisterArrayList.get(position);
@@ -77,16 +76,16 @@ public class RegisterHistoryAdapter extends BaseAdapter {
 
         viewHolder.textViewId.setText(id);
         viewHolder.textViewTimestamp.setText(dateTime);
-        viewHolder.textViewTotal_price.setText(price);
-        viewHolder.textViewCustomer_id.setText(customerId);
+        viewHolder.textViewTotalprice.setText(price);
+        viewHolder.textViewCustomerid.setText(customerId);
 
-        return convertView;
+        return view;
     }
 
     private static class ViewHolder {
         TextView textViewId;
         TextView textViewTimestamp;
-        TextView textViewTotal_price;
-        TextView textViewCustomer_id;
+        TextView textViewTotalprice;
+        TextView textViewCustomerid;
     }
 }

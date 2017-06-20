@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Adapters;
+package com.example.marni.registerapp.presentation.presentation.adapters;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.registerapp.presentation.domain.Product;
-import com.example.marni.registerapp.presentation.presentation.Fragments.CategoriesFragment;
+import com.example.marni.registerapp.presentation.presentation.fragments.CategoriesFragment;
 import com.example.marni.registerapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
@@ -26,14 +26,14 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
  */
 
 public class AssortmentListViewAdapter extends BaseAdapter implements StickyListHeadersAdapter {
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<Product> products;
+    private List<Product> products;
     private Activity activity;
 
-    public AssortmentListViewAdapter(Activity activity,Context context, LayoutInflater layoutInflater, ArrayList<Product> products){
+    public AssortmentListViewAdapter(Activity activity,Context context, LayoutInflater layoutInflater, List<Product> products){
         this.activity = activity;
         this.context = context;
         this.layoutInflater = layoutInflater;
@@ -57,21 +57,22 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
+        View view = convertView;
         final ViewHolder viewHolder;
 
-        if (convertView == null){
-            convertView = layoutInflater.inflate(R.layout.assortment_single_item,parent,false);
+        if (view == null){
+            view = layoutInflater.inflate(R.layout.assortment_single_item,parent,false);
 
             viewHolder = new ViewHolder();
-            viewHolder.textViewName = (TextView) convertView.findViewById(R.id.assortment_product);
-            viewHolder.textViewPrice = (TextView) convertView.findViewById(R.id.assortment_price);
-            viewHolder.textViewSize = (TextView) convertView.findViewById(R.id.assortment_size);
-            viewHolder.textViewAlcohol = (TextView) convertView.findViewById(R.id.assortment_alcohol);
+            viewHolder.textViewName = (TextView) view.findViewById(R.id.assortment_product);
+            viewHolder.textViewPrice = (TextView) view.findViewById(R.id.assortment_price);
+            viewHolder.textViewSize = (TextView) view.findViewById(R.id.assortment_size);
+            viewHolder.textViewAlcohol = (TextView) view.findViewById(R.id.assortment_alcohol);
 
-            convertView.setTag(viewHolder);
+            view.setTag(viewHolder);
         } else {
-            Log.i(TAG, "ViewHolder meegekregen. Position: " + position);
-            viewHolder = (ViewHolder) convertView.getTag();
+            Log.i(tag, "ViewHolder meegekregen. Position: " + position);
+            viewHolder = (ViewHolder) view.getTag();
         }
 
         Product product = products.get(position);
@@ -80,36 +81,37 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
         DecimalFormat formatter2 = new DecimalFormat("#0.00");
 
         if(!product.getImagesrc().equals("")){
-            Picasso.with(context).load(product.getImagesrc()).into((ImageView) convertView.findViewById(R.id.imageView_assortmentimage));
+            Picasso.with(context).load(product.getImagesrc()).into((ImageView)view.findViewById(R.id.imageView_assortmentimage));
         }
 
         viewHolder.textViewName.setText(product.getName());
         viewHolder.textViewPrice.setText("€ " +formatter2.format(product.getPrice()));
         viewHolder.textViewSize.setText(product.getSize()+" ML");
 
-        if (Double.compare(product.getAlcohol_percentage(), 0.0) == 1) {
+        if (Double.compare(product.getAlcoholpercentage(), 0.0) == 1) {
             viewHolder.textViewAlcohol.setText("");
         }else{
-            viewHolder.textViewAlcohol.setText(formatter.format(product.getAlcohol_percentage()) + "% Alc.");
+            viewHolder.textViewAlcohol.setText(formatter.format(product.getAlcoholpercentage()) + "% Alc.");
         }
 
-        return convertView;
+        return view;
 
     }
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
         HeaderViewHolder holder;
 
-        if (convertView == null) {
+        if (view == null) {
             holder = new HeaderViewHolder();
 
-            convertView = layoutInflater.inflate(R.layout.listview_sectionheader_products, parent, false);
-            holder.textViewCategoryTitle = (TextView) convertView.findViewById(R.id.listViewOrders_categoryname);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.imageView_filter);
-            convertView.setTag(holder);
+            view = layoutInflater.inflate(R.layout.listview_sectionheader_products, parent, false);
+            holder.textViewCategoryTitle = (TextView) view.findViewById(R.id.listViewOrders_categoryname);
+            holder.imageView = (ImageView) view.findViewById(R.id.imageView_filter);
+            view.setTag(holder);
         } else {
-            holder = (HeaderViewHolder) convertView.getTag();
+            holder = (HeaderViewHolder) view.getTag();
         }
         final Product product = products.get(position);
         holder.imageView.setOnClickListener(new View.OnClickListener(){
@@ -120,7 +122,7 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
         });
         holder.textViewCategoryTitle.setText(product.getCategoryName());
 
-        return convertView;
+        return view;
     }
 
     private class HeaderViewHolder {

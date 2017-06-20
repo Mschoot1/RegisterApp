@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    tools:context="com.example.marni.registerapp.presentation.presentation.Activities.AssortmentActivity">
+    tools:context="com.example.marni.registerapp.presentation.presentation.activities.AssortmentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

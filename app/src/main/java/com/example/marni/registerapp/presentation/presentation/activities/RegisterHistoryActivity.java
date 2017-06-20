@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Activities;
+package com.example.marni.registerapp.presentation.presentation.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,23 +23,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.marni.registerapp.presentation.asyncklassen.AccountGetTask;
-import com.example.marni.registerapp.presentation.asyncklassen.OrderPendingPutTask;
 import com.example.marni.registerapp.presentation.asyncklassen.PendingGetTask;
 import com.example.marni.registerapp.presentation.asyncklassen.RegisterGetTask;
 import com.example.marni.registerapp.presentation.businesslogic.DrawerMenu;
 import com.example.marni.registerapp.presentation.domain.Customer;
 import com.example.marni.registerapp.presentation.domain.Order;
 import com.example.marni.registerapp.presentation.domain.Register;
-import com.example.marni.registerapp.presentation.presentation.Adapters.RegisterHistoryAdapter;
+import com.example.marni.registerapp.presentation.presentation.adapters.RegisterHistoryAdapter;
 import com.example.marni.registerapp.presentation.cardreader.LoyaltyCardReader;
 import com.example.marni.registerapp.R;
 
 import java.util.ArrayList;
 
 public class RegisterHistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoyaltyCardReader.AccountCallback,
-        RegisterGetTask.OnRandomRegisterAvailable,AdapterView.OnItemClickListener, AccountGetTask.OnAccountAvailable, PendingGetTask.OnPendingAvailable, OrderPendingPutTask.PutSuccessListener {
+        RegisterGetTask.OnRandomRegisterAvailable,AdapterView.OnItemClickListener, AccountGetTask.OnAccountAvailable, PendingGetTask.OnPendingAvailable {
 
-    private final String TAG = getClass().getSimpleName();
+    private final String tag = getClass().getSimpleName();
     public static final String ORDER = "ORDER";
     ListView mListViewOrders;
     RegisterHistoryAdapter mCostumAdapter;
@@ -47,16 +46,16 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
 
     private static final int READER_FLAGS = NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     private LoyaltyCardReader mLoyaltyCardReader;
-    private TextView account_email;
+    private TextView accountemail;
 
-    private int pending;
     private String orderId;
 
     public static final String JWT_STR = "jwt_str";
-    public static final String USER = "user";
+    public static final String USER_KEY = "user";
     String jwt;
     String user;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
@@ -64,7 +63,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         jwt = prefs.getString(JWT_STR, "");
-        user = prefs.getString(USER, "");
+        user = prefs.getString(USER_KEY, "");
 
         getData();
         getEmail();
@@ -84,7 +83,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         navigationView.setCheckedItem(R.id.nav_order_history);
 
         View headerView = navigationView.getHeaderView(0);
-        account_email = (TextView)headerView.findViewById(R.id.nav_email);
+        accountemail = (TextView)headerView.findViewById(R.id.nav_email);
 
         mLoyaltyCardReader = new LoyaltyCardReader(this);
         enableReaderMode();
@@ -98,7 +97,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     }
 
     public void onAccountAvailable (Customer customer){
-        account_email.setText(user);
+        accountemail.setText(user);
     }
 
     public void getEmail(){
@@ -128,7 +127,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        Log.i(TAG, item.toString() + " clicked.");
+        Log.i(tag, item.toString() + " clicked.");
 
         int id = item.getItemId();
 
@@ -147,10 +146,9 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         g.execute(urls);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e("item",position+"");
+        Log.e("item", Integer.toString(position));
 
         Register register = mOrderArrayList.get(position);
 
@@ -184,7 +182,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     }
 
     private void enableReaderMode() {
-        Log.i(TAG, "Enabling reader mode");
+        Log.i(tag, "Enabling reader mode");
         Activity activity = this;
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(activity);
         if (nfc != null) {
@@ -193,7 +191,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     }
 
     private void disableReaderMode() {
-        Log.i(TAG, "Disabling reader mode");
+        Log.i(tag, "Disabling reader mode");
         Activity activity = this;
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(activity);
         if (nfc != null) {
@@ -203,7 +201,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
 
 
     public void getPending(String account){
-        Log.i(TAG, account);
+        Log.i(tag, account);
 
         PendingGetTask customer = new PendingGetTask(this);
         String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + account, jwt};
@@ -223,16 +221,10 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
         });
     }
 
-    public void putOrderPendingStatus(String apiUrl, String orderId, String pending) {
-        String[] urls = new String[]{apiUrl, orderId, pending};
-        OrderPendingPutTask task = new OrderPendingPutTask(this);
-        task.execute(urls);
-    }
-
     @Override
     public void onPendingAvailable(Order order) {
-        pending = order.getPending();
-        Log.i(TAG, pending + "");
+        int pending = order.getPending();
+        Log.i(tag, Integer.toString(pending));
 
         if(pending == 2){
             Toast.makeText(this, "Customer scanned but order was cancelled by register", Toast.LENGTH_LONG).show();
@@ -241,10 +233,6 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
             intent.putExtra("ACCOUNT", orderId);
             startActivity(intent);
         }
-    }
-    @Override
-    public void putSuccessful(Boolean successful) {
-
     }
 }
 

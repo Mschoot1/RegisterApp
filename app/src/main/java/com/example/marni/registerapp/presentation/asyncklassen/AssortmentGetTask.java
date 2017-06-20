@@ -121,7 +121,7 @@ public class AssortmentGetTask extends AsyncTask<String, Void, String> {
                 p.setName(name);
                 p.setCategoryName(categoryName);
                 p.setSize(size);
-                p.setAlcohol_percentage(alcohol);
+                p.setAlcoholpercentage(alcohol);
                 p.setPrice(price);
                 p.setId(id);
                 p.setCategoryId(categoryId);

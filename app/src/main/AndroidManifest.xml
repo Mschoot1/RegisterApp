@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".Presentation.Presentation.Activities.LogInActivity">
+            android:name=".presentation.presentation.activities.LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,30 +30,30 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Presentation.Presentation.Activities.EditProductActivity">
+        <activity android:name=".presentation.presentation.activities.EditProductActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".Presentation.Presentation.Activities.AssortmentActivity"
+            android:value=".presentation.presentation.activities.AssortmentActivity"
             />
         </activity>
-        <activity android:name=".Presentation.Presentation.Activities.AddProductActivity">
+        <activity android:name=".presentation.presentation.activities.AddProductActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Presentation.Presentation.Activities.AssortmentActivity"
+                android:value=".presentation.presentation.activities.AssortmentActivity"
                 />
         </activity>
-        <activity android:name=".Presentation.Presentation.Activities.DeviceInformationActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryDetailActivity">
+        <activity android:name=".presentation.presentation.activities.DeviceInformationActivity"/>
+        <activity android:name=".presentation.presentation.activities.RegisterHistoryDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Presentation.Presentation.Activities.RegisterHistoryActivity"
+                android:value=".presentation.presentation.activities.RegisterHistoryActivity"
                 />
         </activity>
 
-        <activity android:name=".Presentation.Presentation.Activities.OrderDetailActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.RegisterHistoryActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.AssortmentActivity"/>
-        <activity android:name=".Presentation.Presentation.Activities.PaymentPendingActivity"/>
+        <activity android:name=".presentation.presentation.activities.OrderDetailActivity"/>
+        <activity android:name=".presentation.presentation.activities.RegisterHistoryActivity"/>
+        <activity android:name=".presentation.presentation.activities.AssortmentActivity"/>
+        <activity android:name=".presentation.presentation.activities.PaymentPendingActivity"/>
 
     </application>
 

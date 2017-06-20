@@ -13,10 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -71,7 +69,6 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
             if (responsCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
-                // Log.i(tag, "doInBackground response = " + response);
             } else {
                 Log.e(tag, "Error, invalid response");
             }
@@ -120,11 +117,11 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
 
                 int id = register.getInt("id");
                 String timestamp = register.getString("timestamp");
-                double price_total = register.getDouble("price_total");
-                int customer_id = register.getInt("customer_id");
+                double pricetotal = register.getDouble("price_total");
+                int customerid = register.getInt("customer_id");
                 String timestamp2 = getFormattedDate(timestamp);
 
-                Register o = new Register(id,timestamp2,price_total,customer_id);
+                Register o = new Register(id,timestamp2,pricetotal,customerid);
 
                 listener.onRandomRegisterAvailable(o);
             }
@@ -142,9 +139,8 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date parsedDate = sdf.parse(s);
         sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String formattedDate = sdf.format(parsedDate);
 
-        return formattedDate;
+        return sdf.format(parsedDate);
     }
 
     public interface OnRandomRegisterAvailable {

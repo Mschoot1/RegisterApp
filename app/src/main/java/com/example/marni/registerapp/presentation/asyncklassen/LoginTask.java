@@ -21,7 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.example.marni.registerapp.presentation.presentation.Activities.LogInActivity;
+import com.example.marni.registerapp.presentation.presentation.activities.LogInActivity;
 
 import static com.example.marni.registerapp.presentation.asyncklassen.AccountGetTask.getStringFromInputStream;
 
@@ -108,6 +108,7 @@ public class LoginTask extends AsyncTask<String, Void, String> {
         return response;
     }
 
+    @Override
     protected void onPostExecute(String response) {
 
         if (dialog.isShowing()) {

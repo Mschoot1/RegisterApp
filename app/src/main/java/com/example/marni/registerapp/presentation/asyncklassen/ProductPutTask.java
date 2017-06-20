@@ -28,17 +28,17 @@ public class ProductPutTask extends AsyncTask<String, Void, Boolean> {
     protected Boolean doInBackground(String... params) {
 
         int responseCode;
-        String balanceUrl = params[0];
+        String productPutUrl = params[0];
 
         Boolean response = null;
 
-        Log.i(tag, "doInBackground - " + balanceUrl);
+        Log.i(tag, "doInBackground - " + productPutUrl);
         try {
-            URL url = new URL(balanceUrl);
+            URL url = new URL(productPutUrl);
             URLConnection urlConnection = url.openConnection();
 
             if (!(urlConnection instanceof HttpURLConnection)) {
-                return null;
+                return false;
             }
 
             HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
@@ -69,10 +69,10 @@ public class ProductPutTask extends AsyncTask<String, Void, Boolean> {
             response = (responseCode == HttpURLConnection.HTTP_OK);
         } catch (MalformedURLException e) {
             Log.e(tag, "doInBackground MalformedURLEx " + e.getLocalizedMessage());
-            return null;
+            return false;
         } catch (IOException e) {
             Log.e(tag, "doInBackground IOException " + e.getLocalizedMessage());
-            return null;
+            return false;
         } catch (JSONException e) {
             Log.e(tag, "onPostExecute JSONException " + e.getLocalizedMessage());
         }
@@ -80,6 +80,7 @@ public class ProductPutTask extends AsyncTask<String, Void, Boolean> {
         return response;
     }
 
+    @Override
     protected void onPostExecute(Boolean response) {
         listener.putSuccessful(response);
     }

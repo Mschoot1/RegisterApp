@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.marni.registerapp.Presentation.Presentation.Activities.EditProductActivity">
+    tools:context="com.example.marni.registerapp.presentation.presentation.activities.EditProductActivity">
 
     <include
         android:id="@+id/toolbar_include"
@@ -88,15 +88,15 @@
         android:id="@+id/alcohol_percentagetext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/alcohol_percentage"
-        android:layout_alignBottom="@+id/alcohol_percentage"
+        android:layout_alignBaseline="@+id/alcoholpercentage"
+        android:layout_alignBottom="@+id/alcoholpercentage"
         android:layout_alignStart="@+id/sizetext"
         android:text="Alcohol %"
         android:textColor="@color/black_text"
         android:textSize="@dimen/textsizeProduct" />
 
     <EditText
-        android:id="@+id/alcohol_percentage"
+        android:id="@+id/alcoholpercentage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/size"
@@ -121,7 +121,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/allergy_text"
-        android:layout_alignStart="@+id/alcohol_percentage"
+        android:layout_alignStart="@+id/alcoholpercentage"
         android:layout_toStartOf="@+id/imageViewAddAllergy"
         android:orientation="horizontal"
         android:layout_alignTop="@+id/imageViewAddAllergy" />
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/allergy_text"
-        android:layout_alignStart="@+id/alcohol_percentage"
+        android:layout_alignStart="@+id/alcoholpercentage"
         android:layout_toStartOf="@+id/imageViewAddAllergy"
         android:text="None"
         android:textColor="@color/black_text"
@@ -144,8 +144,8 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginTop="12dp"
-        android:layout_alignEnd="@+id/alcohol_percentage"
-        android:layout_below="@+id/alcohol_percentage"
+        android:layout_alignEnd="@+id/alcoholpercentage"
+        android:layout_below="@+id/alcoholpercentage"
         android:src="@drawable/ic_add_circle_black_24dp"
         android:tint="#FFC107" />
 

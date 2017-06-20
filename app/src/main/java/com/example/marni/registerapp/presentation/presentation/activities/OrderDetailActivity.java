@@ -1,4 +1,4 @@
-package com.example.marni.registerapp.presentation.presentation.Activities;
+package com.example.marni.registerapp.presentation.presentation.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,13 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-import com.example.marni.registerapp.presentation.asyncklassen.AccountGetTask;
 import com.example.marni.registerapp.presentation.asyncklassen.GetCustomerfromOrderTask;
 import com.example.marni.registerapp.presentation.asyncklassen.OrderPendingPutTask;
 import com.example.marni.registerapp.presentation.asyncklassen.PendingGetTask;
-import com.example.marni.registerapp.presentation.domain.Customer;
 import com.example.marni.registerapp.presentation.domain.Order;
-import com.example.marni.registerapp.presentation.presentation.Adapters.ProductsListViewAdapter;
+import com.example.marni.registerapp.presentation.presentation.adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.presentation.domain.Product;
 import com.example.marni.registerapp.presentation.asyncklassen.ProductGenerator;
 import com.example.marni.registerapp.R;
@@ -27,35 +25,25 @@ import com.example.marni.registerapp.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import static com.example.marni.registerapp.presentation.presentation.Activities.DeviceInformationActivity.CUSTOMERID;
-//import static com.example.marni.registerapp.presentation.presentation.Activities.DeviceInformationActivity.ORDER;
-import static java.lang.String.valueOf;
+import static com.example.marni.registerapp.presentation.presentation.activities.DeviceInformationActivity.CUSTOMERID;
 
 /**
  * Created by Wallaard on 9-5-2017.
  */
 
-public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable, AccountGetTask.OnAccountAvailable,
+public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
         GetCustomerfromOrderTask.OnCustomerIdAvailable, OrderPendingPutTask.PutSuccessListener, PendingGetTask.OnPendingAvailable {
 
-    private final String TAG = getClass().getSimpleName();
-
-    private ProductsListViewAdapter productAdapter;
     private ArrayList<Product> productsList = new ArrayList<>();
     private TextView textViewTotal;
     private double priceTotal;
-    private Button cancelbutton;
-    private Button confirmbutton;
-    private Button deviceinfobutton;
-    private double current_balance;
     private String orderid;
     private int customerId;
-    private int pending;
     DecimalFormat formatter = new DecimalFormat("#0.00");
     private StickyListHeadersListView stickyList;
 
     public static final String JWT_STR = "jwt_str";
-    public static final String USER = "user";
+    public static final String USER_KEY = "user";
     String jwt;
     String user;
 
@@ -66,19 +54,17 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("Order");
+        getSupportActionBar().setTitle("Order");
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         jwt = prefs.getString(JWT_STR, "");
-        user = prefs.getString(USER, "");
-
-        getBalance();
+        user = prefs.getString(USER_KEY, "");
 
         Bundle bundle = getIntent().getExtras();
         orderid = bundle.getString("ACCOUNT");
 
-        cancelbutton = (Button) findViewById(R.id.cancelbutton1);
+        Button cancelbutton = (Button) findViewById(R.id.cancelbutton1);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +73,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
             }
         });
 
-        confirmbutton = (Button) findViewById(R.id.confirmbutton1);
+        Button confirmbutton = (Button) findViewById(R.id.confirmbutton1);
         confirmbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v2) {
@@ -98,7 +84,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         getProducts(orderid);
         getCustomerId();
 
-        deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton);
+        Button deviceinfobutton = (Button) findViewById(R.id.deviceinformationbutton);
         deviceinfobutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v3) {
@@ -117,11 +103,11 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     }
 
     //GET klassen product hieronder
-    public void OnAvailable(Product product) {
+    public void onAvailable(Product product) {
         productsList.add(product);
         getPriceTotal(product);
 
-        productAdapter = new ProductsListViewAdapter(this,this, getLayoutInflater(), productsList);
+        ProductsListViewAdapter productAdapter = new ProductsListViewAdapter(this,this, getLayoutInflater(), productsList);
         stickyList.setAdapter(productAdapter);
         productAdapter.notifyDataSetChanged();
 
@@ -141,17 +127,6 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         return priceTotal;
     }
 
-
-    ///ONACCOUNT AVAILABLE
-    public void onAccountAvailable (Customer customer){
-        current_balance = customer.getBalance();
-    }
-
-    public void getBalance(){
-        AccountGetTask accounttask = new AccountGetTask(this);
-        String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/account/" + user, jwt};
-        accounttask.execute(urls3);
-    }
 
     public void getCustomerId(){
         GetCustomerfromOrderTask customer = new GetCustomerfromOrderTask(this);
@@ -184,8 +159,8 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
 
     @Override
     public void onPendingAvailable(Order order) {
-        pending = order.getPending();
-        Log.i("OrderDetailActivity", pending + "");
+        int pending = order.getPending();
+        Log.i("OrderDetailActivity", Integer.toString(pending));
         if(pending == 1){
             Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
             intent.putExtra("ORDERID", orderid);
