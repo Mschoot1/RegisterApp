@@ -89,9 +89,9 @@ public class AssortmentListViewAdapter extends BaseAdapter implements StickyList
         viewHolder.textViewSize.setText(product.getSize()+" ML");
 
         if (Double.compare(product.getAlcoholpercentage(), 0.0) == 1) {
-            viewHolder.textViewAlcohol.setText("");
-        }else{
             viewHolder.textViewAlcohol.setText(formatter.format(product.getAlcoholpercentage()) + "% Alc.");
+        }else{
+            viewHolder.textViewAlcohol.setText("");
         }
 
         return view;
