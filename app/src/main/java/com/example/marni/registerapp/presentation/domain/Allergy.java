@@ -55,7 +55,7 @@ public class Allergy implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        throw new UnsupportedOperationException();
+        //do nothing
     }
 
     public Boolean checked() {

@@ -121,7 +121,7 @@ public class AddProductActivity extends AppCompatActivity implements
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                throw new UnsupportedOperationException();
+                //do nothing
             }
         });
 
