@@ -2,8 +2,10 @@ package com.example.marni.registerapp.presentation.presentation.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,12 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import com.example.marni.registerapp.presentation.asyncklassen.GetCustomerfromOrderTask;
 import com.example.marni.registerapp.presentation.asyncklassen.OrderPendingPutTask;
 import com.example.marni.registerapp.presentation.asyncklassen.PendingGetTask;
 import com.example.marni.registerapp.presentation.domain.Order;
+import com.example.marni.registerapp.presentation.presentation.activities.DeviceInformationActivity;
+import com.example.marni.registerapp.presentation.presentation.activities.PaymentPendingActivity;
+import com.example.marni.registerapp.presentation.presentation.activities.RegisterHistoryActivity;
 import com.example.marni.registerapp.presentation.presentation.adapters.ProductsListViewAdapter;
 import com.example.marni.registerapp.presentation.domain.Product;
 import com.example.marni.registerapp.presentation.asyncklassen.ProductGenerator;
@@ -26,10 +32,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.example.marni.registerapp.presentation.presentation.activities.DeviceInformationActivity.CUSTOMERID;
-
-/**
- * Created by Wallaard on 9-5-2017.
- */
 
 public class OrderDetailActivity extends AppCompatActivity implements ProductGenerator.OnAvailable,
         GetCustomerfromOrderTask.OnCustomerIdAvailable, OrderPendingPutTask.PutSuccessListener, PendingGetTask.OnPendingAvailable {
@@ -74,7 +76,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         });
 
         Button confirmbutton = (Button) findViewById(R.id.confirmbutton1);
-        confirmbutton.setOnClickListener(new View.OnClickListener(){
+        confirmbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v2) {
                 getPending();
@@ -88,9 +90,9 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         deviceinfobutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v3) {
-                Intent intent3 = new Intent(OrderDetailActivity.this,DeviceInformationActivity.class);
-                intent3.putExtra("flag","O");
-                intent3.putExtra(CUSTOMERID,customerId);
+                Intent intent3 = new Intent(OrderDetailActivity.this, DeviceInformationActivity.class);
+                intent3.putExtra("flag", "O");
+                intent3.putExtra(CUSTOMERID, customerId);
                 moveTaskToBack(true);
                 startActivity(intent3);
             }
@@ -107,28 +109,29 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         productsList.add(product);
         getPriceTotal(product);
 
-        ProductsListViewAdapter productAdapter = new ProductsListViewAdapter(this,this, getLayoutInflater(), productsList);
+        ProductsListViewAdapter productAdapter = new ProductsListViewAdapter(this, this, getLayoutInflater(), productsList);
         stickyList.setAdapter(productAdapter);
         productAdapter.notifyDataSetChanged();
 
         textViewTotal.setText("€ " + formatter.format(priceTotal));
     }
 
-    public void getProducts(String orderid){
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/products/order/" + orderid, jwt};
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    public void getProducts(String orderid) {
+        String[] urls = new String[]{"http://mysql-test-p4.herokuapp.com/products/order/" + orderid, jwt};
 
         ProductGenerator getProduct = new ProductGenerator(this);
         getProduct.execute(urls);
     }
 
     public Double getPriceTotal(Product product) {
-            priceTotal = priceTotal + (product.getPrice() * product.getQuantity());
+        priceTotal = priceTotal + (product.getPrice() * product.getQuantity());
 
         return priceTotal;
     }
 
 
-    public void getCustomerId(){
+    public void getCustomerId() {
         GetCustomerfromOrderTask customer = new GetCustomerfromOrderTask(this);
         String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid, jwt};
         customer.execute(urls3);
@@ -140,7 +143,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
         task.execute(urls);
     }
 
-    public void getPending(){
+    public void getPending() {
         PendingGetTask customer = new PendingGetTask(this);
         String[] urls3 = new String[]{"https://mysql-test-p4.herokuapp.com/order/" + orderid, jwt};
         customer.execute(urls3);
@@ -161,15 +164,15 @@ public class OrderDetailActivity extends AppCompatActivity implements ProductGen
     public void onPendingAvailable(Order order) {
         int pending = order.getPending();
         Log.i("OrderDetailActivity", Integer.toString(pending));
-        if(pending == 1){
-            Intent intent = new Intent(OrderDetailActivity.this,PaymentPendingActivity.class);
+        if (pending == 1) {
+            Intent intent = new Intent(OrderDetailActivity.this, PaymentPendingActivity.class);
             intent.putExtra("ORDERID", orderid);
             intent.putExtra("PRICETOTAL", priceTotal);
             intent.putExtra("CUSTOMERID", customerId);
             startActivity(intent);
-        } else{
+        } else {
             Toast.makeText(getApplication(), "The customer has cancelled the order.", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(OrderDetailActivity.this,RegisterHistoryActivity.class);
+            Intent intent = new Intent(OrderDetailActivity.this, RegisterHistoryActivity.class);
             startActivity(intent);
         }
     }

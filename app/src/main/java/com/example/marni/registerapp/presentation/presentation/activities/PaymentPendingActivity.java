@@ -42,7 +42,6 @@ public class PaymentPendingActivity extends AppCompatActivity implements Loyalty
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_pending);
 
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         jwt = prefs.getString(JWT_STR, "");

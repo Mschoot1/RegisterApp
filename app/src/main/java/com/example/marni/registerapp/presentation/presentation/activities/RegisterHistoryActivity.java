@@ -140,7 +140,7 @@ public class RegisterHistoryActivity extends AppCompatActivity implements Naviga
     /////////
 
     public void getData() {
-        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/orders/" + user, jwt};
+        String[] urls = new String[] {"http://mysql-test-p4.herokuapp.com/register/" + user, jwt};
 
         RegisterGetTask g = new RegisterGetTask(this);
         g.execute(urls);

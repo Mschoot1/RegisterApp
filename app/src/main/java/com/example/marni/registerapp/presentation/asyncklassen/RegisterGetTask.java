@@ -115,7 +115,7 @@ public class RegisterGetTask extends AsyncTask<String, Void, String> {
             for(int idx = 0; idx < jsonArray.length(); idx++) {
                 JSONObject register = jsonArray.getJSONObject(idx);
 
-                int id = register.getInt("id");
+                int id = register.getInt("order_id");
                 String timestamp = register.getString("timestamp");
                 double pricetotal = register.getDouble("price_total");
                 int customerid = register.getInt("customer_id");
